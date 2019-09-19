@@ -1,5 +1,7 @@
 # NGS-preprocess pipeline
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3451406.svg)](https://doi.org/10.5281/zenodo.3451406)
+
 NGS-preprocess pipeline is a nextflow docker-based wrapper around [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [PEAR](https://cme.h-its.org/exelixis/web/software/pear/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pbh5tools](https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx) and [NanoPack](https://github.com/wdecoster/nanopack).
 
 This is an easy to use pipeline that uses state-of-art software for pre-procesing NGS reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow).
@@ -155,3 +157,7 @@ Create a configuration file in your working directory:
 * For ONT data:
 
       nextflow run fmalmeida/NGS-preprocess --get_ont_config
+      
+# Citation
+
+Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [PEAR](https://cme.h-its.org/exelixis/web/software/pear/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pbh5tools](https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx) and [NanoPack](https://github.com/wdecoster/nanopack).
