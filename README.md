@@ -1,7 +1,5 @@
 # NGS-preprocess pipeline
 
-![](https://travis-ci.com/fmalmeida/NGS-preprocess.svg?token=Q8pHf4UsRz2oiUJXaCZy&branch=master) [![DOI](https://zenodo.org/badge/199041148.svg)](https://zenodo.org/badge/latestdoi/199041148)
-
 NGS-preprocess pipeline is a nextflow docker-based wrapper around [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [PEAR](https://cme.h-its.org/exelixis/web/software/pear/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pbh5tools](https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx) and [NanoPack](https://github.com/wdecoster/nanopack).
 
 This is an easy to use pipeline that uses state-of-art software for pre-procesing NGS reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow).
