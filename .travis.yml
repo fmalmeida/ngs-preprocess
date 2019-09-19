@@ -1,0 +1,17 @@
+sudo: required
+jdk:
+- openjdk8
+services:
+- docker
+branches:
+  only:
+  - master  
+install:
+- sudo apt-get -qq update
+script:
+- curl -fsSL get.nextflow.io | bash
+- ./nextflow run main.nf --help
+- ./nextflow run main.nf --show
+- ./nextflow run main.nf --get_pacbio_config
+- ./nextflow run main.nf --get_ont_config
+- ./nextflow run main.nf --get_illumina_config
