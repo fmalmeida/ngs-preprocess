@@ -13,7 +13,7 @@ def helpMessage() {
    log.info """
 
    Usage:
-   nextflow run fmalmeida/NGS-preprocess [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
+   nextflow run fmalmeida/ngs-preprocess [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
    Comments:
    This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
@@ -23,15 +23,15 @@ def helpMessage() {
    parameterization easier and more readable.
 
    Creating a configuration file:
-   nextflow run fmalmeida/NGS-preprocess [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]
+   nextflow run fmalmeida/ngs-preprocess [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]
 
    Show command line examples:
-   nextflow run fmalmeida/NGS-preprocess --examples
+   nextflow run fmalmeida/ngs-preprocess --examples
 
    Execution Reports:
-   nextflow run fmalmeida/NGS-preprocess [ -c nextflow.config ] -with-report
-   nextflow run fmalmeida/NGS-preprocess [ -c nextflow.config ] -with-trace
-   nextflow run fmalmeida/NGS-preprocess [ -c nextflow.config ] -with-timeline
+   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-report
+   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-trace
+   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-timeline
 
    OBS: These reports can also be enabled through the configuration file.
 
@@ -86,7 +86,7 @@ def exampleMessage() {
       Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz",
       it MUST ALWAYS be double quoted as the example below.
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
 "illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
 --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --pear_execute
 
@@ -94,32 +94,32 @@ def exampleMessage() {
       Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
       If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
 --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --clip_r1 5 --three_prime_clip_r1 5
 
 
       ONT reads:
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline \
 --lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
 
 
       Pacbio basecalled (.fastq) reads with nextflow general report
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq \
 --run_longreads_pipeline --lreads_type pacbio \
 --longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
 
 
       Pacbio raw (subreads.bam) reads
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
 --lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
 
 
       Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
-./nextflow run fmalmeida/NGS-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
 --lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
    """.stripIndent()
@@ -187,33 +187,33 @@ params.get_pacbio_config = false
 */
 
 if (params.get_illumina_config) {
-  new File("illumina_data.config") << new URL ("https://github.com/fmalmeida/NGS-preprocess/raw/master/configuration_example/illumina_data.config").getText()
+  new File("illumina_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/illumina_data.config").getText()
   println ""
   println "illumina_data.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./illumina_data.config"
+  println "nextflow run fmalmeida/ngs-preprocess -c ./illumina_data.config"
   println "Nice code!\n"
 
   exit 0
 }
 
 if (params.get_ont_config) {
-  new File("ont_data.config") << new URL ("https://github.com/fmalmeida/NGS-preprocess/raw/master/configuration_example/ont_data.config").getText()
+  new File("ont_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/ont_data.config").getText()
   println ""
   println "ont_data.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./ont_data.config"
+  println "nextflow run fmalmeida/ngs-preprocess -c ./ont_data.config"
   println "Nice code!\n"
 
   exit 0
 }
 
 if (params.get_pacbio_config) {
-  new File("pacbio_data.config") << new URL ("https://github.com/fmalmeida/NGS-preprocess/raw/master/configuration_example/pacbio_data.config").getText()
+  new File("pacbio_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/pacbio_data.config").getText()
   println ""
   println "pacbio_data.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./pacbio_data.config"
+  println "nextflow run fmalmeida/ngs-preprocess -c ./pacbio_data.config"
   println "Nice code!\n"
 
   exit 0
