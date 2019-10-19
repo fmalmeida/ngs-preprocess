@@ -58,7 +58,7 @@ def helpMessage() {
     --lighter_genomeSize <int>             Approximate genome size
     --lighter_alpha <float>                Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                            If not set, Lighter will automatically calculate the best value
-    --pear_execute                         If set, PEAR will be executed to merge paired end reads
+    --flash_execute                         If set, PEAR will be executed to merge paired end reads
 
             Long Reads Parameters - Mandatory if --run_shortreads_pipeline is used
 
@@ -88,7 +88,7 @@ def exampleMessage() {
 
 ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
 "illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
---clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --pear_execute
+--clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
 
 
       Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
@@ -170,7 +170,7 @@ params.lighter_execute = false
 params.lighter_kmer = 21
 params.lighter_genomeSize = false
 params.lighter_alpha = false
-params.pear_execute = false
+params.flash_execute = false
 params.lreads_type = ''
 params.longReads = ''
 params.lreads_is_barcoded = false
@@ -449,38 +449,38 @@ process lighterCorrectionPaired {
 
 /*
 
-          OPTIONAL STEP - PEAR READ MERGE
+          OPTIONAL STEP - FLASH READ MERGE
 
 */
 
 // Checks if lighter was executed
-pear_input = (params.lighter_execute) ? Channel.empty().mix(lighter_corrected_paired_reads)
+flash_input = (params.lighter_execute) ? Channel.empty().mix(lighter_corrected_paired_reads)
                                       : Channel.empty().mix(galore_trimmed_paired_reads)
 
-process pearMerger {
+process flashMerger {
   publishDir outdir, mode: 'copy',
        saveAs: {filename ->
   // This line saves the files with specific sufixes in specific folders
-         if (filename.indexOf(".fastq") > 0) "pear_output/$filename"
-         else "pear_output/$filename" }
+         if (filename.indexOf(".fastq") > 0) "flash_output/$filename"
+         else "flash_output/$filename" }
   // This line loads the docker container needed
   container 'fmalmeida/compgen:PREPROCESS'
-  tag "Executing PEAR read merger with paired end reads."
+  tag "Executing FLASH read merger with paired end reads."
 
   input:
-  set val(id), file(sread1), file(sread2) from pear_input
+  set val(id), file(sread1), file(sread2) from flash_input
 
   output:
-  file "*.fastq.gz"
+  file "flash_out*"
 
   when:
   // Execute this process only when desired and with paired end short reads.
-  params.pear_execute && params.run_shortreads_pipeline
+  params.flash_execute && params.run_shortreads_pipeline
 
   script:
   """
-  pear -f $sread1 -r $sread2 -o ${id}_merged -j ${params.threads} &> pear.log ;
-  gzip ${id}_merged*.fastq
+  source activate flash ;
+  flash -q -o flash_out -z -t ${params.threads} $sread1 $sread2 &> flash.log;
   """
 
 }
