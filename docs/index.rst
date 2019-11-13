@@ -1,7 +1,7 @@
 .. _index:
 
-ngs-preprocess A generic pipeline for pre-processing Illumina, Pacbio and ONT data
-==================================================================================
+ngs-preprocess
+==============
 
 `ngs-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
 and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for performing the pre-process of data from multiple

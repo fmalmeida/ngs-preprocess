@@ -6,8 +6,6 @@ Manual
 Overview
 """"""""
 
-.. image:: annotation_en.png
-
 An overview of all annotation steps automatically taken by the pipeline.
 
 

@@ -17,8 +17,8 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'Generic Archaeal and Bacterial Annotation (bacannot) pipeline'
-copyright = '2019, Generic Archaeal and Bacterial Annotation (bacannot) pipeline'
+project = 'ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
+copyright = '2019, fmalmeida/ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
 author = 'Felipe Marques de Almeida'
 
 
