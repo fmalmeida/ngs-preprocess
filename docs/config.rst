@@ -3,134 +3,127 @@
 Configuration File
 """"""""""""""""""
 
-To download a configuration file template users just need to run ``nextflow run fmalmeida/bacannot --get_config``
+To download a configuration file template users just need to run ``nextflow run fmalmeida/ngs-preprocess [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]``
 
-Using a config file your code is lot more clean and concise: ``nextflow run fmalmeida/bacannot -c [path-to-config]``
+Using a config file your code is lot more clean and concise: ``nextflow run fmalmeida/ngs-preprocess -c [path-to-config]``
 
 Default configuration:
 
 .. code-block:: groovy
 
   /*
-
-                                                      Required Parameters.
-                                              This parameters must always be set
-
-  */
-  // Input file (Always in fasta)
-  params.genome = ''
-
-  // Name of output directory
-  params.outDir = 'output'
-
-  // Output files predix (it must never be written with white spaces)
-  params.prefix = 'out'
-
-  // Number of threads to be used
-  params.threads = 2
-
-  // Prokka will rename contig files into 'gnl|Centre|TAG_{1,2,3}'. Set your's institute acronym
-  params.prokka_center = 'Centre'
-
-  // Number of minimum overlapping base pairs required for merging
-  // Negative values means required overlapping base pairs. Positive values means maximum distance accepted for merging.
-  // Setting to false means using Bedtools default
-  params.bedtools_merge_distance = false
-
-  /*
-   *
-   *                                                 Prokka optional parameters
-   *
+   * Configuration File to run NGS-PreProcess pipeline.
    */
-  // Annotation mode: Archaea|Bacteria|Mitochondria|Viruses (default 'Bacteria')
-  params.prokka_kingdom = ''
-
-  // Translation table code. Must be set if the above is set.
-  // Example: params.prokka_genetic.code = 11
-  params.prokka_genetic.code = false
-
-  // false or true to use rnammer instead of Barrnap
-  params.prokka_use_rnammer = false
-
-  // Set only if you want to search only a specific prokka genus database
-  params.prokka_genus = ''
 
   /*
-                                    DIAMOND parameters used to annotated the genome using the specific databases
-                                    loaded in the docker image (VFDB, Victors, ICEberg and PHAST)
-                                    Resistance and Virulence genes are searched with blastx while ICEs and Phages
-                                    are searched with blastn.
-
-  */
-  // Virulence genes identity threshold
-  params.diamond_virulence_identity = 90
-
-  // Virulence genes coverage threshold
-  params.diamond_virulence_queryCoverage = 90
-
-  // MGEs (ICEs and Phages) identity threshold
-  params.diamond_MGEs_identity = 85
-
-  // MGEs (ICEs and Phages) coverage threshold
-  params.diamond_MGEs_queryCoverage = 85
-
-  // Minimum alignment length.
-  params.diamond_minimum_alignment_length = 200
+   * General Parameters
+   */
+      // Output folder name
+  params.outDir = 'output'
+      // Number of threads to be used
+  params.threads = 2
+      // Set true or false to run or not longreads and shortreads pipeline.
+  params.run_shortreads_pipeline = false
+  params.run_longreads_pipeline  = false
 
   /*
-
-                                          Configure Optional Pangenome analysis with Roary
-                                          Used to set path to reference genomes to be used in the pangenome
-                                          analysis with Roary. Whenever set, the pipeline will automatically
-                                          execute Roary pangenome analysis. Example: "path/reference/*.fasta"
-                                          They must be all in one directory and they must no be links. They
-                                          must be the hard file.
-
-  */
-  params.roary_reference_genomes = ''
+   * Short Reads Parameters
+   */
+      // Loading input reads
+      // Remember to use wildcards in order to allow the pipeline to get reads ID.
+      // Loading examples:
+      // For Paired end reads: params.shortreads = 'SRR6307304_{1,2}.fastq' & params.reads.size = '2'
+      // For Single end: params.shortreads = 'SRR7128258*' & params.reads.size = '1'
+  params.shortreads = ''
+      // 1 for single end, 2 for paired ends. Let it blank if not needed.
+  params.reads_size = 2
+      //
+      // TrimGalore Parameters
+      //
+      // These are the parameters used to set the number of bases to clip from
+      // 5' end and 3' end of paired end reads in TrimGalore. 0 < value < read length.
+      // Optional. Quality default is 20 (phred)
+      // Clip from 5' end
+  params.clip_r1 = 0
+  params.clip_r2 = 0
+      // Clip from 3' end
+  params.three_prime_clip_r1 = 0
+  params.three_prime_clip_r2 = 0
+      // This one might me left blank to use 20 as default or set a integer
+  params.quality_trim = 20
+      //
+      // Lighter error correction parameters
+      // Set wheter to run or not lighter correction step.
+  params.lighter_execute = false
+      //
+      // Which k-mer to use. Check Ligther's manual (https://github.com/mourisl/Lighter)
+  params.lighter_kmer = 21
+      // Bacterial Genome Size
+  params.lighter_genomeSize =
+      // Lighter alpha paramter. Rule of thumb: (7/C) where C is coverage.
+      // If left blank, Lighter will automatically calculate the best value.
+  params.lighter_alpha =
+      //
+      // PEAR - Software used to merge reads if wanted.
+      //
+      // Set to true or false if you want to execute its process.
+  params.pear_execute = false
 
   /*
-
-                    Necessary files for calling methylation using nanopolish call-methylation algorithm.
-                    This results will be readly plot in JBROWSE browser. Here we need Nanopore raw reads
-                    and its fastq. This step is extremely time consuming. If you desire fast results it
-                    is advised to skip this process and execute it later since it is not a difficult proccess.
-
-                    To skip it one just need to left its variables blank.
-
-  */
-  params.fast5_dir = ''
-  params.fastq_reads = ''
+   * Long Reads Parameters
+   */
+      // General
+      // Set which technology is your data from, pacbio or nanopore.
+      // use lowercase.
+  params.lreads_type = ''
+      // Loading input files (Full path)
+      // params.longReads must be set when extracted reads are already available. (Path to file)
+      // params.fast5Path must be set when extracted reads are not available. (Path to dir)
+      //
+      // Set if fasta is already extracted (basecalled).
+  params.longReads = ''
+      // Set whether your .fastq data is barcoded or not.
+  params.lreads_is_barcoded = false
+      //
+      // PACBIO only
+      //
+      // See manual (https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst)
+      //
+      // Set the subreads bam path to be extracted
+      // IF PACBIO DATA IS NOT ALREADY EXTRACTED. Path to file.
+      // Always set the path to .subreads.bam and always keep
+      // the relative .subreads.bam.pbi in the same directory as input
+  params.pacbio_bamPath = ''
+      // Set path to pacbio legacy .bas.h5 data
+  params.pacbio_h5Path = ''
 
   /*
+   * Configuring Nextflow Scopes.
+   * Enable or not the production of Nextflow Reports
+   */
 
-                                        Handling the execution of optional processes
+  //Trace Report
+  trace {
+      enabled = false
+      file = "${params.outDir}" + "/annotation_pipeline_trace.txt"
+      fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
+  }
 
-                                        By default, all processes are executed. These
-                                        parameters tells wheter NOT to run a process.
+  //Timeline Report
+  timeline {
+      enabled = false
+      file = "${params.outDir}" + "/annotation_pipeline_timeline.html"
+  }
 
-                                        Which means: false will allow its execution
-                                        while true will create a barrier and skip a
-                                        process.
+  //Complete Report
+  report {
+      enabled = false
+      file = "${params.outDir}" + "/annotation_pipeline_nextflow_report.html"
+  }
 
-  */
-  // General Virulence annotation (this controls vfdb and victors together)
-  params.not_run_virulence_search = false
-
-  // Skip only VFDB annotation
-  params.not_run_vfdb_search = false
-
-  // Skip only Victors annotation
-  params.not_run_victors_search = false
-
-  // Skip Resistance annotation
-  params.not_run_resistance_search = false
-
-  // Skip ICE annotation
-  params.not_run_iceberg_search = false
-
-  // Skip prophage annotation
-  params.not_run_prophage_search = false
-
-  // Skip KO (KEGG Orthology) annotation
-  params.not_run_kofamscan = false
+  // DO NOT CHANGE
+  //Queue limit
+  executor.$local.queueSize = 1
+  //Docker usage
+  docker.enabled = true
+  docker.runOptions = '-u $(id -u):root'

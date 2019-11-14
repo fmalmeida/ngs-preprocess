@@ -43,73 +43,9 @@ This is an easy to use pipeline that uses state-of-art software for pre-procesin
 
 ### Usage
 
-    Usage:
-    nextflow run fmalmeida/ngs-preprocess [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
-    Obs: If you have downloaded the files and you run as ./main.nf you must ALWAYS keep the nextflow.config file in the same dir of main.nf
+Checkout the full usage help with nextflow run fmalmeida/bacannot --help
 
-    Comments:
-    This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
-    cause the command to be huge.
-
-    Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make
-    parameterization easier and more readable.
-
-    Creating a configuration file:
-    nextflow run fmalmeida/ngs-preprocess [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]
-
-    Show command line examples:
-    nextflow run fmalmeida/ngs-preprocess --examples
-
-    Execution Reports:
-    nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-report
-    nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-trace
-    nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-timeline
-
-    OBS: These reports can also be enabled through the configuration file.
-
-    OPTIONS:
-
-         General Parameters - Mandatory
-
-       --outDir <string>                      Output directory name
-       --threads <int>                        Number of threads to use
-       --run_shortreads_pipeline              Selects preprocess pipeline of Illumina short reads
-       --run_longreads_pipeline               Selects preprocess pipeline of ONT or Pacbio long reads
-
-         Short Reads Parameters - Mandatory if --run_shortreads_pipeline is used
-
-       --shortreads <string>                  String Pattern to find short reads. Example: SRR6307304_{1,2}.fastq
-       --reads_size <int>                     Tells wheter input is unpaired or paired end. 1 is unpaired. 2 is paired
-       --clip_r1 <int>                        Number of bases to always remove from 5' of read pair 1 or from unpaired read. [Default: 0]
-       --clip_r2 <int>                        Number of bases to always remove from 5' of read pair 2. [Default: 0]
-       --three_prime_clip_r1 <int>            Number of bases to always remove from 3' of read pair 1 or from unpaired read. [Default: 0]
-       --three_prime_clip_r2 <int>            Number of bases to always remove from 3' of read pair 2. [Default: 0]
-       --quality_trim <int>                   Phred quality threshold for trimming. [Default: 20]
-       --lighter_execute                      Tells wheter to run or not Lighter correction tool
-       --lighter_kmer <int>                   Lighter k-mer to use in correction step. [Default: 21]
-       --lighter_genomeSize <int>             Approximate genome size
-       --lighter_alpha <float>                Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
-                                              If not set, Lighter will automatically calculate the best value
-       --flash_execute                         If set, PEAR will be executed to merge paired end reads
-
-         Long Reads Parameters - Mandatory if --run_shortreads_pipeline is used
-
-       --lreads_type <string>                 Tells wheter input is from pacbio or ONT. Possibilities: pacbio | nanopore
-       --longReads <string>                   Path to pacbio or ONT basecalled reads. If reads are already basecalled, the
-                                              pipeline will only check sequencing quality and statistics with NanoPack
-       --lreads_is_barcoded                   Tells wheter your data is barcoded or not. It will split barcodes into single files.
-                                              Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
-
-         For Oxford Nanopore Data - Mandatory if --lreads_type nanopore
-
-       --nanopore_prefix <string>             Output prefix
-
-         For PacificBiosciences Data - Mandatory if --lreads_type pacbio
-
-       --pacbio_bamPath <string>              Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
-                                              Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
-       --pacbio_h5Path <string>               Path to legacy \*.bas.h5 data. It will be used to extract reads in FASTQ file.
-                                              All related \*bas.h5 and \*bax.h5 files MUST be in the SAME dir.
+Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
 ### Usage examples:
 
@@ -139,6 +75,10 @@ This is an easy to use pipeline that uses state-of-art software for pre-procesin
 > Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
     ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+
+> Running with a configuratio file
+
+    ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
 
 ## Using the configuration file
 

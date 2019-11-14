@@ -58,7 +58,7 @@ def helpMessage() {
     --lighter_genomeSize <int>             Approximate genome size
     --lighter_alpha <float>                Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                            If not set, Lighter will automatically calculate the best value
-    --flash_execute                         If set, PEAR will be executed to merge paired end reads
+    --flash_execute                        If set, PEAR will be executed to merge paired end reads
 
             Long Reads Parameters - Mandatory if --run_shortreads_pipeline is used
 
@@ -155,7 +155,7 @@ params.examples = false
 
 */
 
-params.outDir = ''
+params.outDir = 'output'
 params.threads = 2
 params.run_shortreads_pipeline = false
 params.run_longreads_pipeline  = false
