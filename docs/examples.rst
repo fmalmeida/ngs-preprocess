@@ -3,39 +3,67 @@
 CLI usage Examples
 ==================
 
-Simple annotation example
-"""""""""""""""""""""""""
+Illumina paired end reads.
+""""""""""""""""""""""""""
 
 ::
 
-      ./nextflow run main.nf --outDir TESTE --threads 3 --genome assembly.fasta \
-      --bedtools_merge_distance -20 --prokka_center UNB --not_run_kofamscan
+      ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads
+      "illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5
+      --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
 
 .. note::
 
-  This command will perform a rapid annotation of ``assembly.fasta`` file using a minimum of 20 overlapping bases
-  for gene merge and will not execute KofamScan, nor methylation call with Nanopolish, nor pangenome analysis with
-  Roary since their required arguments are not defined.
+  Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be double quoted as the example below.
 
-A little more complex example
-"""""""""""""""""""""""""""""
+Illumina single end reads.
+""""""""""""""""""""""""""
 
 ::
 
-      ./nextflow run main.nf --outDir TESTE --threads 3 --genome assembly.fasta --bedtools_merge_distance -20 \
-      --prokka_center UNB --roary_reference_genomes "references/*.fasta" --nanopolish_fastq_reads "fastq/input.fastq" \
-      --nanopolish_fast5_dir "fast5_pass_dir" --diamond_minimum_alignment_length 500
+      ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline
+      --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --clip_r1 5 --three_prime_clip_r1 5
 
 .. note::
 
-  Differently, this command will run **all** analysis because all optional arguments of Roary and Nanopolish have
-  been set and no process have been told to skip (e.g. ``--not_run_kofamscan``). Additionally, we have set a new
-  minimum diamond alignment length to report hits (500).
+  Multiple files at once, using fixed number of bases to be trimmed. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
+
+ONT reads (fastq)
+"""""""""""""""""
+
+::
+
+  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore
+  --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
+
+Pacbio basecalled (.fastq) reads with nextflow general report
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+::
+
+  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq --run_longreads_pipeline --lreads_type pacbio
+  --longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
+
+Pacbio raw (subreads.bam) reads
+"""""""""""""""""""""""""""""""
+
+::
+
+  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio
+  --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
+
+Pacbio raw (legacy .bas.h5 to subreads.bam) reads
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+::
+
+  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio
+  --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
 
 Running with a configuration file
 """""""""""""""""""""""""""""""""
 
 ::
-  
-      ./nextflow run fmalmeida/bacannot -c bacannot.config
+
+      ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config

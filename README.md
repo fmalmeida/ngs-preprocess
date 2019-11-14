@@ -43,7 +43,7 @@ This is an easy to use pipeline that uses state-of-art software for pre-procesin
 
 ### Usage
 
-Checkout the full usage help with nextflow run fmalmeida/bacannot --help
+Checkout the full usage help with nextflow run fmalmeida/ngs-preprocess --help
 
 Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
