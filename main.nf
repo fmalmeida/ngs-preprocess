@@ -332,7 +332,7 @@ process fastqcPaired {
   // This line saves all the zip files in a folder named "zips"
         saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
   // This line loads the docker container needed
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Executing FastQC with paired end reads."
 
     input:
@@ -368,7 +368,7 @@ process trimGalorePaired {
             else null
         }
     // This line loads the docker container needed
-    container 'fmalmeida/compgen:PREPROCESS'
+    container 'fmalmeida/ngs-preprocess'
     tag "Executing TrimGalore with paired end reads."
 
     input:
@@ -416,7 +416,7 @@ process lighterCorrectionPaired {
             if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighterCorrectedOut/$filename"
             else "lighterOutput/$filename"}
    // This line loads the docker container needed
-   container 'fmalmeida/compgen:PREPROCESS'
+   container 'fmalmeida/ngs-preprocess'
    tag "Executing Ligther (read correction) with paired end reads."
 
    input:
@@ -464,7 +464,7 @@ process flashMerger {
          if (filename.indexOf(".fastq") > 0) "flash_output/$filename"
          else "flash_output/$filename" }
   // This line loads the docker container needed
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Executing FLASH read merger with paired end reads."
 
   input:
@@ -502,7 +502,7 @@ process fastqcSingle {
   // This line saves all the zip files in a folder named "zips"
         saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
   // This line loads the docker container needed
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Executing FastQC with single end reads."
 
   input:
@@ -538,7 +538,7 @@ process trimGaloreSingle {
             else if (filename.indexOf(".fq.gz") > 0) "zips/TrimGaloreFastQ/$filename"
             else null }
   // This line loads the docker container needed
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Executing TrimGalore with single end reads."
 
   input:
@@ -575,7 +575,7 @@ process lighterCorrectionSingle {
             if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighterCorrectedOut/$filename"
             else "lighterOutput/$filename"}
   // This line loads the docker container needed
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Executing Lighter (read correction) with single end reads."
 
   input:
@@ -617,7 +617,7 @@ process lighterCorrectionSingle {
 process subreadsBamToFastq {
   publishDir outdir, mode: 'copy'
   // Loads the necessary Docker image
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Extracting FASTQ from pacbio .subreads.bam files"
 
   input:
@@ -646,7 +646,7 @@ process subreadsBamToFastq {
 process legacyH5ToFastq {
   publishDir outdir, mode: 'copy'
   // Loads the necessary Docker image
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Extracting FASTQ from h5 files"
 
   input:
@@ -676,7 +676,7 @@ process legacyH5ToFastq {
 process porechopTrimming {
   publishDir outdir, mode: 'copy'
   // Loads the necessary Docker image
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Trimming with Porechop"
 
   input:
@@ -715,7 +715,7 @@ nanopack_input = Channel.empty().mix(pacbio_fastq, ont_trimmed_reads, pacbio_tri
 process nanopack {
   publishDir outdir, mode: 'copy'
   // Loads the necessary Docker image
-  container 'fmalmeida/compgen:PREPROCESS'
+  container 'fmalmeida/ngs-preprocess'
   tag "Checking ONT reads stats with NanoPack"
 
   input:
