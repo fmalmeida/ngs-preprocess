@@ -135,8 +135,8 @@ params.help = false
  // Show help emssage
  if (params.help){
    helpMessage()
-   file('work').deleteDir()
-   file('.nextflow').deleteDir()
+   //file('work').deleteDir()
+   //file('.nextflow').deleteDir()
    exit 0
 }
 
@@ -218,6 +218,19 @@ if (params.get_pacbio_config) {
 
   exit 0
 }
+
+// Header log info
+log.info "============================================"
+log.info " Docker-based reads pre-processing Pipeline "
+log.info "============================================"
+def summary = [:]
+summary['Output dir']   = params.outDir
+if(workflow.revision) summary['Pipeline Release'] = workflow.revision
+summary['Current home']   = "$HOME"
+summary['Current user']   = "$USER"
+summary['Current path']   = "$PWD"
+log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
+log.info "========================================="
 
 /*
 
@@ -750,16 +763,3 @@ workflow.onComplete {
     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
     println "Execution duration: $workflow.duration"
 }
-
-// Header log info
-log.info "============================================"
-log.info " Docker-based reads pre-processing Pipeline "
-log.info "============================================"
-def summary = [:]
-summary['Output dir']   = params.outDir
-if(workflow.revision) summary['Pipeline Release'] = workflow.revision
-summary['Current home']   = "$HOME"
-summary['Current user']   = "$USER"
-summary['Current path']   = "$PWD"
-log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
-log.info "========================================="
