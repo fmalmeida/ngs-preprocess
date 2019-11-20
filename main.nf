@@ -125,6 +125,39 @@ def exampleMessage() {
    """.stripIndent()
 }
 
+def illuminaMessage() {
+  log.info """
+
+  illumina_data.config file saved in working directory
+  After configuration, run:
+  nextflow run fmalmeida/ngs-preprocess -c ./illumina_data.config
+  Nice code
+
+  """.stripIndent()
+}
+
+def ontMessage() {
+  log.info """
+
+  ont_data.config file saved in working directory
+  After configuration, run:
+  nextflow run fmalmeida/ngs-preprocess -c ./ont_data.config
+  Nice code
+
+  """.stripIndent()
+}
+
+def pacbioMessage() {
+  log.info """
+
+  pacbio_data.config file saved in working directory
+  After configuration, run:
+  nextflow run fmalmeida/ngs-preprocess -c ./pacbio_data.config
+  Nice code
+
+  """.stripIndent()
+}
+
 /*
 
           Display Help Message
@@ -188,34 +221,19 @@ params.get_pacbio_config = false
 
 if (params.get_illumina_config) {
   new File("illumina_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/illumina_data.config").getText()
-  println ""
-  println "illumina_data.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/ngs-preprocess -c ./illumina_data.config"
-  println "Nice code!\n"
-
+  illuminaMessage()
   exit 0
 }
 
 if (params.get_ont_config) {
   new File("ont_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/ont_data.config").getText()
-  println ""
-  println "ont_data.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/ngs-preprocess -c ./ont_data.config"
-  println "Nice code!\n"
-
+  ontMessage()
   exit 0
 }
 
 if (params.get_pacbio_config) {
   new File("pacbio_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/pacbio_data.config").getText()
-  println ""
-  println "pacbio_data.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/ngs-preprocess -c ./pacbio_data.config"
-  println "Nice code!\n"
-
+  pacbioMessage()
   exit 0
 }
 
