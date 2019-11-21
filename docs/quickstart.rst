@@ -9,12 +9,12 @@ Example dataset
 We provide users a few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
 
-* *K. pneumoniae* `dataset <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
+* `Dataset 1 <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
 
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
 
-* *Novosphingobium sp* dataset
+* `Dataset 2 <>`_
 
     * Pacbio data (FASTA and subreads.bam);
     * Illumina paired end reads;
@@ -42,11 +42,11 @@ Add to your ``bashrc`` or ``bash_aliases``
 
 Then, you can download the datasets as follows:
 
-* *K. pneumoniae*
+* **Dataset 1**
 
     * ``gdrive_download 1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL kp_ont_dataset.tar.gz``
 
-* *N. sp*
+* **Dataset 2**
 
 Preprocessing the data
 ----------------------

@@ -665,12 +665,14 @@ process subreadsBamToFastq {
   if (params.lreads_is_barcoded)
   """
   source activate pbtools ;
-  bam2fastq -o ${input.baseName} -u --split-barcodes $input ;
+  pbindex ${input} ;
+  bam2fastq -o ${input.baseName} -u --split-barcodes ${input} ;
   """
   else
   """
   source activate pbtools ;
-  bam2fastq -o ${input.baseName} -u $input
+  pbindex ${input} ;
+  bam2fastq -o ${input.baseName} -u ${input}
   """
 }
 

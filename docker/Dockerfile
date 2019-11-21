@@ -6,7 +6,8 @@ RUN apt-get update
 
 RUN apt-get upgrade -y
 
-RUN apt-get install -y python python3 python-pip git default-jre fastqc wget cutadapt curl python-pkg-resources python3-pip python3-pkg-resources git python-setuptools python-dev cython libhdf5-serial-dev
+RUN apt-get install -y python python3 python-pip git default-jre fastqc wget cutadapt curl \
+      python-pkg-resources python3-pip python3-pkg-resources git python-setuptools python-dev cython libhdf5-serial-dev pbbamtools
 
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh ; bash /miniconda.sh -b -p /miniconda
 
@@ -38,7 +39,7 @@ RUN git clone https://github.com/mourisl/Lighter.git ; cd Lighter/ ; make ; ln -
 RUN conda create -y -n flash ; conda install -y -n flash -c bioconda flash
 
 # INSTALL LoRDEC hybrid long reads correction
-#RUN wget http://gatb-tools.gforge.inria.fr/versions/bin/LoRDEC-0.5.3-Linux.tar.gz ; tar zxvf LoRDEC-0.5.3-Linux.tar.gz ; ln -rs LoRDEC-0.5.3-Linux/bin/* /usr/local/bin 
+#RUN wget http://gatb-tools.gforge.inria.fr/versions/bin/LoRDEC-0.5.3-Linux.tar.gz ; tar zxvf LoRDEC-0.5.3-Linux.tar.gz ; ln -rs LoRDEC-0.5.3-Linux/bin/* /usr/local/bin
 
 # INSTALL lorma longreads only reads correction
 #RUN conda install -c atgc-montpellier lorma
@@ -54,12 +55,12 @@ RUN conda create -y -n pbtools && conda install -y -n pbtools -c bioconda bax2ba
 RUN git clone https://github.com/holtjma/fmlrc.git ; cd fmlrc ; make ; ln -rs fmlrc /usr/local/bin ; ln -rs fmlrc-convert /usr/local/bin
 
 # INSTALL ROPEBWT2
-RUN git clone https://github.com/lh3/ropebwt2.git ; cd ropebwt2 ; make ; ln -rs ropebwt2 /usr/local/bin  
+RUN git clone https://github.com/lh3/ropebwt2.git ; cd ropebwt2 ; make ; ln -rs ropebwt2 /usr/local/bin
 
 # INSTALL NANOPACK
 RUN conda create -y -n nanopack && conda install -y -n nanopack -c bioconda nanoplot nanostat nanoqc
 
 # INSTALL FILTLONG
-RUN conda create -y -n filtlong && conda install -y -n filtlong -c bioconda filtlong 
+RUN conda create -y -n filtlong && conda install -y -n filtlong -c bioconda filtlong
 
 WORKDIR /work
