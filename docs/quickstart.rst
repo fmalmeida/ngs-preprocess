@@ -76,7 +76,7 @@ After properly configuration of the files, they might look as this:
 * `01_ont_data.config <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_
 
 Running the pipeline
-"""""""""""""""""""
+""""""""""""""""""""
 
 .. code-block:: bash
 
@@ -96,3 +96,29 @@ the pipeline and downloading the docker image is to download the configuration f
 
 Download config files
 """""""""""""""""""""
+
+.. code-block:: bash
+
+  ## Get configuration for illumina data
+  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 02_illumina_data.config
+
+  ## Get configuration for pacbio data
+  nextflow run fmalmeida/ngs-preprocess --get_pacbio_config && mv pacbio_data.config 02_pacbio_data.config
+
+After properly configuration of the files, they might look as this:
+
+* `02_illumina_data.config <https://drive.google.com/file/d/17_lipuPHWOHUKj9TcW9ouDUpuzb7h3gQ/view?usp=sharing>`_
+* `02_pacbio_data.config <https://drive.google.com/file/d/1gEsZ5KglbW-uYpYHnBrKIX7V5oTcMQuO/view?usp=sharing>`_
+
+Running the pipeline
+""""""""""""""""""""
+
+.. code-block:: bash
+
+  ## Run for illumina
+  nextflow run fmalmeida/ngs-preprocess -c 02_illumina_data.config &> 02_illumina_preprocess.log
+
+  ## Run for pacbio (we will use subreads.bam as input)
+  nextflow run fmalmeida/ngs-preprocess -c 02_pacbio_data.config &> 02_pacbio_preprocess.log
+
+Outputs will be at ``dataset_2/preprocessed``
