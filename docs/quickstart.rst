@@ -9,7 +9,7 @@ Example dataset
 We provide users a few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
 
-* `*K. pneumoniae* dataset <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
+* `\ *K. pneumoniae* dataset <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
 
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
