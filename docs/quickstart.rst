@@ -9,14 +9,14 @@ Example dataset
 We provide users a few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
 
-* `Dataset 1 <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
+* `Dataset 1 <https://drive.google.com/file/d/1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws/view?usp=sharing>`_.
 
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
 
-* `Dataset 2 <>`_
+* `Dataset 2 <https://drive.google.com/file/d/1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E/view?usp=sharing>`_
 
-    * Pacbio data (FASTA and subreads.bam);
+    * Pacbio data (subreads.bam);
     * Illumina paired end reads;
 
 Getting the data
@@ -44,12 +44,57 @@ Then, you can download the datasets as follows:
 
 * **Dataset 1**
 
-    * ``gdrive_download 1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL kp_ont_dataset.tar.gz``
+    * ``gdrive_download 1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws dataset_1.tar.gz``
 
 * **Dataset 2**
+
+    * ``gdrive_download 1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E dataset_2.tar.gz``
 
 Preprocessing the data
 ----------------------
 
-Illumina reads
-~~~~~~~~~~~~~~
+Dataset 1
+~~~~~~~~~
+
+After downloaded. the dataset shall be available as ``dataset_1`` directory. The first step, right after installing
+the pipeline and downloading the docker image is to download the configuration file templates.
+
+Download config files
+"""""""""""""""""""""
+
+.. code-block:: bash
+
+  ## Get configuration for illumina data
+  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && \
+  mv illumina_data.config 01_illumina_data.config
+
+  ## Get configuration for nanopore data
+  nextflow run fmalmeida/ngs-preprocess --get_ont_config && \
+  mv ont_data.config 01_ont_data.config
+
+After properly configuration of the files, they might look as this:
+
+* `01_illumina_data.config <https://drive.google.com/file/d/1misoPDB66ai2J9cKhEyUKSO--H-933xv/view?usp=sharing>`_
+* `01_ont_data.config <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_
+
+Runnig the pipeline
+"""""""""""""""""""
+
+.. code-block:: bash
+
+  ## Run for illumina
+  nextflow run fmalmeida/ngs-preprocess -c 01_illumina_data.config &> 01_illumina_preprocess.log
+
+  ## Run for nanopore
+  nextflow run fmalmeida/ngs-preprocess -c 01_ont_data.config &> 01_ont_preprocess.log
+
+Outputs will be at `dataset_1/preprocessed`
+
+Dataset 2
+~~~~~~~~~
+
+After downloaded. the dataset shall be available as ``dataset_2`` directory. The first step, right after installing
+the pipeline and downloading the docker image is to download the configuration file templates.
+
+Download config files
+"""""""""""""""""""""
