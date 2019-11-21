@@ -21,6 +21,7 @@ sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the fol
    :hidden:
 
    installation
+   quickstart
    manual
    config
    examples

@@ -85,12 +85,12 @@ Usage example
      - Number of bases to always remove from 5' of read pair 2.
 
    * - ``--three_prime_clip_r1``
-     - Y (if ``--run_shortreads_pipeline``)
+     - N
      - 0
      - Number of bases to always remove from 3' of read pair 1 or from unpaired read
 
    * - ``--three_prime_clip_r2``
-     - Y (if ``--run_shortreads_pipeline``)
+     - N
      - 0
      - Number of bases to always remove from 3' of read pair 2.
 
@@ -105,7 +105,7 @@ Usage example
      - Tells wheter to run or not Lighter correction tool
 
    * - ``--lighter_kmer``
-     - Y (If ``--lighter_execute``)
+     - N
      - 21
      - Lighter k-mer to use in correction step.
 
@@ -140,12 +140,12 @@ Usage example
      - Tells wheter your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
    * - ``--pacbio_bamPath``
-     - Y (If input is pacbio .bam)
+     - N
      - NA
      - Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
 
    * - ``--pacbio_h5Path``
-     - Y (If input is legacy pacbio)
+     - N
      - NA
      - Path to legacy .bas.h5 data. It will be used to extract reads in FASTQ file. All related .bas.h5 and .bax.h5 files MUST be in the SAME dir.
 
