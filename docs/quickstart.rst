@@ -3,8 +3,8 @@
 Quickstart
 **********
 
-Example dataset
----------------
+Overview
+--------
 
 We provide users a few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
@@ -51,10 +51,10 @@ Then, you can download the datasets as follows:
     * ``gdrive_download 1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E dataset_2.tar.gz``
 
 Preprocessing the data
-======================
+----------------------
 
 Dataset 1
----------
+=========
 
 After downloaded. the dataset shall be available as ``dataset_1`` directory. The first step, right after installing
 the pipeline and downloading the docker image is to download the configuration file templates.
@@ -89,7 +89,7 @@ Running the pipeline
 Outputs will be at ``dataset_1/preprocessed``
 
 Dataset 2
----------
+=========
 
 After downloaded. the dataset shall be available as ``dataset_2`` directory. The first step, right after installing
 the pipeline and downloading the docker image is to download the configuration file templates.
