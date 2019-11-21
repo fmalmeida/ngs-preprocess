@@ -53,6 +53,7 @@ Then, you can download the datasets as follows:
 Preprocessing the data
 ----------------------
 
+
 Dataset 1
 ~~~~~~~~~
 
@@ -65,12 +66,10 @@ Download config files
 .. code-block:: bash
 
   ## Get configuration for illumina data
-  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && \
-  mv illumina_data.config 01_illumina_data.config
+  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 01_illumina_data.config
 
   ## Get configuration for nanopore data
-  nextflow run fmalmeida/ngs-preprocess --get_ont_config && \
-  mv ont_data.config 01_ont_data.config
+  nextflow run fmalmeida/ngs-preprocess --get_ont_config && mv ont_data.config 01_ont_data.config
 
 After properly configuration of the files, they might look as this:
 
@@ -88,7 +87,7 @@ Runnig the pipeline
   ## Run for nanopore
   nextflow run fmalmeida/ngs-preprocess -c 01_ont_data.config &> 01_ont_preprocess.log
 
-Outputs will be at `dataset_1/preprocessed`
+Outputs will be at ``dataset_1/preprocessed``
 
 Dataset 2
 ~~~~~~~~~
