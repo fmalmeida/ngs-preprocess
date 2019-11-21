@@ -1,7 +1,7 @@
 .. _quickstart:
 
 Quickstart
-==========
+**********
 
 Example dataset
 ---------------
@@ -20,7 +20,7 @@ We've made available two datasets:
     * Illumina paired end reads;
 
 Getting the data
-----------------
+================
 
 Users can directly download data through the link given or by this command line method below.
 
@@ -51,11 +51,10 @@ Then, you can download the datasets as follows:
     * ``gdrive_download 1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E dataset_2.tar.gz``
 
 Preprocessing the data
-----------------------
-
+======================
 
 Dataset 1
-~~~~~~~~~
+---------
 
 After downloaded. the dataset shall be available as ``dataset_1`` directory. The first step, right after installing
 the pipeline and downloading the docker image is to download the configuration file templates.
@@ -76,7 +75,7 @@ After properly configuration of the files, they might look as this:
 * `01_illumina_data.config <https://drive.google.com/file/d/1misoPDB66ai2J9cKhEyUKSO--H-933xv/view?usp=sharing>`_
 * `01_ont_data.config <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_
 
-Runnig the pipeline
+Running the pipeline
 """""""""""""""""""
 
 .. code-block:: bash
@@ -90,7 +89,7 @@ Runnig the pipeline
 Outputs will be at ``dataset_1/preprocessed``
 
 Dataset 2
-~~~~~~~~~
+---------
 
 After downloaded. the dataset shall be available as ``dataset_2`` directory. The first step, right after installing
 the pipeline and downloading the docker image is to download the configuration file templates.

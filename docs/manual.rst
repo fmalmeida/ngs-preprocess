@@ -1,16 +1,10 @@
 .. _manual:
 
 Manual
-======
-
-Overview
-""""""""
-
-An overview of all annotation steps automatically taken by the pipeline.
-
+******
 
 Input
-"""""
+=====
 
     * path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
     * path to Pacbio .bam or .h5 files containing raw data
@@ -29,7 +23,7 @@ Input
   The pipeline only runs either long or short reads workflows at once.
 
 Usage example
-"""""""""""""
+=============
 
 ::
 
@@ -154,6 +148,6 @@ All this parameters are configurable through a configuration file. We encourage 
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
 
 Examples
-""""""""
+--------
 
 For a better understanding of the usage we provided a feel examples. See :ref:`examples`
