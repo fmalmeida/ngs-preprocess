@@ -306,7 +306,7 @@ lreads = (params.longReads && params.run_longreads_pipeline && params.lreads_typ
 if (params.pacbio_bamPath && params.run_longreads_pipeline && params.lreads_type == 'pacbio') {
     // loading subreads.bam
 
-    bamfiles = Channel.fromPath(params.pacbio_bamPath).map { file -> tuple(file, file + ".pbi") }
+    bamfiles = Channel.fromPath(params.pacbio_bamPath)
     pacbio_fastq = Channel.empty()
 
     // loading pacbio fastqs
@@ -652,7 +652,7 @@ process subreadsBamToFastq {
   tag "Extracting FASTQ from pacbio .subreads.bam files"
 
   input:
-  set file(input), file(pbi) from bamfiles
+  file(input) from bamfiles
 
   output:
   file "*.fastq" into pacbio_trimmed mode flatten
@@ -664,14 +664,14 @@ process subreadsBamToFastq {
   script:
   if (params.lreads_is_barcoded)
   """
-  source activate pbtools ;
   pbindex ${input} ;
+  source activate pbtools ;
   bam2fastq -o ${input.baseName} -u --split-barcodes ${input} ;
   """
   else
   """
-  source activate pbtools ;
   pbindex ${input} ;
+  source activate pbtools ;
   bam2fastq -o ${input.baseName} -u ${input}
   """
 }

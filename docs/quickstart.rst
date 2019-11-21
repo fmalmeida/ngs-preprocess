@@ -122,3 +122,9 @@ Running the pipeline
   nextflow run fmalmeida/ngs-preprocess -c 02_pacbio_data.config &> 02_pacbio_preprocess.log
 
 Outputs will be at ``dataset_2/preprocessed``
+
+Afterwards
+----------
+
+Now you can used this dataset to, for example, eassemble a genome. For this, check it out our other pipeline developed
+for this task (which uses data from Illumina, Pacbio and Oxford Nanopore). It is called `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_.
