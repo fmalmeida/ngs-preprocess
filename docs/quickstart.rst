@@ -9,7 +9,7 @@ Example dataset
 We provide users a few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
 
-* `*K. pneumoniae* dataset <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
+* ` *K. pneumoniae* dataset <https://drive.google.com/file/d/1OJImuNgNQo_Wxbi3QnErcQXzhwuEPQNL/view?usp=sharing>`_.
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
 * *Novosphingobium sp* dataset
@@ -21,8 +21,8 @@ Getting the data
 
 Users can directly download data through the link given or by this command line method below.
 
-Add to your bashrc or bash_aliases
-""""""""""""""""""""""""""""""""""
+Add to your ``bashrc`` or ``bash_aliases``
+""""""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: bash
 
