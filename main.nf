@@ -359,7 +359,7 @@ if (params.lreads_type == 'pacbio' && params.pacbio_h5Path && params.run_longrea
 */
 
 process fastqcPaired {
-  publishDir outdir, mode: 'copy',
+  publishDir "${outdir}/illumina", mode: 'copy',
   // This line saves all the zip files in a folder named "zips"
         saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
   // This line loads the docker container needed
@@ -390,12 +390,12 @@ process fastqcPaired {
 */
 
 process trimGalorePaired {
-    publishDir outdir, mode: 'copy',
+    publishDir "${outdir}/illumina", mode: 'copy',
         saveAs: {filename ->
     // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf("_fastqc") > 0) "trimGaloreFastQC/$filename"
             else if (filename.indexOf("trimming_report.txt") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf(".fq.gz") > 0) "zips/TrimGaloreFastQ/$filename"
+            else if (filename.indexOf(".fq.gz") > 0) "fastqs/trimGalore/$filename"
             else null
         }
     // This line loads the docker container needed
@@ -441,11 +441,11 @@ lighter_input = (params.lighter_execute) ? Channel.empty().mix(galore_trimmed_pa
                                          : Channel.empty()
 
 process lighterCorrectionPaired {
-   publishDir outdir, mode: 'copy',
+   publishDir "${outdir}/illumina", mode: 'copy',
    saveAs: {filename ->
    // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighterCorrectedOut/$filename"
-            else "lighterOutput/$filename"}
+            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "fastqs/lighter_corrected/$filename"
+            else "fastqs/lighter_corrected/$filename"}
    // This line loads the docker container needed
    container 'fmalmeida/ngs-preprocess'
    tag "Executing Ligther (read correction) with paired end reads."
@@ -489,11 +489,11 @@ flash_input = (params.lighter_execute) ? Channel.empty().mix(lighter_corrected_p
                                       : Channel.empty().mix(galore_trimmed_paired_reads)
 
 process flashMerger {
-  publishDir outdir, mode: 'copy',
+  publishDir "${outdir}/illumina", mode: 'copy',
        saveAs: {filename ->
   // This line saves the files with specific sufixes in specific folders
-         if (filename.indexOf(".fastq") > 0) "flash_output/$filename"
-         else "flash_output/$filename" }
+         if (filename.indexOf(".fastq") > 0) "fastqs/flash_merged/$filename"
+         else "fastqs/flash_merged/$filename" }
   // This line loads the docker container needed
   container 'fmalmeida/ngs-preprocess'
   tag "Executing FLASH read merger with paired end reads."
@@ -529,7 +529,7 @@ process flashMerger {
 */
 
 process fastqcSingle {
-  publishDir outdir, mode: 'copy',
+  publishDir "${outdir}/illumina", mode: 'copy',
   // This line saves all the zip files in a folder named "zips"
         saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
   // This line loads the docker container needed
@@ -561,12 +561,12 @@ process fastqcSingle {
 */
 
 process trimGaloreSingle {
-  publishDir outdir, mode: 'copy',
+  publishDir "${outdir}/illumina", mode: 'copy',
   saveAs: {filename ->
   // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf("_fastqc") > 0) "trimGaloreFastQC/$filename"
             else if (filename.indexOf("trimming_report.txt") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf(".fq.gz") > 0) "zips/TrimGaloreFastQ/$filename"
+            else if (filename.indexOf(".fq.gz") > 0) "fastqs/trimGalore/$filename"
             else null }
   // This line loads the docker container needed
   container 'fmalmeida/ngs-preprocess'
@@ -600,11 +600,11 @@ process trimGaloreSingle {
 */
 
 process lighterCorrectionSingle {
-  publishDir outdir, mode: 'copy',
+  publishDir "${outdir}/illumina", mode: 'copy',
   saveAs: {filename ->
   // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighterCorrectedOut/$filename"
-            else "lighterOutput/$filename"}
+            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "fastqs/lighter_corrected/$filename"
+            else "fastqs/lighter_corrected/$filename"}
   // This line loads the docker container needed
   container 'fmalmeida/ngs-preprocess'
   tag "Executing Lighter (read correction) with single end reads."
@@ -646,7 +646,7 @@ process lighterCorrectionSingle {
  */
 
 process subreadsBamToFastq {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/pacbio", mode: 'copy'
   // Loads the necessary Docker image
   container 'fmalmeida/ngs-preprocess'
   tag "Extracting FASTQ from pacbio .subreads.bam files"
@@ -677,7 +677,7 @@ process subreadsBamToFastq {
 }
 
 process legacyH5ToFastq {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/pacbio", mode: 'copy'
   // Loads the necessary Docker image
   container 'fmalmeida/ngs-preprocess'
   tag "Extracting FASTQ from h5 files"
@@ -707,7 +707,7 @@ process legacyH5ToFastq {
 */
 
 process porechopTrimming {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/ONT", mode: 'copy'
   // Loads the necessary Docker image
   container 'fmalmeida/ngs-preprocess'
   tag "Trimming with Porechop"
