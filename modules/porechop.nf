@@ -4,7 +4,7 @@
  * Definition of porechop module
  */
 process porechop {
-  publishDir "/home/falmeida/Downloads/porechopTESTE", mode: 'copy'
+  publishDir "${params.outdir}/porechop_out", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
   tag "Trimming longreads with Porechop"
 
