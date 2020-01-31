@@ -55,72 +55,6 @@ if (params.lreads_type == 'pacbio' && params.pacbio_h5Path && params.run_longrea
 
 /*
 
-          PIPELINE BEGINS
-
-*/
-
-/*
-        First Block - Short Reads Pre Processing
-
-        Running with Paired End Short Reads.
-
-*/
-
-/*
-
-        STEP 1 - FastQC
-
-*/
-
-/*
-
-        STEP 2 - Trim Galore!
-
-*/
-
-process trimGalorePaired {
-    publishDir "${outdir}/illumina", mode: 'copy',
-        saveAs: {filename ->
-    // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf("_fastqc") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf("trimming_report.txt") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf(".fq.gz") > 0) "fastqs/trimGalore/$filename"
-            else null
-        }
-    // This line loads the docker container needed
-    container 'fmalmeida/ngs-preprocess'
-    tag "Executing TrimGalore with paired end reads."
-
-    input:
-    set val(id), file(sread1), file(sread2) from trimgalore_paired
-
-    output:
-    set val(id), file("${id}_1.fq.gz"), file("${id}_2.fq.gz") into galore_trimmed_paired_reads
-    file "*trimming_report.txt"
-    file "*_fastqc.{zip,html}"
-
-    when:
-    // Execute this process only when having paired end short reads.
-    params.reads_size == 2 && params.run_shortreads_pipeline
-
-    script:
-    // Loads Optional Parameters
-    c_r1 = params.clip_r1 > 0 ? "--clip_r1 ${params.clip_r1}" : ''
-    c_r2 = params.clip_r2 > 0 ? "--clip_r2 ${params.clip_r2}" : ''
-    tpc_r1 = params.three_prime_clip_r1 > 0 ? "--three_prime_clip_r1 ${params.three_prime_clip_r1}" : ''
-    tpc_r2 = params.three_prime_clip_r2 > 0 ? "--three_prime_clip_r2 ${params.three_prime_clip_r2}" : ''
-    TrimQuality = params.quality_trim != null ? params.quality_trim : ''
-
-    """
-    trim_galore --paired -q ${params.quality_trim} \
-    --fastqc --gzip $c_r1 $c_r2 $tpc_r1 $tpc_r2 $sread1 $sread2 ;
-    mv *_val_1.fq.gz ${id}_1.fq.gz ;
-    mv *_val_2.fq.gz ${id}_2.fq.gz ;
-    """
-}
-
-/*
-
         STEP 3 - Read Correction
 
 */
@@ -205,39 +139,6 @@ process flashMerger {
 
 }
 
-
-process trimGaloreSingle {
-  publishDir "${outdir}/illumina", mode: 'copy',
-  saveAs: {filename ->
-  // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf("_fastqc") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf("trimming_report.txt") > 0) "trimGaloreFastQC/$filename"
-            else if (filename.indexOf(".fq.gz") > 0) "fastqs/trimGalore/$filename"
-            else null }
-  // This line loads the docker container needed
-  container 'fmalmeida/ngs-preprocess'
-  tag "Executing TrimGalore with single end reads."
-
-  input:
-  file sread  from trimgalore_single
-
-  output:
-  file('*.{fq.gz,fq}') into galore_trimmed_single_reads mode flatten
-  file "*trimming_report.txt"
-  file "*_fastqc.{zip,html}"
-
-  when:
-  // Execute this process only when having single end short reads.
-  params.reads_size == 1 && params.run_shortreads_pipeline
-
-  script:
-  // Loads Optional Parameters
-  c_r1 = params.clip_r1 > 0 ? "--clip_r1 ${params.clip_r1}" : ''
-  tpc_r1 = params.three_prime_clip_r1 > 0 ? "--three_prime_clip_r1 ${params.three_prime_clip_r1}" : ''
-  """
-  trim_galore --fastqc -q ${params.quality_trim} --gzip $c_r1 $tpc_r1 $sread
-  """
-}
 
 /*
 

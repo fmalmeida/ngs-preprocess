@@ -204,7 +204,6 @@ params.run_longreads_pipeline  = false
  */
 params.shortreads = ''
 params.shortreads_type = 'paired' //paired or single
-params.reads_size = 2
 params.clip_r1 = 0
 params.clip_r2 = 0
 params.three_prime_clip_r1 = 0
@@ -247,6 +246,10 @@ log.info "========================================="
 include porechop from './modules/porechop.nf' params(outdir: params.outdir)
 include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
+include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
+  shortreads_type: params.shortreads_type, clip_r1: params.clip_r1,
+  clip_r2: params.clip_r2, three_prime_clip_r1: params.three_prime_clip_r1,
+  three_prime_clip_r2: params.three_prime_clip_r2, quality_trim: params.quality_trim)
 
 /*
  * Define custom workflows
@@ -268,6 +271,14 @@ workflow fastqc_nf {
     fastqc(reads, threads)
 }
 
+workflow trimgalore_nf {
+  get:
+    reads
+    threads
+  main:
+    trimgalore(reads, threads)
+}
+
 /*
  * Define main workflow
  */
@@ -284,6 +295,7 @@ workflow {
    */
   if (params.shortreads && params.shortreads_type == 'paired') {
     fastqc_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
+    trimgalore_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
   }
 
   /*
@@ -291,5 +303,6 @@ workflow {
    */
   if (params.shortreads && params.shortreads_type == 'single') {
     fastqc_nf(Channel.fromPath(params.shortreads), params.threads)
+    trimgalore_nf(Channel.fromPath(params.shortreads), params.threads)
   }
 }

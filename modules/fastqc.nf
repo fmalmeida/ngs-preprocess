@@ -1,7 +1,5 @@
 process fastqc {
-  publishDir "${params.outdir}/illumina", mode: 'copy',
-  // This line saves all the zip files in a folder named "zips"
-        saveAs: {filename -> filename.indexOf(".zip") > 0 ? "zips/$filename" : "$filename"}
+  publishDir "${params.outdir}/illumina/before_trimming", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
   tag "Evaluating short reads with FastQC"
 
