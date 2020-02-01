@@ -230,7 +230,7 @@ summary['Current home']   = "$HOME"
 summary['Current user']   = "$USER"
 summary['Current path']   = "$PWD"
 log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
-log.info "========================================="
+log.info "==================================="
 
 /*
  * Include modules
@@ -239,8 +239,14 @@ include porechop from './modules/porechop.nf' params(outdir: params.outdir)
 
 include nanopack from './modules/nanopack.nf' params(outdir: params.outdir)
 
+include pacbio_bam2fastq from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
+  pacbio_is_barcoded: params.pacbio_is_barcoded)
+
+include pacbio_h52fastq from './modules/pacbio_h52fastq.nf' params(outdir: params.outdir)
+
 include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
+
 include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type, clip_r1: params.clip_r1,
   clip_r2: params.clip_r2, three_prime_clip_r1: params.three_prime_clip_r1,
@@ -265,6 +271,23 @@ workflow nanopore_nf {
   main:
     porechop(reads, threads, barcode)
     nanopack(porechop.out[0].flatten(), threads)
+}
+
+workflow pacbio_bam_nf {
+  get:
+    reads
+    threads
+  main:
+    pacbio_bam2fastq(reads)
+    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+}
+
+workflow pacbio_bas_nf {
+  get:
+    h5bas
+    h5bax
+  main:
+    pacbio_h52fastq(h5bas, h5bax)
 }
 
 workflow paired_shortreads_nf {
@@ -300,6 +323,21 @@ workflow {
   }
 
   /*
+   * User has pacbio subreads in bam format
+   */
+  if (params.pacbio_bamPath) {
+    pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath), params.threads)
+  }
+
+  /*
+   * User has pacbio subreads in legacy h5 (bas and bax) files
+   */
+  if (params.pacbio_h5Path) {
+    h5_bax_path = (params.pacbio_h5Path - ".bas.h5" + "*.bax.h5")
+    pacbio_h52fastq(Channel.fromPath(params.pacbio_h5Path), Channel.fromPath(h5_bax_path).collect())
+  }
+
+  /*
    * User has short paired end reads
    */
   if (params.shortreads && params.shortreads_type == 'paired') {
@@ -312,4 +350,10 @@ workflow {
   if (params.shortreads && params.shortreads_type == 'single') {
     single_shortreads_nf(Channel.fromPath(params.shortreads), params.threads)
   }
+}
+
+workflow.onComplete {
+    println "Pipeline completed at: $workflow.complete"
+    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+    println "Execution duration: $workflow.duration"
 }
