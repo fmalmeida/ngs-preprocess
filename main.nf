@@ -29,6 +29,7 @@ def helpMessage() {
    nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-timeline
 
    OBS: These reports can also be enabled through the configuration file.
+   OBS 2: Make sure parameters set are double quoted
 
    OPTIONS:
 
@@ -36,13 +37,11 @@ def helpMessage() {
 
     --outDir <string>                      Output directory name
     --threads <int>                        Number of threads to use
-    --run_shortreads_pipeline              Selects preprocess pipeline of Illumina short reads
-    --run_longreads_pipeline               Selects preprocess pipeline of ONT or Pacbio long reads
 
-            Short Reads Parameters - Mandatory if --run_shortreads_pipeline is used
+            Parameters for preprocessing shortreads
 
     --shortreads <string>                  String Pattern to find short reads. Example: SRR6307304_{1,2}.fastq
-    --reads_size <int>                     Tells wheter input is unpaired or paired end. 1 is unpaired. 2 is paired
+    --shortreads_type <string>             Possibilities: single | paired. Tells wheter input is single or paired end.
     --clip_r1 <int>                        Number of bases to always remove from 5' of read pair 1 or from unpaired read. [Default: 0]
     --clip_r2 <int>                        Number of bases to always remove from 5' of read pair 2. [Default: 0]
     --three_prime_clip_r1 <int>            Number of bases to always remove from 3' of read pair 1 or from unpaired read. [Default: 0]
@@ -55,20 +54,19 @@ def helpMessage() {
                                            If not set, Lighter will automatically calculate the best value
     --flash_execute                        If set, PEAR will be executed to merge paired end reads
 
-            Long Reads Parameters - Mandatory if --run_shortreads_pipeline is used
+            Parameters for preprocessing nanopore ONT longreads
 
-    --lreads_type <string>                 Tells wheter input is from pacbio or ONT. Possibilities: pacbio | nanopore
-    --longReads <string>                   Path to pacbio or ONT basecalled reads. If reads are already basecalled, the pipeline
-                                           will only check sequencing quality and statistics with NanoPack
-    --lreads_is_barcoded                   Tells wheter your data is barcoded or not. It will split barcodes into single files.
-                                           Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
+    --nanopore_fastq <string>              Path to ONT basecalled reads.
+    --nanopore_is_barcoded                 Inform the pipeline that the data is barcoded. It will split barcodes into single files.
 
-            For PacificBiosciences Data - Mandatory if --lreads_type pacbio
+            Parameters for preprocessing Pacbio longreads (bam files of legacy h5)
 
     --pacbio_bamPath <string>              Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
                                            Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
     --pacbio_h5Path <string>               Path to legacy *.bas.h5 data. It will be used to extract reads in FASTQ file.
                                            All related *bas.h5 and *bax.h5 files MUST be in the SAME dir.
+    --pacbio_is_barcoded                   Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+                                           Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
    """.stripIndent()
 }
@@ -81,41 +79,34 @@ def exampleMessage() {
       Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz",
       it MUST ALWAYS be double quoted as the example below.
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
-"illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
---clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --shortreads \
+"illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" --lighter_execute --lighter_genomeSize 4600000 \
+--clip_r1 5 --three_prime_clip_r1 5 --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
 
 
       Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
       If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
---shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --clip_r1 5 --three_prime_clip_r1 5
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single \
+--shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --shortreads_type "single" --clip_r1 5 --three_prime_clip_r1 5
 
 
       ONT reads:
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline \
---lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont \
+--nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq
 
 
-      Pacbio basecalled (.fastq) reads with nextflow general report
+      Pacbio raw (subreads.bam) reads with nextflow general report
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq \
---run_longreads_pipeline --lreads_type pacbio \
---longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
-
-
-      Pacbio raw (subreads.bam) reads
-
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
---lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio \
+--pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam -with-report
 
 
       Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
---lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio \
+--pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
    """.stripIndent()
 }
@@ -196,8 +187,6 @@ if (params.get_pacbio_config) {
  */
 params.outdir = 'output'
 params.threads = 2
-params.run_shortreads_pipeline = false
-params.run_longreads_pipeline  = false
 
 /*
  * Parameters for short reads
@@ -216,14 +205,17 @@ params.lighter_alpha = false
 params.flash_execute = false
 
 /*
- * Parameters for long reads
+ * Parameters for nanopore longreads
  */
-params.lreads_type = ''
+params.nanopore_fastq = ''
+params.nanopore_is_barcoded = false
+
+/*
+ * Parameters for pacbio longreads
+ */
 params.pacbio_bamPath = ''
 params.pacbio_h5Path = ''
-params.lreads_is_barcoded = false
-params.longreads = ''
-longreads = (params.longreads) ? Channel.fromPath(params.longreads) : ''
+params.pacbio_is_barcoded = false
 
 /*
  * Define log message
@@ -245,6 +237,8 @@ log.info "========================================="
  */
 include porechop from './modules/porechop.nf' params(outdir: params.outdir)
 
+include nanopack from './modules/nanopack.nf' params(outdir: params.outdir)
+
 include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
 include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
@@ -257,16 +251,20 @@ include lighter from './modules/lighter.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize,
   lighter_execute: params.lighter_execute)
 
+include flash from './modules/flash.nf' params(outdir: params.outdir,
+  flash_execute: params.flash_execute)
+
 /*
  * Define custom workflows
  */
-workflow porechop_nf {
+workflow nanopore_nf {
   get:
     reads
     threads
     barcode
   main:
     porechop(reads, threads, barcode)
+    nanopack(porechop.out[0].flatten(), threads)
 }
 
 workflow paired_shortreads_nf {
@@ -277,6 +275,7 @@ workflow paired_shortreads_nf {
     fastqc(reads, threads)
     trimgalore(reads, threads)
     lighter(trimgalore.out[0], threads)
+    flash(lighter.out[0], threads)
 }
 
 workflow single_shortreads_nf {
@@ -294,10 +293,10 @@ workflow single_shortreads_nf {
  */
 workflow {
   /*
-   * User has long reads
+   * User has nanopore longreads
    */
-  if (params.longreads) {
-    porechop_nf(longreads, params.threads, params.lreads_is_barcoded)
+  if (params.nanopore_fastq) {
+    nanopore_nf(Channel.fromPath(params.nanopore_fastq), params.threads, params.nanopore_is_barcoded)
   }
 
   /*

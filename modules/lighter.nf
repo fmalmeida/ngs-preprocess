@@ -1,5 +1,5 @@
 process lighter {
-   publishDir "${params.outdir}/illumina/after_trimming", mode: 'copy',
+   publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
    saveAs: {filename ->
    // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "reads/lighter_corrected/$filename"

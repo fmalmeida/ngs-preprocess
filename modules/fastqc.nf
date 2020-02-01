@@ -1,5 +1,5 @@
 process fastqc {
-  publishDir "${params.outdir}/illumina/before_trimming", mode: 'copy'
+  publishDir "${params.outdir}/shortreads/before_trimming", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
   tag "Evaluating short reads with FastQC"
 
