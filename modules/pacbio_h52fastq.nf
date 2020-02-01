@@ -7,11 +7,12 @@ process pacbio_h52fastq {
     file h5bas
     file h5bax
   output:
-    file "${h5bas.baseName}.fastq"
+    file "${id}.fastq"
 
   script:
+  id = (h5bas.getBaseName() - ".bas")
   """
-  bash5tools.py --outFilePrefix ${h5bas.baseName} --readType subreads \
+  bash5tools.py --outFilePrefix ${id} --readType subreads \
   --outType fastq --minLength 200 ${h5bas} ;
   """
 }

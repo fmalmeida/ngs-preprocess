@@ -286,8 +286,10 @@ workflow pacbio_bas_nf {
   get:
     h5bas
     h5bax
+    threads
   main:
     pacbio_h52fastq(h5bas, h5bax)
+    nanopack(pacbio_h52fastq.out[0].flatten(), threads)
 }
 
 workflow paired_shortreads_nf {
@@ -334,7 +336,8 @@ workflow {
    */
   if (params.pacbio_h5Path) {
     h5_bax_path = (params.pacbio_h5Path - ".bas.h5" + "*.bax.h5")
-    pacbio_h52fastq(Channel.fromPath(params.pacbio_h5Path), Channel.fromPath(h5_bax_path).collect())
+    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
+    Channel.fromPath(h5_bax_path).collect(), params.threads)
   }
 
   /*
