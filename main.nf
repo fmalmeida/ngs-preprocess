@@ -356,7 +356,9 @@ workflow {
 }
 
 workflow.onComplete {
+    println ""
     println "Pipeline completed at: $workflow.complete"
     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
     println "Execution duration: $workflow.duration"
+    println "Thank you for using fmalmeida/ngs-preprocess pipeline!"
 }
