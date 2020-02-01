@@ -244,12 +244,18 @@ log.info "========================================="
  * Include modules
  */
 include porechop from './modules/porechop.nf' params(outdir: params.outdir)
+
 include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
 include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type, clip_r1: params.clip_r1,
   clip_r2: params.clip_r2, three_prime_clip_r1: params.three_prime_clip_r1,
   three_prime_clip_r2: params.three_prime_clip_r2, quality_trim: params.quality_trim)
+
+include lighter from './modules/lighter.nf' params(outdir: params.outdir,
+  lighter_kmer: params.lighter_kmer, lighter_alpha: params.lighter_alpha,
+  shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize,
+  lighter_execute: params.lighter_execute)
 
 /*
  * Define custom workflows
@@ -263,20 +269,24 @@ workflow porechop_nf {
     porechop(reads, threads, barcode)
 }
 
-workflow fastqc_nf {
+workflow paired_shortreads_nf {
   get:
     reads
     threads
   main:
     fastqc(reads, threads)
+    trimgalore(reads, threads)
+    lighter(trimgalore.out[0], threads)
 }
 
-workflow trimgalore_nf {
+workflow single_shortreads_nf {
   get:
     reads
     threads
   main:
+    fastqc(reads, threads)
     trimgalore(reads, threads)
+    lighter(trimgalore.out[1].flatten(), threads)
 }
 
 /*
@@ -294,15 +304,13 @@ workflow {
    * User has short paired end reads
    */
   if (params.shortreads && params.shortreads_type == 'paired') {
-    fastqc_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
-    trimgalore_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
+    paired_shortreads_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
   }
 
   /*
    * User has short single end reads
    */
   if (params.shortreads && params.shortreads_type == 'single') {
-    fastqc_nf(Channel.fromPath(params.shortreads), params.threads)
-    trimgalore_nf(Channel.fromPath(params.shortreads), params.threads)
+    single_shortreads_nf(Channel.fromPath(params.shortreads), params.threads)
   }
 }

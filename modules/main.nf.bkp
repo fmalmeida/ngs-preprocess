@@ -55,54 +55,6 @@ if (params.lreads_type == 'pacbio' && params.pacbio_h5Path && params.run_longrea
 
 /*
 
-        STEP 3 - Read Correction
-
-*/
-
-// Checks if lighter is meant to be executed
-lighter_input = (params.lighter_execute) ? Channel.empty().mix(galore_trimmed_paired_reads)
-                                         : Channel.empty()
-
-process lighterCorrectionPaired {
-   publishDir "${outdir}/illumina", mode: 'copy',
-   saveAs: {filename ->
-   // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "fastqs/lighter_corrected/$filename"
-            else "fastqs/lighter_corrected/$filename"}
-   // This line loads the docker container needed
-   container 'fmalmeida/ngs-preprocess'
-   tag "Executing Ligther (read correction) with paired end reads."
-
-   input:
-   set val(id), file(sread1), file(sread2) from lighter_input
-
-   output:
-   set val(id), file('*_1.cor.fq.gz'), file('*_2.cor.fq.gz') into lighter_corrected_paired_reads
-   file 'fastqc'
-
-   when:
-   // Execute this process only when having paired end short reads.
-   params.reads_size == 2 && params.run_shortreads_pipeline && params.lighter_execute
-
-   script:
-   // Executes the Command with the user's defined alpha parameter
-   if (params.lighter_alpha)
-   """
-   lighter -r $sread1 -r $sread2 -k ${params.lighter_kmer} ${params.lighter_genomeSize} ${params.lighter_alpha} ;
-   mkdir fastqc ;
-   fastqc -t ${params.threads} -o fastqc -q *_1.cor.fq.gz *_2.cor.fq.gz
-   """
-   // Lets Lighter automatically find the best alpha parameter
-   else
-   """
-   lighter -r $sread1 -r $sread2 -K ${params.lighter_kmer} ${params.lighter_genomeSize};
-   mkdir fastqc ;
-   fastqc -t ${params.threads} -o fastqc -q *_1.cor.fq.gz *_2.cor.fq.gz
-   """
-}
-
-/*
-
           OPTIONAL STEP - FLASH READ MERGE
 
 */
@@ -137,50 +89,6 @@ process flashMerger {
   flash -q -o flash_out -z -t ${params.threads} $sread1 $sread2 &> flash.log;
   """
 
-}
-
-
-/*
-
-        STEP 3 - Read Correction
-
-*/
-
-process lighterCorrectionSingle {
-  publishDir "${outdir}/illumina", mode: 'copy',
-  saveAs: {filename ->
-  // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "fastqs/lighter_corrected/$filename"
-            else "fastqs/lighter_corrected/$filename"}
-  // This line loads the docker container needed
-  container 'fmalmeida/ngs-preprocess'
-  tag "Executing Lighter (read correction) with single end reads."
-
-  input:
-  file sread  from galore_trimmed_single_reads
-
-  output:
-  file "*"
-
-  when:
-  // Execute this process only when having single end short reads.
-  params.reads_size == 1 && params.run_shortreads_pipeline && params.lighter_execute
-
-  script:
-  // Executes the Command with the user's defined alpha parameter
-  if (params.lighter_alpha)
-  """
-  lighter -r $sread -k ${params.lighter_kmer} ${params.lighter_genomeSize} ${params.lighter_alpha};
-  mkdir fastqc ;
-  fastqc -t ${params.threads} -o fastqc -q *.cor{.fq.gz, .fq}
-  """
-  // Lets Lighter automatically find the best alpha parameter
-  else
-  """
-  lighter -r $sread -K ${params.lighter_kmer} ${params.lighter_genomeSize};
-  mkdir fastqc ;
-  fastqc -t ${params.threads} -o fastqc -q *.cor{.fq.gz, .fq}
-  """
 }
 
 /*
