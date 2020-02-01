@@ -1,5 +1,5 @@
 process nanopack {
-  publishDir "${params.outdir}/longreads", mode: 'copy'
+  publishDir "${params.outdir}/longreads/nanopack_out", mode: 'copy'
   // Loads the necessary Docker image
   container 'fmalmeida/ngs-preprocess'
   tag "Checking longreads qualities with Nanopack"
@@ -11,16 +11,17 @@ process nanopack {
     file "${reads.baseName}*"
 
   script:
-    """
+  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  """
   source activate nanopack;
   # Plotting
-  NanoPlot -t $threads --fastq ${reads} -o ${reads.baseName}_nanoplot -f svg --N50 \
-  --title "${reads.baseName} sample" --plots hex dot pauvre kde ;
+  NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot -f svg --N50 \
+  --title "${id} sample" --plots hex dot pauvre kde ;
 
   # Checking Quality
-  nanoQC -o ${reads.baseName}_nanoQC ${reads} ;
+  nanoQC -o ${id}_nanoQC ${reads} ;
 
   # Generate Statistics Summary
-  NanoStat --fastq ${reads} -n ${reads.baseName}.txt --outdir ${reads.baseName}_stats ;
+  NanoStat --fastq ${reads} -n ${id}.txt --outdir ${id}_stats ;
   """
 }

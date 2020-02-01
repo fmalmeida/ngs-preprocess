@@ -17,12 +17,13 @@ process porechop {
     file "porechop_barcodes/*.fastq" optional true
 
   script:
+    id = (reads.getBaseName() - "fastq.gz" - ".fastq")
     if (barcode)
     """
     porechop -i ${reads} -b porechop_barcodes --barcode_threshold 85
     """
     else
     """
-    porechop -i ${reads} -t ${threads} --format fastq -o ${reads.baseName}_trimmed.fastq ;
+    porechop -i ${reads} -t ${threads} --format fastq -o ${id}_trimmed.fastq ;
     """
 }
