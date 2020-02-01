@@ -13,7 +13,7 @@ process porechop {
     val threads
     val barcode
   output:
-    file "${reads.baseName}_trimmed.fastq" optional true
+    file "${id}_trimmed.fastq" optional true
     file "porechop_barcodes/*.fastq" optional true
 
   script:

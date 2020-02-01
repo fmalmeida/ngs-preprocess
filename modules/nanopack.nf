@@ -8,7 +8,7 @@ process nanopack {
     file reads
     val threads
   output:
-    file "${reads.baseName}*"
+    file "${id}*"
 
   script:
   id = (reads.getBaseName() - "fastq.gz" - ".fastq")
