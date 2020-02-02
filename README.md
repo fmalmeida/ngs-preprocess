@@ -78,7 +78,7 @@ Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/e
     ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/pacbio \
     --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
-> Running with a configuratio file
+> Running with a configuration file
 
     ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
 
@@ -89,6 +89,10 @@ All the parameters showed above can be, and are advised to be, set through the c
 Your configuration file is what will tell to the pipeline the type of data you have, and which processes to execute. Therefore, it needs to be correctly set up.
 
 Create a configuration file in your working directory:
+
+* Complete config:
+
+      nextflow run fmalmeida/ngs-preprocess --get_full_config
 
 * For Illumina data:
 

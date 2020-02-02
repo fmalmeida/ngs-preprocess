@@ -111,6 +111,17 @@ def exampleMessage() {
    """.stripIndent()
 }
 
+def configMessage() {
+  log.info """
+
+  ngs-preprocess.config file saved in working directory
+  After configuration, run:
+  nextflow run fmalmeida/ngs-preprocess -c ./ngs-preprocess.config
+  Nice code
+
+  """.stripIndent()
+}
+
 def illuminaMessage() {
   log.info """
 
@@ -161,9 +172,17 @@ if (params.examples){
 /*
  * Download configuration files if requested
  */
+params.get_full_config = false
 params.get_illumina_config = false
 params.get_ont_config = false
 params.get_pacbio_config = false
+
+if (params.get_full_config) {
+  new File("ngs-preprocess.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/nextflow.config").getText()
+  configMessage()
+  exit 0
+}
+
 if (params.get_illumina_config) {
   new File("illumina_data.config") << new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/illumina_data.config").getText()
   illuminaMessage()
