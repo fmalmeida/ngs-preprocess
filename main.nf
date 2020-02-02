@@ -35,7 +35,7 @@ def helpMessage() {
 
             General Parameters - Mandatory
 
-    --outDir <string>                      Output directory name
+    --outdir <string>                      Output directory name
     --threads <int>                        Number of threads to use
 
             Parameters for preprocessing shortreads

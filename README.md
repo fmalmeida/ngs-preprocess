@@ -5,7 +5,7 @@
 
 ngs-preprocess pipeline is a nextflow docker-based wrapper around [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [FLASH](https://ccb.jhu.edu/software/FLASH/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pbh5tools](https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx) and [NanoPack](https://github.com/wdecoster/nanopack).
 
-This is an easy to use pipeline that uses state-of-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow).
+This is an easy to use pipeline that uses state-of-the-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 ## Table of contents
 
@@ -31,7 +31,7 @@ This is an easy to use pipeline that uses state-of-art software for pre-procesin
 
           docker pull fmalmeida/ngs-preprocess
 
-2. Install Nextflow (version 0.24.x or higher):
+2. Install Nextflow (version 19.10):
 
        curl -s https://get.nextflow.io | bash
 
@@ -51,30 +51,32 @@ Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/e
 
 > Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be double quoted as the example below.
 
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
-    "illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
+    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_paired \
+    --shortreads "illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" \
+    --lighter_execute --lighter_genomeSize 4.6m --clip_r1 5 --three_prime_clip_r1 5 \
     --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
 
 > Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
-    --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --clip_r1 5 --three_prime_clip_r1 5
+    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_single \
+    --shortreads "illumina/SRR9696*.fastq.gz" --shortreads_type "single" \
+    --clip_r1 5 --three_prime_clip_r1 5
 
-> ONT reads (fastq)
+> ONT barcoded reads (fastq)
 
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
+    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/ont \
+    --nanopore_fastq kpneumoniae_25X.fastq --nanopore_is_barcoded
 
-> Pacbio basecalled (.fastq) reads with nextflow general report
+> Pacbio raw barcoded (subreads.bam) reads
 
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq --run_longreads_pipeline --lreads_type pacbio --longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
-
-> Pacbio raw (subreads.bam) reads
-
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
+    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/pacbio \
+    --pacbio_bamPath pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam \
+    --pacbio_is_barcoded
 
 > Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/pacbio \
+    --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
 > Running with a configuratio file
 
