@@ -56,75 +56,51 @@ Preprocessing the data
 Dataset 1
 =========
 
-After downloaded. the dataset shall be available as ``dataset_1`` directory. The first step, right after installing
-the pipeline and downloading the docker image is to download the configuration file templates.
+After downloaded the dataset shall be available as ``dataset_1`` directory. The data can be
+preprocessed using the following command:
 
-Download config files
-"""""""""""""""""""""
+.. note::
 
-.. code-block:: bash
-
-  ## Get configuration for illumina data
-  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 01_illumina_data.config
-
-  ## Get configuration for nanopore data
-  nextflow run fmalmeida/ngs-preprocess --get_ont_config && mv ont_data.config 01_ont_data.config
-
-After properly configuration of the files, they might look as this:
-
-* `01_illumina_data.config <https://drive.google.com/file/d/1misoPDB66ai2J9cKhEyUKSO--H-933xv/view?usp=sharing>`_
-* `01_ont_data.config <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_
+  These parameters can be used via configuration file
 
 Running the pipeline
 """"""""""""""""""""
 
 .. code-block:: bash
 
-  ## Run for illumina
-  nextflow run fmalmeida/ngs-preprocess -c 01_illumina_data.config &> 01_illumina_preprocess.log
-
-  ## Run for nanopore
-  nextflow run fmalmeida/ngs-preprocess -c 01_ont_data.config &> 01_ont_preprocess.log
+  # Running for both Illumina and nanopore data
+  --shortreads "dataset_1/illumina/read_pair_{1,2}.fastq" --shortreads_type "paired" \
+  --quality_trim 30 --flash_execute --nanopore_fastq "dataset_1/ont/ont_reads.fastq" \
+  --outdir "dataset_1/preprocessed" --threads 3
 
 Outputs will be at ``dataset_1/preprocessed``
 
 Dataset 2
 =========
 
-After downloaded. the dataset shall be available as ``dataset_2`` directory. The first step, right after installing
-the pipeline and downloading the docker image is to download the configuration file templates.
+After downloaded the dataset shall be available as ``dataset_2`` directory. The data can be
+preprocessed using the following command:
 
-Download config files
-"""""""""""""""""""""
+.. note::
 
-.. code-block:: bash
-
-  ## Get configuration for illumina data
-  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 02_illumina_data.config
-
-  ## Get configuration for pacbio data
-  nextflow run fmalmeida/ngs-preprocess --get_pacbio_config && mv pacbio_data.config 02_pacbio_data.config
-
-After properly configuration of the files, they might look as this:
-
-* `02_illumina_data.config <https://drive.google.com/file/d/17_lipuPHWOHUKj9TcW9ouDUpuzb7h3gQ/view?usp=sharing>`_
-* `02_pacbio_data.config <https://drive.google.com/file/d/1gEsZ5KglbW-uYpYHnBrKIX7V5oTcMQuO/view?usp=sharing>`_
+  These parameters can be used via configuration file
 
 Running the pipeline
 """"""""""""""""""""
 
 .. code-block:: bash
 
-  ## Run for illumina
-  nextflow run fmalmeida/ngs-preprocess -c 02_illumina_data.config &> 02_illumina_preprocess.log
-
-  ## Run for pacbio (we will use subreads.bam as input)
-  nextflow run fmalmeida/ngs-preprocess -c 02_pacbio_data.config &> 02_pacbio_preprocess.log
+  # Running for both Illumina and pacbio data
+  --shortreads "dataset_2/illumina/read_pair_{1,2}.fastq" --shortreads_type "paired" --lighter_execute \
+  --lighter_genomeSize "5m" --flash_execute --pacbio_bamPath "dataset_2/pacbio/subreads/*.bam" \
+  --outdir "dataset_2/preprocessed" --threads 3
 
 Outputs will be at ``dataset_2/preprocessed``
 
 Afterwards
 ----------
 
-Now you can used this dataset to, for example, eassemble a genome. For this, check it out our other pipeline developed
-for this task (which uses data from Illumina, Pacbio and Oxford Nanopore). It is called `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_.
+Now you can used these datasets to, for example, assemble a genome.
+
+For this, check `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_ out that we've
+developed for assembling reads from Illumina, Pacbio and Oxford Nanopore sequencing platforms.

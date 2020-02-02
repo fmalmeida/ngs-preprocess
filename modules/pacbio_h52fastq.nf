@@ -1,5 +1,5 @@
 process pacbio_h52fastq {
-  publishDir "${params.outdir}/pacbio", mode: 'copy'
+  publishDir "${params.outdir}/longreads/pacbio", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
   tag "Extracting FASTQ from pacbio legacy h5 files"
 
