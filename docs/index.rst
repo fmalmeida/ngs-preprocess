@@ -1,7 +1,7 @@
 .. _index:
 
-ngs-preprocess
-**************
+ngs-preprocess pipeline
+***********************
 
 `ngs-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
 and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for performing the pre-process of data from multiple
@@ -28,4 +28,4 @@ sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the fol
 
 Support Contact
 ===============
-Whenever a doubt arise feel free to contact me at almeidafmarques@gmail.com
+Feel free to contact me at almeidafmarques@gmail.com

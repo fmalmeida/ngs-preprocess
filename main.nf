@@ -79,7 +79,7 @@ def exampleMessage() {
       Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz",
       it MUST ALWAYS be double quoted as the example below.
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --shortreads \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_paired --shortreads \
 "illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" --lighter_execute --lighter_genomeSize 4600000 \
 --clip_r1 5 --three_prime_clip_r1 5 --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
 
@@ -87,25 +87,25 @@ def exampleMessage() {
       Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
       If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/illumina_single \
 --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --shortreads_type "single" --clip_r1 5 --three_prime_clip_r1 5
 
 
       ONT reads:
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/ont \
 --nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq
 
 
       Pacbio raw (subreads.bam) reads with nextflow general report
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio \
 --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam -with-report
 
 
       Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio \
 --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
 
    """.stripIndent()

@@ -6,7 +6,7 @@ Manual
 Input
 =====
 
-    * path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
+    * path to fastq files containing sequencing reads (Illumina or Nanopore)
     * path to Pacbio .bam or .h5 files containing raw data
 
 .. note::
@@ -14,13 +14,6 @@ Input
    Users must **never** use hard or symbolic links. This will make nextflow fail.
    When setting the parameters, please **always** give full path to a hard file,
    not to a link. This will prevent file access fail.
-
-.. tip::
-
-  Users must choose between a pipeline for short reads or for long reads using one
-  of the following parameters: ``--run_shortreads_pipeline`` or ``--run_longreads_pipeline``
-
-  The pipeline only runs either long or short reads workflows at once.
 
 Usage example
 =============
@@ -38,7 +31,7 @@ Usage example
      - Default value
      - Description
 
-   * - ``--outDir``
+   * - ``--outdir``
      - Y
      - output
      - Name of directory to store output values
@@ -48,25 +41,15 @@ Usage example
      - 2
      - Number of threads to use
 
-   * - ``--run_shortreads_pipeline``
-     - Y
-     - False
-     - Tells the pipeline to run the short reads pre-processing workflow
-
-   * - ``--run_longreads_pipeline``
-     - Y
-     - False
-     - Tells the pipeline to run the long reads pre-processing workflow
-
    * - ``--shortreads``
-     - Y (if ``--run_shortreads_pipeline``)
+     - Y
      - NA
      - String Pattern to find short reads. Example: "SRR6307304_{1,2}.fastq"
 
-   * - ``--reads_size``
-     - Y (if ``--run_shortreads_pipeline``)
+   * - ``--shortreads_type``
+     - Y
      - NA
-     - Tells wheter input is unpaired or paired end. 1 is unpaired. 2 is paired
+     - (single | paired). Tells wheter input is unpaired or paired end.
 
    * - ``--clip_r1``
      - N
@@ -118,17 +101,12 @@ Usage example
      - False
      - If set, PEAR will be executed to merge paired end reads
 
-   * - ``--longReads``
-     - Y (If ``--run_longreads_pipeline``)
+   * - ``--nanopore_fastq``
+     - Y
      - NA
-     - Sets path to long reads fastq files (Nanopore or Pacbio). Pre-processes basecalled long reads.
+     - Sets path to nanopore fastq files. Pre-processes basecalled long reads.
 
-   * - ``--lreads_type``
-     - Y (If ``--run_longreads_pipeline``)
-     - NA
-     - Tells wheter your input is nanopore or pacbio data. Possibilities: pacbio | nanopore
-
-   * - ``--lreads_is_barcoded``
+   * - ``--nanopore_is_barcoded``
      - N
      - False
      - Tells wheter your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
