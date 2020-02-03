@@ -22,7 +22,7 @@ We've made available two datasets:
 Getting the data
 ================
 
-Users can directly download data through the link given or by this command line method below.
+Users can download the data with the command below.
 
 Add to your ``bashrc`` or ``bash_aliases``
 """"""""""""""""""""""""""""""""""""""""""

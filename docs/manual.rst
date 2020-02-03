@@ -99,7 +99,7 @@ Usage example
    * - ``--flash_execute``
      - N
      - False
-     - If set, PEAR will be executed to merge paired end reads
+     - If set, FLASH will be executed to merge paired end reads
 
    * - ``--nanopore_fastq``
      - Y
