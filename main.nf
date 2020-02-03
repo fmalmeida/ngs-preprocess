@@ -58,6 +58,8 @@ def helpMessage() {
 
     --nanopore_fastq <string>              Path to ONT basecalled reads.
     --nanopore_is_barcoded                 Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+    --nanopore_sequencing_summary          Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a
+                                           sequencing statistics report using pycoQC
 
             Parameters for preprocessing Pacbio longreads (bam files of legacy h5)
 
@@ -228,6 +230,7 @@ params.flash_execute = false
  */
 params.nanopore_fastq = ''
 params.nanopore_is_barcoded = false
+params.nanopore_sequencing_summary = ''
 
 /*
  * Parameters for pacbio longreads
@@ -257,6 +260,8 @@ log.info "==================================="
 include porechop from './modules/porechop.nf' params(outdir: params.outdir)
 
 include nanopack from './modules/nanopack.nf' params(outdir: params.outdir)
+
+include pycoQC from './modules/pycoQC.nf' params(outdir: params.outdir)
 
 include pacbio_bam2fastq from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
   pacbio_is_barcoded: params.pacbio_is_barcoded)
@@ -290,6 +295,13 @@ workflow nanopore_nf {
   main:
     porechop(reads, threads, barcode)
     nanopack(porechop.out[0].flatten(), threads)
+}
+
+workflow pycoQC_nf {
+  get:
+    input
+  main:
+    pycoQC(input)
 }
 
 workflow pacbio_bam_nf {
@@ -341,6 +353,13 @@ workflow {
    */
   if (params.nanopore_fastq) {
     nanopore_nf(Channel.fromPath(params.nanopore_fastq), params.threads, params.nanopore_is_barcoded)
+  }
+
+  /*
+   * User wants to render a report with pycoQC
+   */
+  if (params.nanopore_sequencing_summary) {
+    pycoQC_nf(Channel.fromPath(params.nanopore_sequencing_summary))
   }
 
   /*

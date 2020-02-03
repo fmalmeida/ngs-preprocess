@@ -1,8 +1,3 @@
-#!/usr/bin/env nextflow
-
-/*
- * Definition of porechop module
- */
 process porechop {
   publishDir "${params.outdir}/longreads/porechop_out", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
