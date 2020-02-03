@@ -78,8 +78,10 @@ RUN conda create -y -n nanopack && conda install -y -n nanopack -c bioconda nano
 
 # INSTALL pycoQC
 RUN conda create -y -n pycoQC python=3.6 && \
-  conda install -y -n pycoQC -c anaconda pip && \
-  source activate pycoQC && \
-  python3 -m pip install pycoQC
+	source activate pycoQC && \
+	conda install -y -c aleg pycoqc && \
+	conda config --add channels r && \
+	conda config --add channels bioconda && \
+	conda install -y pysam
 
 WORKDIR /work

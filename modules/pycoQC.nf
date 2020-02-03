@@ -11,7 +11,7 @@ process pycoQC {
   script:
     """
     source activate pycoQC ;
-    pycoQC -f ${summary} -o pycoQC_report.html --filter_calibration \
-    --min_pass_len 200 --min_pass_qual 8 --min_barcode_percent 10
+    pycoQC --summary_file ${summary} --html_outfile pycoQC_report.html \
+    --filter_calibration --filter_duplicated --min_pass_qual 8
     """
 }
