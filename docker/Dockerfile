@@ -1,17 +1,26 @@
 FROM ubuntu:18.04
 
 MAINTAINER Felipe Marques <180039822@aluno.unb.br>
+SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
 
 RUN apt-get upgrade -y
 
-RUN apt-get install -y python python3 python-pip git default-jre fastqc wget cutadapt curl \
-      python-pkg-resources python3-pip python3-pkg-resources git python-setuptools python-dev cython libhdf5-serial-dev pbbamtools
-
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh ; bash /miniconda.sh -b -p /miniconda
-
+# INSTALL MINICONDA
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git libc6-dev build-essential wget && \
+	wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh && \
+	bash /miniconda.sh -b -p /miniconda
 ENV PATH="/miniconda/bin:$PATH"
+
+# Update do latest
+RUN conda update -y -n base conda
+
+# Configure Miniconda
+RUN conda config --add channels defaults && \
+	conda config --add channels bioconda && \
+	conda config --add channels conda-forge && \
+	conda init --all
 
 RUN pip3 install --user --upgrade cutadapt
 
@@ -52,15 +61,21 @@ RUN apt-get install -y pbh5tools
 RUN conda create -y -n pbtools && conda install -y -n pbtools -c bioconda bax2bam bam2fastx lima
 
 # INSTALL FMLRC
-RUN git clone https://github.com/holtjma/fmlrc.git ; cd fmlrc ; make ; ln -rs fmlrc /usr/local/bin ; ln -rs fmlrc-convert /usr/local/bin
+#RUN git clone https://github.com/holtjma/fmlrc.git ; cd fmlrc ; make ; ln -rs fmlrc /usr/local/bin ; ln -rs fmlrc-convert /usr/local/bin
 
 # INSTALL ROPEBWT2
-RUN git clone https://github.com/lh3/ropebwt2.git ; cd ropebwt2 ; make ; ln -rs ropebwt2 /usr/local/bin
+#RUN git clone https://github.com/lh3/ropebwt2.git ; cd ropebwt2 ; make ; ln -rs ropebwt2 /usr/local/bin
 
 # INSTALL NANOPACK
 RUN conda create -y -n nanopack && conda install -y -n nanopack -c bioconda nanoplot nanostat nanoqc
 
 # INSTALL FILTLONG
-RUN conda create -y -n filtlong && conda install -y -n filtlong -c bioconda filtlong
+#RUN conda create -y -n filtlong && conda install -y -n filtlong -c bioconda filtlong
+
+# INSTALL pycoQC
+RUN conda create -y -n pycoQC python=3.6 && \
+  conda install -y -n pycoQC -c anaconda pip && \
+  source activate pycoQC && \
+  python3 -m pip install pycoQC
 
 WORKDIR /work
