@@ -49,12 +49,14 @@ Default configuration:
     nanopore_fastq = ''                                   // Path to nanopore ONT basecalled reads in fastq
     nanopore_is_barcoded = false                          // Tells wheter or not nanopore reads are barcoded
                                                           // It will split barcodes into single files
+    nanopore_sequencing_summary = ''                      // Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a
+                                                        // sequencing statistics report using pycoQC
 
     /*
      * Parameters for PacBio longreads preprocessing
      */
     pacbio_bamPath = ''                                   // Path to PacBio subreads in bam format
-    pacbio_h5Path = ''                                    // Path to PacBio subreads in legacy h5 format
+    pacbio_h5Path = ''                                    // Path to directory containing legacy *.bas.h5 data (1 per directory)
 
   }
 

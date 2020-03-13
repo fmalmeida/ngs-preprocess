@@ -7,17 +7,15 @@ Overview
 --------
 
 We will use few test cases for evaluating the pipeline's commands and workflow.
-We've made available two datasets:
 
 * `Dataset 1 <https://drive.google.com/file/d/1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws/view?usp=sharing>`_.
 
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
 
-* `Dataset 2 <https://github.com/PacificBiosciences/DevNet/wiki/E-coli-K12-MG1655-Resequencing>`_
+* `Dataset 2 <https://github.com/PacificBiosciences/DevNet/wiki/E.-coli-Bacterial-Assembly>`_
 
-    * Pacbio data (subreads.bam);
-    * Illumina paired end reads;
+    * Pacbio data (including metadata.xml, bas.h5, and bax.h5 files);
 
 Getting the data
 ================
@@ -48,7 +46,7 @@ Then, you can download the datasets as follows:
 
 * **Dataset 2**
 
-    * ``wget http://files.pacb.com/datasets/primary-analysis/e-coli-k12/1.3.0/e-coli-k12-mg1655-raw-reads-1.3.0.tgz``
+    * ``wget https://s3.amazonaws.com/files.pacb.com/datasets/secondary-analysis/e-coli-k12-P6C4/p6c4_ecoli_RSII_DDR2_with_15kb_cut_E01_1.tar.gz``
 
 Preprocessing the data
 ----------------------
@@ -78,12 +76,7 @@ Outputs will be at ``dataset_1/preprocessed``
 Dataset 2
 =========
 
-After downloaded and decompressed the dataset shall be available as ``e-coli-k12-mg1655-raw-reads-1.3.0`` directory. The data can be
-preprocessed using the following command:
-
-.. note::
-
-  These parameters can be used via configuration file
+After downloaded and decompressed the dataset shall be available as ``E01_1`` directory.
 
 Running the pipeline
 """"""""""""""""""""
@@ -91,10 +84,14 @@ Running the pipeline
 .. code-block:: bash
 
   # Running for both Illumina and pacbio data
-  nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/Analysis_Results/*.bas.h5 \
-  --outdir e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/preprocessed --threads 3
+  nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
+  --outdir E01_1/Analysis_Results/preprocessed --threads 3
 
-Outputs will be at ``e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/preprocessed``
+Outputs will be at ``E01_1/Analysis_Results/preprocessed``
+
+.. note::
+
+  These parameters can be used via configuration file
 
 Afterwards
 ----------

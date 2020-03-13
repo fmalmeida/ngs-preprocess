@@ -111,6 +111,11 @@ Usage example
      - False
      - Tells wheter your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
+   * - ``--nanopore_sequencing_summary``
+     - N
+     - NA
+     - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC
+
    * - ``--pacbio_bamPath``
      - N
      - NA
@@ -119,7 +124,12 @@ Usage example
    * - ``--pacbio_h5Path``
      - N
      - NA
-     - Path to legacy .bas.h5 data. It will be used to extract reads in FASTQ file. All related .bas.h5 and .bax.h5 files MUST be in the SAME dir.
+     - Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory
+
+   * - ``--pacbio_is_barcoded``
+     - N
+     - False
+     - Inform the pipeline that the data is barcoded. It will split barcodes into single files.
 
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration

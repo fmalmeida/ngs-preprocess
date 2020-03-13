@@ -65,9 +65,9 @@ def helpMessage() {
 
     --pacbio_bamPath <string>              Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
                                            Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
-    --pacbio_h5Path <string>               Path to legacy *.bas.h5 data. It will be used to extract reads in FASTQ file.
+    --pacbio_h5Path <string>               Path to directory containing legacy *.bas.h5 data (1 per directory). It will be used to
+                                           extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory.
     --pacbio_is_barcoded                   Inform the pipeline that the data is barcoded. It will split barcodes into single files.
-                                           Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
    """.stripIndent()
 }
@@ -106,8 +106,8 @@ def exampleMessage() {
 
       Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio \
---pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
+--outdir E01_1/Analysis_Results/preprocessed --threads 3
 
    """.stripIndent()
 }
@@ -265,7 +265,7 @@ include pycoQC from './modules/pycoQC.nf' params(outdir: params.outdir)
 include pacbio_bam2fastq from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
   pacbio_is_barcoded: params.pacbio_is_barcoded)
 
-include pacbio_h52fastq from './modules/pacbio_h52fastq.nf' params(outdir: params.outdir)
+include pacbio_h52bam from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
 
 include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
@@ -305,20 +305,22 @@ workflow pycoQC_nf {
 
 workflow pacbio_bam_nf {
   take:
-    reads
+    subreads
     threads
   main:
-    pacbio_bam2fastq(reads)
+    pacbio_bam2fastq(subreads)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
 }
 
 workflow pacbio_bas_nf {
   take:
     h5bas
+    h5bas_dir
     threads
   main:
-    pacbio_h52fastq(h5bas)
-    nanopack(pacbio_h52fastq.out[0].flatten(), threads)
+    pacbio_h52bam(h5bas, h5bas_dir)
+    pacbio_bam2fastq(pacbio_h52bam.out[0])
+    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
 }
 
 workflow paired_shortreads_nf {
@@ -371,7 +373,8 @@ workflow {
    * User has pacbio subreads in legacy h5 (bas and bax) files
    */
   if (params.pacbio_h5Path) {
-    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path), params.threads)
+    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
+                  Channel.fromPath(params.pacbio_h5Path, type: 'dir'), params.threads)
   }
 
   /*

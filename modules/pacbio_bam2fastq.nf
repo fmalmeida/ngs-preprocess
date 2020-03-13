@@ -4,16 +4,16 @@ process pacbio_bam2fastq {
   tag "Extracting FASTQ from pacbio subreads.bam files"
 
   input:
-    file reads
+    file subreads
   output:
     file "*.fastq"
 
   script:
-  id = (reads.getBaseName() - ".bam")
-  param = (params.pacbio_is_barcoded) ? "-u --split-barcodes ${reads}" : "-u ${reads}"
+  id = (subreads.getBaseName() - ".bam")
+  param = (params.pacbio_is_barcoded) ? "-u --split-barcodes ${subreads}" : "-u ${subreads}"
   """
   source activate pbtools ;
-  pbindex ${reads} ;
+  pbindex ${subreads} ;
   bam2fastq -o ${id} ${param}
   """
 }
