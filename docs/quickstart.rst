@@ -69,9 +69,9 @@ Running the pipeline
 .. code-block:: bash
 
   # Running for both Illumina and nanopore data
-  --shortreads "dataset_1/illumina/read_pair_{1,2}.fastq" --shortreads_type "paired" \
-  --quality_trim 30 --flash_execute --nanopore_fastq "dataset_1/ont/ont_reads.fastq" \
-  --outdir "dataset_1/preprocessed" --threads 3
+  nextflow run fmalmeida/ngs-preprocess --shortreads "dataset_1/illumina/read_pair_{1,2}.fastq" \
+  --shortreads_type "paired" --quality_trim 30 --flash_execute --threads 3 \
+  --nanopore_fastq "dataset_1/ont/ont_reads.fastq" --outdir "dataset_1/preprocessed" 
 
 Outputs will be at ``dataset_1/preprocessed``
 
@@ -91,9 +91,9 @@ Running the pipeline
 .. code-block:: bash
 
   # Running for both Illumina and pacbio data
-  --shortreads "dataset_2/illumina/read_pair_{1,2}.fastq" --shortreads_type "paired" --lighter_execute \
-  --lighter_genomeSize "5m" --flash_execute --pacbio_bamPath "dataset_2/pacbio/subreads/*.bam" \
-  --outdir "dataset_2/preprocessed" --threads 3
+  nextflow run fmalmeida/ngs-preprocess --shortreads "dataset_2/illumina/read_pair_{1,2}.fastq" \
+  --shortreads_type "paired" --lighter_execute --lighter_genomeSize "5m" --flash_execute \
+  --pacbio_bamPath "dataset_2/pacbio/subreads/*.bam" --outdir "dataset_2/preprocessed" --threads 3
 
 Outputs will be at ``dataset_2/preprocessed``
 
