@@ -6,7 +6,7 @@ Quickstart
 Overview
 --------
 
-We provide users a few test cases for evaluating the pipeline's commands and workflow.
+We will use few test cases for evaluating the pipeline's commands and workflow.
 We've made available two datasets:
 
 * `Dataset 1 <https://drive.google.com/file/d/1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws/view?usp=sharing>`_.
@@ -14,7 +14,7 @@ We've made available two datasets:
     * Oxford Nanopore data (FAST5 and FASTQ);
     * Illumina paired end reads;
 
-* `Dataset 2 <https://drive.google.com/file/d/1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E/view?usp=sharing>`_
+* `Dataset 2 <https://github.com/PacificBiosciences/DevNet/wiki/E-coli-K12-MG1655-Resequencing>`_
 
     * Pacbio data (subreads.bam);
     * Illumina paired end reads;
@@ -48,7 +48,7 @@ Then, you can download the datasets as follows:
 
 * **Dataset 2**
 
-    * ``gdrive_download 1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E dataset_2.tar.gz``
+    * ``wget http://files.pacb.com/datasets/primary-analysis/e-coli-k12/1.3.0/e-coli-k12-mg1655-raw-reads-1.3.0.tgz``
 
 Preprocessing the data
 ----------------------
