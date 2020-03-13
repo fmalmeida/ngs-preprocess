@@ -5,7 +5,7 @@ process pacbio_h52fastq {
 
   input:
     file h5bas
-    file h5bax
+    
   output:
     file "${id}.fastq"
 

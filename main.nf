@@ -66,7 +66,6 @@ def helpMessage() {
     --pacbio_bamPath <string>              Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
                                            Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
     --pacbio_h5Path <string>               Path to legacy *.bas.h5 data. It will be used to extract reads in FASTQ file.
-                                           All related *bas.h5 and *bax.h5 files MUST be in the SAME dir.
     --pacbio_is_barcoded                   Inform the pipeline that the data is barcoded. It will split barcodes into single files.
                                            Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
@@ -288,7 +287,7 @@ include flash from './modules/flash.nf' params(outdir: params.outdir,
  * Define custom workflows
  */
 workflow nanopore_nf {
-  get:
+  take:
     reads
     threads
     barcode
@@ -298,14 +297,14 @@ workflow nanopore_nf {
 }
 
 workflow pycoQC_nf {
-  get:
+  take:
     input
   main:
     pycoQC(input)
 }
 
 workflow pacbio_bam_nf {
-  get:
+  take:
     reads
     threads
   main:
@@ -314,17 +313,16 @@ workflow pacbio_bam_nf {
 }
 
 workflow pacbio_bas_nf {
-  get:
+  take:
     h5bas
-    h5bax
     threads
   main:
-    pacbio_h52fastq(h5bas, h5bax)
+    pacbio_h52fastq(h5bas)
     nanopack(pacbio_h52fastq.out[0].flatten(), threads)
 }
 
 workflow paired_shortreads_nf {
-  get:
+  take:
     reads
     threads
   main:
@@ -335,7 +333,7 @@ workflow paired_shortreads_nf {
 }
 
 workflow single_shortreads_nf {
-  get:
+  take:
     reads
     threads
   main:
@@ -373,9 +371,7 @@ workflow {
    * User has pacbio subreads in legacy h5 (bas and bax) files
    */
   if (params.pacbio_h5Path) {
-    h5_bax_path = (params.pacbio_h5Path - ".bas.h5" + "*.bax.h5")
-    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
-    Channel.fromPath(h5_bax_path).collect(), params.threads)
+    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path), params.threads)
   }
 
   /*

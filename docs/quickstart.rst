@@ -71,14 +71,14 @@ Running the pipeline
   # Running for both Illumina and nanopore data
   nextflow run fmalmeida/ngs-preprocess --shortreads "dataset_1/illumina/read_pair_{1,2}.fastq" \
   --shortreads_type "paired" --quality_trim 30 --flash_execute --threads 3 \
-  --nanopore_fastq "dataset_1/ont/ont_reads.fastq" --outdir "dataset_1/preprocessed" 
+  --nanopore_fastq "dataset_1/ont/ont_reads.fastq" --outdir "dataset_1/preprocessed"
 
 Outputs will be at ``dataset_1/preprocessed``
 
 Dataset 2
 =========
 
-After downloaded the dataset shall be available as ``dataset_2`` directory. The data can be
+After downloaded and decompressed the dataset shall be available as ``e-coli-k12-mg1655-raw-reads-1.3.0`` directory. The data can be
 preprocessed using the following command:
 
 .. note::
@@ -91,11 +91,10 @@ Running the pipeline
 .. code-block:: bash
 
   # Running for both Illumina and pacbio data
-  nextflow run fmalmeida/ngs-preprocess --shortreads "dataset_2/illumina/read_pair_{1,2}.fastq" \
-  --shortreads_type "paired" --lighter_execute --lighter_genomeSize "5m" --flash_execute \
-  --pacbio_bamPath "dataset_2/pacbio/subreads/*.bam" --outdir "dataset_2/preprocessed" --threads 3
+  nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/Analysis_Results/*.bas.h5 \
+  --outdir e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/preprocessed --threads 3
 
-Outputs will be at ``dataset_2/preprocessed``
+Outputs will be at ``e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/preprocessed``
 
 Afterwards
 ----------
