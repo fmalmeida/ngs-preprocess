@@ -12,8 +12,8 @@ process pacbio_bam2fastq {
   id = (reads.getBaseName() - ".bam")
   param = (params.pacbio_is_barcoded) ? "-u --split-barcodes ${reads}" : "-u ${reads}"
   """
-  pbindex ${reads} ;
   source activate pbtools ;
+  pbindex ${reads} ;
   bam2fastq -o ${id} ${param}
   """
 }
