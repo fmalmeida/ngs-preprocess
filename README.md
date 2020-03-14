@@ -76,7 +76,7 @@ Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/e
 > Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
     ./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
-  --outdir E01_1/Analysis_Results/preprocessed --threads 3
+    --outdir E01_1/Analysis_Results/preprocessed --threads 3
 
 > Running with a configuration file
 
