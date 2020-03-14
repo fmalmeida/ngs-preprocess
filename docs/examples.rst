@@ -58,8 +58,8 @@ Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
 ::
 
-  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio \
-  --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+  ./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
+  --outdir E01_1/Analysis_Results/preprocessed --threads 3
 
 .. note::
 

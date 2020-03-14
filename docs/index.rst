@@ -12,9 +12,10 @@ sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the fol
 * `FLASH <https://ccb.jhu.edu/software/FLASH/>`_
 * `Lighter <https://github.com/mourisl/Lighter>`_
 * `Porechop <https://github.com/rrwick/Porechop>`_
-* `pbh5tools <https://github.com/PacificBiosciences/pbh5tools/blob/master/doc/index.rst>`_
+* `bax2bam <https://github.com/PacificBiosciences/bax2bam>`_
 * `bam2fastx <https://github.com/PacificBiosciences/bam2fastx>`_
 * `NanoPack <https://github.com/wdecoster/nanopack>`_
+* `pycoQC <https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam>`_
 
 
 .. toctree::
