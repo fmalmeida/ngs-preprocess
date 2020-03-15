@@ -13,9 +13,6 @@ process flash {
   output:
     file "flash_merge*"
 
-  when:
-  (params.flash_execute)
-
   script:
   """
   source activate flash ;

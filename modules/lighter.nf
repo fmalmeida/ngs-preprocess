@@ -16,9 +16,6 @@ process lighter {
     file "*.cor.fq.gz" optional true
     file 'fastqc_after_correction'
 
-   when:
-   (params.lighter_execute)
-
    script:
    // Check if alpha is given
    alpha_param = (params.lighter_alpha) ? "-k ${params.lighter_kmer} ${params.lighter_alpha}" : "-K ${params.lighter_kmer}"

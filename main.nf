@@ -277,11 +277,9 @@ include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
 
 include lighter from './modules/lighter.nf' params(outdir: params.outdir,
   lighter_kmer: params.lighter_kmer, lighter_alpha: params.lighter_alpha,
-  shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize,
-  lighter_execute: params.lighter_execute)
+  shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize)
 
-include flash from './modules/flash.nf' params(outdir: params.outdir,
-  flash_execute: params.flash_execute)
+include flash from './modules/flash.nf' params(outdir: params.outdir)
 
 /*
  * Define custom workflows
@@ -330,8 +328,14 @@ workflow paired_shortreads_nf {
   main:
     fastqc(reads, threads)
     trimgalore(reads, threads)
-    lighter(trimgalore.out[0], threads)
-    flash(lighter.out[0], threads)
+    if (params.lighter_execute && params.flash_execute) {
+      lighter(trimgalore.out[0], threads)
+      flash(lighter.out[0], threads)
+    } else if (params.lighter_execute && !params.flash_execute) {
+      lighter(trimgalore.out[0], threads)
+    } else if (!params.lighter_execute && params.flash_execute) {
+      flash(trimgalore.out[0], threads)
+    }
 }
 
 workflow single_shortreads_nf {
@@ -341,7 +345,9 @@ workflow single_shortreads_nf {
   main:
     fastqc(reads, threads)
     trimgalore(reads, threads)
-    lighter(trimgalore.out[1].flatten(), threads)
+    if (params.lighter_execute) {
+      lighter(trimgalore.out[1].flatten(), threads)
+    }
 }
 
 /*
