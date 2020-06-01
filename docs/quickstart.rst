@@ -51,6 +51,11 @@ Then, you can download the datasets as follows:
 Preprocessing the data
 ----------------------
 
+.. warning::
+
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
+  such as \* the pipeline will process each pair separately.
+
 Dataset 1
 =========
 

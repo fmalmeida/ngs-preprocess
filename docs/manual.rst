@@ -15,6 +15,12 @@ Input
    When setting the parameters, please **always** give full path to a hard file,
    not to a link. This will prevent file access fail.
 
+.. warning::
+
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
+  such as \* the pipeline will process each pair separately.
+
+
 Usage example
 =============
 

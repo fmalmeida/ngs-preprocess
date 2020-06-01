@@ -3,6 +3,11 @@
 CLI usage Examples
 ******************
 
+.. warning::
+
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
+  such as \* the pipeline will process each pair separately.
+
 Illumina paired end reads.
 """"""""""""""""""""""""""
 
