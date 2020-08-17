@@ -3,9 +3,17 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3634044.svg)](https://doi.org/10.5281/zenodo.3634044) ![](https://img.shields.io/github/v/release/fmalmeida/ngs-preprocess) [![Build Status](https://travis-ci.com/fmalmeida/ngs-preprocess.svg?branch=master)](https://travis-ci.com/fmalmeida/ngs-preprocess) ![](https://img.shields.io/docker/cloud/build/fmalmeida/ngs-preprocess) [![Documentation Status](https://readthedocs.org/projects/ngs-preprocess/badge/?version=latest)](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
 
 
-ngs-preprocess pipeline is a nextflow docker-based wrapper around [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [FLASH](https://ccb.jhu.edu/software/FLASH/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/a-slide/pycoQC), [bam2fastx](https://github.com/PacificBiosciences/bam2fastx), [bax2bam](https://github.com/PacificBiosciences/bax2bam) and [NanoPack](https://github.com/wdecoster/nanopack).
+ngs-preprocess pipeline is an easy to use pipeline nextflow docker-based that uses state-of-the-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow). It wraps up the following software:
 
-This is an easy to use pipeline that uses state-of-the-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow).
+* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+* [TrimGalore](https://github.com/FelixKrueger/TrimGalore)
+* [FLASH](https://ccb.jhu.edu/software/FLASH/)
+* [Lighter](https://github.com/mourisl/Lighter)
+* [Porechop](https://github.com/rrwick/Porechop)
+* [pycoQC](https://github.com/a-slide/pycoQC)
+* [bam2fastx](https://github.com/PacificBiosciences/bam2fastx)
+* [bax2bam](https://github.com/PacificBiosciences/bax2bam)
+* [NanoPack](https://github.com/wdecoster/nanopack). 
 
 ## Table of contents
 
@@ -19,9 +27,10 @@ This is an easy to use pipeline that uses state-of-the-art software for pre-proc
 ## Requirements
 
 * Unix-like operating system (Linux, macOS, etc)
+* Nextflow (version 20.01 or higher)
 * Java 8
 * Docker
-  * `fmalmeida/ngs-preprocess`
+  * Image: `fmalmeida/ngs-preprocess`
 
 ## Quickstart
 
@@ -31,7 +40,7 @@ This is an easy to use pipeline that uses state-of-the-art software for pre-proc
 
           docker pull fmalmeida/ngs-preprocess
 
-2. Install Nextflow (version 19.10):
+2. Install Nextflow (version 20.01 or higher):
 
        curl -s https://get.nextflow.io | bash
 
@@ -43,9 +52,7 @@ This is an easy to use pipeline that uses state-of-the-art software for pre-proc
 
 ### Usage
 
-Checkout the full usage help with nextflow run fmalmeida/ngs-preprocess --help
-
-Please take some time to read the [docs](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
+Checkout the full usage help with `nextflow run fmalmeida/ngs-preprocess --help`. Users are encouraged to read the [complete documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
 ### Usage examples:
 
