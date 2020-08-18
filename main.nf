@@ -321,32 +321,32 @@ workflow pacbio_bas_nf {
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
 }
 
-workflow paired_shortreads_nf {
+workflow shortreads_nf {
   take:
-    reads
+    preads
+    sreads
     threads
   main:
-    fastqc(reads, threads)
-    trimgalore(reads, threads)
-    if (params.lighter_execute && params.flash_execute) {
-      lighter(trimgalore.out[0], threads)
-      flash(lighter.out[0], threads)
-    } else if (params.lighter_execute && !params.flash_execute) {
-      lighter(trimgalore.out[0], threads)
-    } else if (!params.lighter_execute && params.flash_execute) {
-      flash(trimgalore.out[0], threads)
-    }
-}
+    fastqc(preads, sreads, threads)
+    trimgalore(preads, sreads, threads)
 
-workflow single_shortreads_nf {
-  take:
-    reads
-    threads
-  main:
-    fastqc(reads, threads)
-    trimgalore(reads, threads)
-    if (params.lighter_execute) {
-      lighter(trimgalore.out[1].flatten(), threads)
+    // Paired
+    if (params.shortreads_type == 'paired') {
+      if (params.lighter_execute && params.flash_execute) {
+        lighter(trimgalore.out[0], threads)
+        flash(lighter.out[0], threads)
+      } else if (params.lighter_execute && !params.flash_execute) {
+        lighter(trimgalore.out[0], threads)
+      } else if (!params.lighter_execute && params.flash_execute) {
+        flash(trimgalore.out[0], threads)
+      }
+    }
+
+    // Single
+    if (params.shortreads_type == 'paired') {
+      if (params.lighter_execute) {
+        lighter(trimgalore.out[1].flatten(), threads)
+      }
     }
 }
 
@@ -387,14 +387,15 @@ workflow {
    * User has short paired end reads
    */
   if (params.shortreads && params.shortreads_type == 'paired') {
-    paired_shortreads_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2), params.threads)
+    shortreads_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2),
+                  Channel.value(''), params.threads)
   }
 
   /*
    * User has short single end reads
    */
   if (params.shortreads && params.shortreads_type == 'single') {
-    single_shortreads_nf(Channel.fromPath(params.shortreads), params.threads)
+    shortreads_nf(Channel.value(['', '', '']), Channel.fromPath(params.shortreads), params.threads)
   }
 }
 

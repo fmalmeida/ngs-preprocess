@@ -4,19 +4,23 @@ process fastqc {
   tag "Evaluating short reads with FastQC"
 
     input:
-      file reads
+      tuple val(id), file(read1), file(read2)
+      file(sreads)
       val threads
+
     output:
       file "fastqc_${id}/*_fastqc.{zip,html}"
+
     script:
+
       if (params.shortreads_type == 'paired') {
-        id = (reads[1].getBaseName() - "_1")
-        param = "-q ${reads[1]} ${reads[2]}"
+        param = "-q ${read1} ${read2}"
       }
       else if (params.shortreads_type == 'single') {
-        param = "-q ${reads}"
-        id = reads.getBaseName()
+        param = "-q ${sreads}"
+        id = sreads.getBaseName()
       }
+      
     """
     mkdir fastqc_${id} ;
     fastqc -t $threads -o fastqc_${id} $param

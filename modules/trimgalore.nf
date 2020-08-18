@@ -8,11 +8,13 @@ process trimgalore {
             else null
         }
     container 'fmalmeida/ngs-preprocess'
-    tag "Executing TrimGalore with paired end reads."
+    tag "Executing TrimGalore"
 
     input:
-      file reads
-      file threads
+      tuple val(id), file(read1), file(read2)
+      file(sreads)
+      val threads
+
     output:
       tuple val('trimgalore'), file("${id}_1.fq.gz"), file("${id}_2.fq.gz") optional true
       file "*.fq.gz" optional true
@@ -27,12 +29,11 @@ process trimgalore {
       tpc_r2 = params.three_prime_clip_r2 > 0 ? "--three_prime_clip_r2 ${params.three_prime_clip_r2}" : ''
 
       if (params.shortreads_type == 'paired') {
-        id = (reads[1].getBaseName() - "_1")
-        param = "--paired $c_r1 $c_r2 $tpc_r1 $tpc_r2 ${reads[1]} ${reads[2]}"
+        param = "--paired $c_r1 $c_r2 $tpc_r1 $tpc_r2 ${read1} ${read2}"
         rename = "mv *_val_1.fq.gz ${id}_1.fq.gz ; mv *_val_2.fq.gz ${id}_2.fq.gz"
       }
       else if (params.shortreads_type == 'single') {
-        param = "$c_r1 $tpc_r1 ${reads}"
+        param = "$c_r1 $tpc_r1 ${sreads}"
         id = reads.getBaseName()
         rename = ''
       }
