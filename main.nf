@@ -256,30 +256,30 @@ log.info "==================================="
 /*
  * Include modules
  */
-include porechop from './modules/porechop.nf' params(outdir: params.outdir)
+include {porechop} from './modules/porechop.nf' params(outdir: params.outdir)
 
-include nanopack from './modules/nanopack.nf' params(outdir: params.outdir)
+include {nanopack} from './modules/nanopack.nf' params(outdir: params.outdir)
 
-include pycoQC from './modules/pycoQC.nf' params(outdir: params.outdir)
+include {pycoQC} from './modules/pycoQC.nf' params(outdir: params.outdir)
 
-include pacbio_bam2fastq from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
+include {pacbio_bam2fastq} from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
   pacbio_is_barcoded: params.pacbio_is_barcoded)
 
-include pacbio_h52bam from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
+include {pacbio_h52bam} from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
 
-include fastqc from './modules/fastqc.nf' params(outdir: params.outdir,
+include {fastqc} from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
 
-include trimgalore from './modules/trimgalore.nf' params(outdir: params.outdir,
+include {trimgalore} from './modules/trimgalore.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type, clip_r1: params.clip_r1,
   clip_r2: params.clip_r2, three_prime_clip_r1: params.three_prime_clip_r1,
   three_prime_clip_r2: params.three_prime_clip_r2, quality_trim: params.quality_trim)
 
-include lighter from './modules/lighter.nf' params(outdir: params.outdir,
+include {lighter} from './modules/lighter.nf' params(outdir: params.outdir,
   lighter_kmer: params.lighter_kmer, lighter_alpha: params.lighter_alpha,
   shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize)
 
-include flash from './modules/flash.nf' params(outdir: params.outdir)
+include {flash} from './modules/flash.nf' params(outdir: params.outdir)
 
 /*
  * Define custom workflows
