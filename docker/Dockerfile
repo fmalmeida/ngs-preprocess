@@ -32,10 +32,6 @@ RUN pip install --upgrade pip ; pip3 install --upgrade pip
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python3-matplotlib python-matplotlib
 
-# INSTALL PORETOOLS
-#RUN git clone https://github.com/arq5x/poretools ; cd poretools ; python2.7 setup.py install
-#RUN conda create -y -n poretools && conda install -y -n poretools -c bioconda poretools
-
 # Install Trim Galore
 RUN curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/0.6.0.tar.gz -o trim_galore.tar.gz ; tar xvzf trim_galore.tar.gz ; ln -rs TrimGalore-0.6.0/* /usr/local/bin
 
@@ -43,19 +39,11 @@ RUN curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/0.6.0.tar.gz -
 RUN git clone https://github.com/rrwick/Porechop.git ; cd Porechop ; python3 setup.py install
 
 # INSTALL LIGHTER ILLUMINA READ CORRECTION
-RUN git clone https://github.com/mourisl/Lighter.git ; cd Lighter/ ; make ; ln -rs lighter /usr/local/bin
-
-# INSTALL PEAR
-#RUN conda install -y pear ; conda update -y pear ; conda install -y h5py
+#RUN git clone https://github.com/mourisl/Lighter.git ; cd Lighter/ ; make ; ln -rs lighter /usr/local/bin
+RUN conda install -c bioconda lighter
 
 # INSTALL FLASH
 RUN conda create -y -n flash ; conda install -y -n flash -c bioconda flash
-
-# INSTALL LoRDEC hybrid long reads correction
-#RUN wget http://gatb-tools.gforge.inria.fr/versions/bin/LoRDEC-0.5.3-Linux.tar.gz ; tar zxvf LoRDEC-0.5.3-Linux.tar.gz ; ln -rs LoRDEC-0.5.3-Linux/bin/* /usr/local/bin
-
-# INSTALL lorma longreads only reads correction
-#RUN conda install -c atgc-montpellier lorma
 
 # INSTALL NANOPOLISH
 RUN apt-get install -y libhdf5-dev ; conda config --add channels defaults ; conda config --add channels conda-forge ; conda config --add channels bioconda ; conda install -y nanopolish pear
@@ -64,14 +52,10 @@ RUN apt-get install -y libhdf5-dev ; conda config --add channels defaults ; cond
 RUN apt-get install -y pbh5tools
 RUN conda create -y -n pbtools && conda install -y -n pbtools -c bioconda bax2bam bam2fastx lima
 
-# INSTALL FMLRC
-#RUN git clone https://github.com/holtjma/fmlrc.git ; cd fmlrc ; make ; ln -rs fmlrc /usr/local/bin ; ln -rs fmlrc-convert /usr/local/bin
-
-# INSTALL ROPEBWT2
-#RUN git clone https://github.com/lh3/ropebwt2.git ; cd ropebwt2 ; make ; ln -rs ropebwt2 /usr/local/bin
-
 # INSTALL NANOPACK
-RUN conda create -y -n nanopack && conda install -y -n nanopack -c bioconda nanoplot nanostat nanoqc
+RUN conda create -y -n nanopack python=3.7 && \
+			source activate nanopack && \
+			pip install nanopack
 
 # INSTALL FILTLONG
 #RUN conda create -y -n filtlong && conda install -y -n filtlong -c bioconda filtlong
@@ -83,5 +67,10 @@ RUN conda create -y -n pycoQC python=3.6 && \
 	conda config --add channels r && \
 	conda config --add channels bioconda && \
 	conda install -y pysam
+
+# Fix matplotlib
+RUN source activate nanopack && \
+			pip uninstall -y matplotlib && \
+			pip install matplotlib==3.1.3
 
 WORKDIR /work
