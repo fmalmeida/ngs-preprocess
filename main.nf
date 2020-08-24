@@ -343,7 +343,7 @@ workflow shortreads_nf {
     }
 
     // Single
-    if (params.shortreads_type == 'paired') {
+    if (params.shortreads_type == 'single') {
       if (params.lighter_execute) {
         lighter(trimgalore.out[1].flatten(), threads)
       }
