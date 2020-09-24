@@ -87,7 +87,8 @@ def helpMessage() {
     --pacbio_get_hifi                      Also try to use pbccs to compute subreads consensus and produce HIFI reads. ccs combines multiple subreads
                                            of the same SMRTbell molecule. Therefore, the bam files used as input must already be merged since this tool
                                            takes one bam (from one movie) at a time. Can be used for the legacy *.bas.h5 since this pipeline
-                                           automatically creates one subreads.bam for each single movies (each *.bas.h5).
+                                           automatically creates one subreads.bam for each single movies (each *.bas.h5). If the chemistry is incompatible
+                                           with ccs an error will be thrown and you can re-run the pipeline without this parameter, using '-resume'.
 
    """.stripIndent()
 }
