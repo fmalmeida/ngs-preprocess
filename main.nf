@@ -36,38 +36,58 @@ def helpMessage() {
             General Parameters - Mandatory
 
     --outdir <string>                      Output directory name
+
     --threads <int>                        Number of threads to use
 
             Parameters for preprocessing shortreads
 
     --shortreads <string>                  String Pattern to find short reads. Example: SRR6307304_{1,2}.fastq
+
     --shortreads_type <string>             Possibilities: single | paired. Tells wheter input is single or paired end.
+
     --clip_r1 <int>                        Number of bases to always remove from 5' of read pair 1 or from unpaired read. [Default: 0]
+
     --clip_r2 <int>                        Number of bases to always remove from 5' of read pair 2. [Default: 0]
+
     --three_prime_clip_r1 <int>            Number of bases to always remove from 3' of read pair 1 or from unpaired read. [Default: 0]
+
     --three_prime_clip_r2 <int>            Number of bases to always remove from 3' of read pair 2. [Default: 0]
+
     --quality_trim <int>                   Phred quality threshold for trimming. [Default: 20]
+
     --lighter_execute                      Tells wheter to run or not Lighter correction tool
+
     --lighter_kmer <int>                   Lighter k-mer to use in correction step. [Default: 21]
+
     --lighter_genomeSize <int>             Approximate genome size
+
     --lighter_alpha <float>                Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                            If not set, Lighter will automatically calculate the best value
+
     --flash_execute                        If set, FLASH will be executed to merge paired end reads
 
             Parameters for preprocessing nanopore ONT longreads
 
     --nanopore_fastq <string>              Path to ONT basecalled reads.
+
     --nanopore_is_barcoded                 Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+
     --nanopore_sequencing_summary          Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a
                                            sequencing statistics report using pycoQC
 
             Parameters for preprocessing Pacbio longreads (bam files of legacy h5)
 
     --pacbio_bamPath <string>              Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
-                                           Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
+
     --pacbio_h5Path <string>               Path to directory containing legacy *.bas.h5 data (1 per directory). It will be used to
                                            extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory.
+
     --pacbio_is_barcoded                   Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+
+    --pacbio_get_hifi                      Also try to use pbccs to compute subreads consensus and produce HIFI reads. ccs combines multiple subreads
+                                           of the same SMRTbell molecule. Therefore, the bam files used as input must already be merged since this tool
+                                           takes one bam (from one movie) at a time. Can be used for the legacy *.bas.h5 since this pipeline
+                                           automatically creates one subreads.bam for each single movies (each *.bas.h5).
 
    """.stripIndent()
 }
@@ -98,16 +118,16 @@ def exampleMessage() {
 --nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq
 
 
-      Pacbio raw (subreads.bam) reads with nextflow general report
+      Pacbio raw (subreads.bam) reads with nextflow general report (with CCS attempt)
 
-./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio \
+./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio --pacbio_get_hifi \
 --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam -with-report
 
 
-      Pacbio raw (legacy .bas.h5 to subreads.bam) reads
+      Pacbio raw (legacy .bas.h5 to subreads.bam) reads (with CCS attempt)
 
 ./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
---outdir E01_1/Analysis_Results/preprocessed --threads 3
+--outdir E01_1/Analysis_Results/preprocessed --threads 3 --pacbio_get_hifi
 
    """.stripIndent()
 }
@@ -237,6 +257,7 @@ params.nanopore_sequencing_summary = ''
 params.pacbio_bamPath = ''
 params.pacbio_h5Path = ''
 params.pacbio_is_barcoded = false
+params.pacbio_get_hifi = false
 
 /*
  * Define log message
@@ -256,30 +277,33 @@ log.info "==================================="
 /*
  * Include modules
  */
-include {porechop} from './modules/porechop.nf' params(outdir: params.outdir)
+include { porechop } from './modules/porechop.nf' params(outdir: params.outdir)
 
-include {nanopack} from './modules/nanopack.nf' params(outdir: params.outdir)
+include { nanopack; nanopack as nanopack_hifi } from './modules/nanopack.nf' params(outdir: params.outdir)
 
-include {pycoQC} from './modules/pycoQC.nf' params(outdir: params.outdir)
+include { pycoQC } from './modules/pycoQC.nf' params(outdir: params.outdir)
 
-include {pacbio_bam2fastq} from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
+include { pacbio_bam2fastq } from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
   pacbio_is_barcoded: params.pacbio_is_barcoded)
 
-include {pacbio_h52bam} from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
+include { pacbio_bam2hifi } from './modules/pacbio_bam2hifi.nf' params(outdir: params.outdir,
+  pacbio_is_barcoded: params.pacbio_is_barcoded, threads: params.threads)
 
-include {fastqc} from './modules/fastqc.nf' params(outdir: params.outdir,
+include { pacbio_h52bam } from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
+
+include { fastqc } from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
 
-include {trimgalore} from './modules/trimgalore.nf' params(outdir: params.outdir,
+include { trimgalore } from './modules/trimgalore.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type, clip_r1: params.clip_r1,
   clip_r2: params.clip_r2, three_prime_clip_r1: params.three_prime_clip_r1,
   three_prime_clip_r2: params.three_prime_clip_r2, quality_trim: params.quality_trim)
 
-include {lighter} from './modules/lighter.nf' params(outdir: params.outdir,
+include { lighter } from './modules/lighter.nf' params(outdir: params.outdir,
   lighter_kmer: params.lighter_kmer, lighter_alpha: params.lighter_alpha,
   shortreads_type: params.shortreads_type, lighter_genomeSize: params.lighter_genomeSize)
 
-include {flash} from './modules/flash.nf' params(outdir: params.outdir)
+include { flash } from './modules/flash.nf' params(outdir: params.outdir)
 
 /*
  * Define custom workflows
@@ -308,6 +332,12 @@ workflow pacbio_bam_nf {
   main:
     pacbio_bam2fastq(subreads)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+
+    // User wants to get hifi?
+    if (params.pacbio_get_hifi) {
+      pacbio_bam2hifi(subreads)
+      nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+    }
 }
 
 workflow pacbio_bas_nf {
@@ -317,8 +347,15 @@ workflow pacbio_bas_nf {
     threads
   main:
     pacbio_h52bam(h5bas, h5bas_dir)
-    pacbio_bam2fastq(pacbio_h52bam.out[0])
+    bams = pacbio_h52bam.out[0]
+    pacbio_bam2fastq(bams)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+
+    // User wants to get hifi?
+    if (params.pacbio_get_hifi) {
+      pacbio_bam2hifi(bams)
+      nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+    }
 }
 
 workflow shortreads_nf {
