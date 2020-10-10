@@ -21,7 +21,8 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [Quickstart](https://github.com/fmalmeida/ngs-preprocess#quickstart)
 * [Documentation](https://github.com/fmalmeida/ngs-preprocess#documentation)
   * [Full usage](https://github.com/fmalmeida/ngs-preprocess#usage)
-  * [Usage Examples](https://github.com/fmalmeida/ngs-preprocess#usage-examples)
+  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#graphical-and-interactive-execution)
+  * [Command line examples](https://github.com/fmalmeida/ngs-preprocess#command-line-usage-examples)
   * [Configuration File](https://github.com/fmalmeida/ngs-preprocess#using-the-configuration-file)
 
 ## Requirements
@@ -52,9 +53,15 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 
 ### Usage
 
-Checkout the full usage help with `nextflow run fmalmeida/ngs-preprocess --help`. Users are encouraged to read the [complete documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
+* Complete command line explanation of paramters:
+    + `nextflow run fmalmeida/ngs-preprocess --help`
+* See usage examples in the command line:
+    + `nextflow run fmalmeida/ngs-preprocess --examples`
+* However, users are encouraged to read the [complete online documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
-### Usage examples:
+### Graphical and interactive execution
+
+### Command line usage examples:
 
 > Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be double quoted as the example below.
 
@@ -89,7 +96,7 @@ Checkout the full usage help with `nextflow run fmalmeida/ngs-preprocess --help`
 
     ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
 
-## Using the configuration file
+### Using the configuration file
 
 All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/ngs-preprocess -c ./configuration-file`
 
