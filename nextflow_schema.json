@@ -5,6 +5,22 @@
     "description": "",
     "type": "object",
     "definitions": {
+        "nf_tower_options": {
+            "title": "NF Tower options",
+            "type": "object",
+            "description": "Define your tokens of NF tower",
+            "default": "",
+            "properties": {
+                "use_tower": {
+                    "type": "boolean",
+                    "description": "Do you or not to launch in NF tower?"
+                },
+                "tower_token": {
+                    "type": "string",
+                    "description": "Your NF tower token for lanching"
+                }
+            }
+        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -51,7 +67,7 @@
             "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
             "properties": {
                 "threads": {
-                    "type": "string",
+                    "type": "integer",
                     "description": "Amount of threads to use"
                 }
             }
@@ -70,7 +86,10 @@
                     "type": "string"
                 },
                 "pacbio_is_barcoded": {
-                    "type": "string"
+                    "type": "boolean"
+                },
+                "pacbio_get_hifi": {
+                    "type": "boolean"
                 }
             }
         },
@@ -81,40 +100,43 @@
             "default": "",
             "properties": {
                 "clip_r1": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "clip_r2": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "three_prime_clip_r1": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "three_prime_clip_r2": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "quality_trim": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "lighter_execute": {
-                    "type": "string"
+                    "type": "boolean"
                 },
                 "lighter_kmer": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "lighter_genomeSize": {
                     "type": "string"
                 },
                 "lighter_alpha": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "flash_execute": {
-                    "type": "string"
+                    "type": "boolean"
                 }
             },
             "fa_icon": "fas fa-file-import"
         }
     },
     "allOf": [
+        {
+            "$ref": "#/definitions/nf_tower_options"
+        },
         {
             "$ref": "#/definitions/input_output_options"
         },
