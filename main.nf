@@ -82,7 +82,10 @@ def helpMessage() {
     --pacbio_h5Path <string>               Path to directory containing legacy *.bas.h5 data (1 per directory). It will be used to
                                            extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory.
 
-    --pacbio_is_barcoded                   Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+    --pacbio_barcodes                      Path to xml/fasta file containing barcode information. It will split barcodes into single files.
+
+    --pacbio_barcode_design                By default, only reads with "same" barcodes are given. You can also select reads with only
+                                           "different" barcodes or any of them. Options: same, different, any
 
     --pacbio_get_hifi                      Also try to use pbccs to compute subreads consensus and produce HIFI reads. ccs combines multiple subreads
                                            of the same SMRTbell molecule. Therefore, the bam files used as input must already be merged since this tool
@@ -257,7 +260,8 @@ params.nanopore_sequencing_summary = ''
  */
 params.pacbio_bamPath = ''
 params.pacbio_h5Path = ''
-params.pacbio_is_barcoded = false
+params.pacbio_barcodes = ''
+params.pacbio_barcode_design = 'any'
 params.pacbio_get_hifi = false
 
 /*
@@ -285,10 +289,11 @@ include { nanopack; nanopack as nanopack_hifi } from './modules/nanopack.nf' par
 include { pycoQC } from './modules/pycoQC.nf' params(outdir: params.outdir)
 
 include { pacbio_bam2fastq } from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
-  pacbio_is_barcoded: params.pacbio_is_barcoded)
+  pacbio_barcodes: params.pacbio_barcodes, pacbio_barcode_design: params.pacbio_barcode_design,
+  threads: params.threads)
 
 include { pacbio_bam2hifi } from './modules/pacbio_bam2hifi.nf' params(outdir: params.outdir,
-  pacbio_is_barcoded: params.pacbio_is_barcoded, threads: params.threads)
+  pacbio_barcodes: params.pacbio_barcodes, threads: params.threads)
 
 include { pacbio_h52bam } from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
 
@@ -329,9 +334,10 @@ workflow pycoQC_nf {
 workflow pacbio_bam_nf {
   take:
     subreads
+    barcodes
     threads
   main:
-    pacbio_bam2fastq(subreads)
+    pacbio_bam2fastq(subreads, barcodes)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
 
     // User wants to get hifi?
@@ -345,12 +351,13 @@ workflow pacbio_bas_nf {
   take:
     h5bas
     h5bas_dir
+    barcodes
     threads
   main:
     pacbio_h52bam(h5bas, h5bas_dir)
     bams = pacbio_h52bam.out[0]
     pacbio_bam2fastq(bams)
-    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+    nanopack(pacbio_bam2fastq.out[0].flatten(), barcodes, threads)
 
     // User wants to get hifi?
     if (params.pacbio_get_hifi) {
@@ -410,7 +417,9 @@ workflow {
    * User has pacbio subreads in bam format
    */
   if (params.pacbio_bamPath) {
-    pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath), params.threads)
+    pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath),
+                  (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
+                  params.threads)
   }
 
   /*
@@ -418,7 +427,9 @@ workflow {
    */
   if (params.pacbio_h5Path) {
     pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
-                  Channel.fromPath(params.pacbio_h5Path, type: 'dir'), params.threads)
+                  Channel.fromPath(params.pacbio_h5Path, type: 'dir'),
+                  (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
+                  params.threads)
   }
 
   /*
