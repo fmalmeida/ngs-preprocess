@@ -293,7 +293,8 @@ include { pacbio_bam2fastq } from './modules/pacbio_bam2fastq.nf' params(outdir:
   threads: params.threads)
 
 include { pacbio_bam2hifi } from './modules/pacbio_bam2hifi.nf' params(outdir: params.outdir,
-  pacbio_barcodes: params.pacbio_barcodes, threads: params.threads)
+  pacbio_barcodes: params.pacbio_barcodes, pacbio_barcode_design: params.pacbio_barcode_design,
+  threads: params.threads)
 
 include { pacbio_h52bam } from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
 
@@ -342,7 +343,7 @@ workflow pacbio_bam_nf {
 
     // User wants to get hifi?
     if (params.pacbio_get_hifi) {
-      pacbio_bam2hifi(subreads)
+      pacbio_bam2hifi(subreads, barcodes)
       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
     }
 }
@@ -356,12 +357,12 @@ workflow pacbio_bas_nf {
   main:
     pacbio_h52bam(h5bas, h5bas_dir)
     bams = pacbio_h52bam.out[0]
-    pacbio_bam2fastq(bams)
-    nanopack(pacbio_bam2fastq.out[0].flatten(), barcodes, threads)
+    pacbio_bam2fastq(bams, barcodes)
+    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
 
     // User wants to get hifi?
     if (params.pacbio_get_hifi) {
-      pacbio_bam2hifi(bams)
+      pacbio_bam2hifi(bams, barcodes)
       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
     }
 }

@@ -8,6 +8,8 @@ process pacbio_bam2fastq {
     file barcodes
   output:
     file "*.fastq"
+    file "*.bam"
+    file "*"
 
   script:
   id = (subreads.getBaseName() - ".bam")
@@ -29,6 +31,6 @@ process pacbio_bam2fastq {
   """
   source activate pbtools ;
   pbindex ${subreads} ;
-  bam2fastq -o ${id} ${param}
+  bam2fastq -o ${id} -u ${subreads}
   """
 }
