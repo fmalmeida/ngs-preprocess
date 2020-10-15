@@ -74,12 +74,16 @@ pip install nf-core
 
 #### launch the pipeline
 
-nf-core launch will start a interactive form in your web browser or command line so you can configure the pipeline step by step and start the execution of the pipeline in the end.
+nf-core launch will start an interactive form in your web browser or command line so you can configure the pipeline step by step and start the execution of the pipeline in the end.
 
 ```bash
 # Launch the pipeline
 nf-core launch fmalmeida/ngs-preprocess
 ```
+
+It will result in the following:
+
+![](./images/nf-core-asking.png) ![](./images/nf-core-gui.png)
 
 #### nextflow tower
 
