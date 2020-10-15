@@ -85,7 +85,9 @@ It will result in the following:
 
 <p align="center">
 <img src="./images/nf-core-asking.png" width="400px"/>
+</p>
 
+<p align="center">
 <img src="./images/nf-core-gui.png" width="400px"/>
 </p>
 
