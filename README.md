@@ -13,6 +13,8 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [pycoQC](https://github.com/a-slide/pycoQC)
 * [bam2fastx](https://github.com/PacificBiosciences/bam2fastx)
 * [bax2bam](https://github.com/PacificBiosciences/bax2bam)
+* [lima](https://github.com/PacificBiosciences/barcoding)
+* [pacbio ccs](https://ccs.how/)
 * [NanoPack](https://github.com/wdecoster/nanopack).
 
 ## Table of contents
@@ -21,7 +23,7 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [Quickstart](https://github.com/fmalmeida/ngs-preprocess#quickstart)
 * [Documentation](https://github.com/fmalmeida/ngs-preprocess#documentation)
   * [Full usage](https://github.com/fmalmeida/ngs-preprocess#usage)
-  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#graphical-and-interactive-execution)
+  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#interactive-graphical-configuration-and-execution)
   * [Command line examples](https://github.com/fmalmeida/ngs-preprocess#command-line-usage-examples)
   * [Configuration File](https://github.com/fmalmeida/ngs-preprocess#using-the-configuration-file)
 
@@ -59,7 +61,29 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
     + `nextflow run fmalmeida/ngs-preprocess --examples`
 * However, users are encouraged to read the [complete online documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
-### Graphical and interactive execution
+### Interactive graphical configuration and execution
+
+Users can trigger a graphical and interactive pipeline configuration and execution by using [nf-core launch](https://nf-co.re/launch) utility.
+
+#### Install nf-core
+
+```bash
+# Install nf-core
+pip install nf-core
+```
+
+#### launch the pipeline
+
+nf-core launch will start a interactive form in your web browser or command line so you can configure the pipeline step by step and start the execution of the pipeline in the end.
+
+```bash
+# Launch the pipeline
+nf-core launch fmalmeida/ngs-preprocess
+```
+
+#### nextflow tower
+
+This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
 
 ### Command line usage examples:
 
