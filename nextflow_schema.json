@@ -13,11 +13,15 @@
             "properties": {
                 "use_tower": {
                     "type": "boolean",
-                    "description": "Do you or not to launch in NF tower?"
+                    "description": "Launch in NF tower?",
+                    "help_text": "This sets wheter you want or not to run the pipeline interactively in your nextflow tower section. Default is not to.",
+                    "fa_icon": "fas fa-gopuram"
                 },
                 "tower_token": {
                     "type": "string",
-                    "description": "Your NF tower token for lanching"
+                    "description": "Your NF tower token",
+                    "help_text": "If running interactively in nextflow tower you need to supply your nf-tower user token.",
+                    "fa_icon": "fas fa-address-card"
                 }
             }
         },
@@ -25,34 +29,43 @@
             "title": "Input/output options",
             "type": "object",
             "fa_icon": "fas fa-terminal",
-            "description": "Define where the pipeline should find input data and save output data.",
+            "description": "Define where the pipeline should find input data and save output data",
             "properties": {
                 "outdir": {
                     "type": "string",
-                    "description": "The output directory where the results will be saved.",
+                    "description": "Output directory",
                     "default": "./results",
-                    "fa_icon": "fas fa-folder-open"
+                    "fa_icon": "fas fa-folder-open",
+                    "help_text": "All the results of the pipeline will be stored under that directory."
                 },
                 "shortreads": {
                     "type": "string",
-                    "description": "Input short reads"
+                    "description": "Input short reads",
+                    "fa_icon": "fas fa-copy",
+                    "help_text": "Set path to your input short reads (paired or single end). For paired, users must use the following notation: \"path/to/dir/pattern*_{1,2}.fastq\".\n\nIt can be gzipped or not. The *_{1,2}* regex is required so that nextflow can properly load the exact read pairs."
                 },
                 "shortreads_type": {
                     "type": "string",
-                    "description": "Short reads are paired or single?"
+                    "description": "Short reads are paired or single?",
+                    "help_text": "Which is the sequencing library used for your input reads? 'paired' or 'single'?\n\nNote: single notation is used for unpaired data."
                 },
                 "nanopore_fastq": {
                     "type": "string",
-                    "description": "Input nanopore longreads"
+                    "description": "Input nanopore longreads",
+                    "fa_icon": "fas fa-file",
+                    "help_text": "Path to your nanopore reads. It can be gzipped or not."
                 },
                 "pacbio_bamPath": {
                     "type": "string",
-                    "description": "Input pacbio subreads (.bam)"
+                    "description": "Input pacbio subreads (.bam)",
+                    "fa_icon": "fas fa-file",
+                    "help_text": "Path to pacbio subreads in bam format. This applies to the majority of pacbio sequencers and chemistries."
                 },
                 "pacbio_h5Path": {
                     "type": "string",
-                    "hidden": true,
-                    "description": "Input pacbio reads (.h5)"
+                    "description": "Folder with pacbio reads (.h5)",
+                    "fa_icon": "fas fa-folder",
+                    "help_text": "Set path to the directory containing your pacbio reads in legacy (.h5) format. This applies to old/legacy pacbio sequencers and chemistries."
                 }
             },
             "required": [
@@ -68,7 +81,9 @@
             "properties": {
                 "threads": {
                     "type": "integer",
-                    "description": "Amount of threads to use"
+                    "description": "Amount of threads to use",
+                    "fa_icon": "fas fa-microchip",
+                    "help_text": "Set the max number of threads to allocate for each process. "
                 }
             }
         },
@@ -79,17 +94,45 @@
             "description": "Additional / Optional parameters",
             "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
             "properties": {
+                "lreads_min_length": {
+                    "type": "integer",
+                    "description": "Min. length for long reads",
+                    "help_text": "It uses nanofilt to filter nanopore and pacbio long reads by a min. length threshold.",
+                    "fa_icon": "fas fa-ruler-horizontal"
+                },
+                "lreads_min_quality": {
+                    "type": "integer",
+                    "description": "Min. quality for long reads",
+                    "help_text": "It uses nanofilt to filter nanopore and pacbio long reads by a min. quality threshold.",
+                    "fa_icon": "fas fa-filter"
+                },
                 "nanopore_is_barcoded": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "fa_icon": "fas fa-barcode",
+                    "description": "Nanopore reads are barcoded?",
+                    "help_text": "You have barcoded nanopore reads? When using this paremeter the pipeline triggers porechop to demultiplex the data."
                 },
                 "nanopore_sequencing_summary": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Path to nanopore sequencing summary",
+                    "help_text": "Optional. Path to nanopore sequencing summary. If given, the pipeline will trigger pycoQC to calculate nanopore long reads statistics.",
+                    "fa_icon": "fas fa-file"
                 },
-                "pacbio_is_barcoded": {
-                    "type": "boolean"
+                "pacbio_barcodes": {
+                    "type": "string",
+                    "fa_icon": "fas fa-barcode",
+                    "description": "Path to pacbio barcodes",
+                    "help_text": "You have barcoded pacbio reads? This parameter sets path the your pacbio barcodes in fasta or xml. It will use this barcodes to demultiplex the data."
+                },
+                "pacbio_barcode_design": {
+                    "type": "string",
+                    "description": "Pacbio barcode design (same, different, any)",
+                    "help_text": "For demultiplexing you can choose how to associate the barcodes: same, different or any type of combination.\n\nBy default, only reads with 'same' barcodes in both ends are demultiplexed."
                 },
                 "pacbio_get_hifi": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Try to obtain hifi reads?",
+                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error."
                 }
             }
         },
@@ -100,34 +143,63 @@
             "default": "",
             "properties": {
                 "clip_r1": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Clip n bases from 5' end of read pair 1 (or unpaired)",
+                    "help_text": "Tells trim_galore the amount of bases to trim from the 5' end of unpaired or read pair 1.",
+                    "fa_icon": "fas fa-cut"
                 },
                 "clip_r2": {
-                    "type": "integer"
+                    "type": "integer",
+                    "help_text": "Tells trim_galore the amount of bases to trim from the 5' end of read pair 2.",
+                    "description": "Clip n bases from 5' end of read pair 2",
+                    "fa_icon": "fas fa-cut"
                 },
                 "three_prime_clip_r1": {
-                    "type": "integer"
+                    "type": "integer",
+                    "help_text": "Tells trim_galore the amount of bases to trim from the 3' end of unpaired or read pair 1.",
+                    "description": "Clip n bases from 3' end of read pair 1 (or unpaired)",
+                    "fa_icon": "fas fa-cut"
                 },
                 "three_prime_clip_r2": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Clip n bases from 3' end of read pair 2",
+                    "help_text": "Tells trim_galore the amount of bases to trim from the 3' end of read pair 2.",
+                    "fa_icon": "fas fa-cut"
                 },
                 "quality_trim": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Base quality threshold for trim_galore",
+                    "help_text": "Tells to trim_galore the base quality threshold to use when trimming.",
+                    "fa_icon": "fas fa-filter"
                 },
                 "lighter_execute": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Correct reads with lighter?",
+                    "help_text": "Run short reads correction step with lighter.",
+                    "fa_icon": "fas fa-check-double"
                 },
                 "lighter_kmer": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Tells lighter the k-mer to use",
+                    "fa_icon": "fas fa-arrows-alt-h",
+                    "help_text": "Sets the k-mer to be used by lighter when correcting the reads"
                 },
                 "lighter_genomeSize": {
-                    "type": "string"
+                    "type": "string",
+                    "fa_icon": "fas fa-arrows-alt-h",
+                    "description": "Tells lighter the expected genome size",
+                    "help_text": "Lighter requires an expected genome size in order to correct the reads"
                 },
                 "lighter_alpha": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Ligther alpha value",
+                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it"
                 },
                 "flash_execute": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Merge read pairs?",
+                    "help_text": "If used, the pipeline will use FLASH to merge paired reads.",
+                    "fa_icon": "fab fa-confluence"
                 }
             },
             "fa_icon": "fas fa-file-import"
