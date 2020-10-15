@@ -39,6 +39,7 @@ def helpMessage() {
 
     --threads <int>                        Number of threads to use
 
+
             Parameters for preprocessing shortreads
 
     --shortreads <string>                  String Pattern to find short reads. Example: SRR6307304_{1,2}.fastq
@@ -66,6 +67,13 @@ def helpMessage() {
 
     --flash_execute                        If set, FLASH will be executed to merge paired end reads
 
+
+            Parameters for filtering both nanopore or pacbio long reads
+
+    --lreads_min_length <int>              If set, the pipeline will filter the longreads by this minimun length.
+
+    --lreads_min_quality <int>             If set, the pipeline will filter the longreads by this minimun quality.
+
             Parameters for preprocessing nanopore ONT longreads
 
     --nanopore_fastq <string>              Path to ONT basecalled reads.
@@ -91,7 +99,7 @@ def helpMessage() {
                                            of the same SMRTbell molecule. Therefore, the bam files used as input must already be merged since this tool
                                            takes one bam (from one movie) at a time. Can be used for the legacy *.bas.h5 since this pipeline
                                            automatically creates one subreads.bam for each single movies (each *.bas.h5). If the chemistry is incompatible
-                                           with ccs an error will be thrown and you can re-run the pipeline without this parameter, using '-resume'.
+                                           with ccs an error will be thrown and you can re-run the pipeline removing this parameter, using '-resume'.
 
    """.stripIndent()
 }
@@ -116,22 +124,23 @@ def exampleMessage() {
 --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --shortreads_type "single" --clip_r1 5 --three_prime_clip_r1 5
 
 
-      ONT reads:
+      ONT reads (filtering reads by length and quality):
 
 ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/ont \
---nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq
+--nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq --lreads_min_length 500 --lreads_min_quality 10
 
 
-      Pacbio raw (subreads.bam) reads with nextflow general report (with CCS attempt)
+      Pacbio raw (subreads.bam) reads with nextflow general report (filtering reads by length and quality)
 
 ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/pacbio --pacbio_get_hifi \
---pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam -with-report
+--pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam \
+--lreads_min_length 500 --lreads_min_quality 15
 
 
-      Pacbio raw (legacy .bas.h5 to subreads.bam) reads (with CCS attempt)
+      Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
 ./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
---outdir E01_1/Analysis_Results/preprocessed --threads 3 --pacbio_get_hifi
+--outdir E01_1/Analysis_Results/preprocessed --threads 3
 
    """.stripIndent()
 }
@@ -249,6 +258,12 @@ params.lighter_alpha = false
 params.flash_execute = false
 
 /*
+ * Parameters for longreads filtering
+ */
+params.lreads_min_quality = false
+params.lreads_min_length  = false
+
+/*
  * Parameters for nanopore longreads
  */
 params.nanopore_fastq = ''
@@ -261,7 +276,7 @@ params.nanopore_sequencing_summary = ''
 params.pacbio_bamPath = ''
 params.pacbio_h5Path = ''
 params.pacbio_barcodes = ''
-params.pacbio_barcode_design = 'any'
+params.pacbio_barcode_design = 'same'
 params.pacbio_get_hifi = false
 
 /*
@@ -285,6 +300,9 @@ log.info "==================================="
 include { porechop } from './modules/porechop.nf' params(outdir: params.outdir)
 
 include { nanopack; nanopack as nanopack_hifi } from './modules/nanopack.nf' params(outdir: params.outdir)
+
+include { lreads_filter; lreads_filter as lreads_filter_hifi } from './modules/lreads_filter.nf' params(outdir: params.outdir,
+  lreads_min_length: params.lreads_min_length, lreads_min_quality: params.lreads_min_quality)
 
 include { pycoQC } from './modules/pycoQC.nf' params(outdir: params.outdir)
 
@@ -323,6 +341,9 @@ workflow nanopore_nf {
   main:
     porechop(reads, threads, barcode)
     nanopack(porechop.out[0].flatten(), threads)
+    if (params.lreads_min_length || params.lreads_min_quality) {
+      lreads_filter(porechop.out[0].flatten())
+    }
 }
 
 workflow pycoQC_nf {
@@ -340,11 +361,17 @@ workflow pacbio_bam_nf {
   main:
     pacbio_bam2fastq(subreads, barcodes)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+    if (params.lreads_min_length || params.lreads_min_quality) {
+      lreads_filter(pacbio_bam2fastq.out[0].flatten())
+    }
 
     // User wants to get hifi?
     if (params.pacbio_get_hifi) {
       pacbio_bam2hifi(subreads, barcodes)
       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+      if (params.lreads_min_length || params.lreads_min_quality) {
+        lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
+      }
     }
 }
 
@@ -359,11 +386,17 @@ workflow pacbio_bas_nf {
     bams = pacbio_h52bam.out[0]
     pacbio_bam2fastq(bams, barcodes)
     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+    if (params.lreads_min_length || params.lreads_min_quality) {
+      lreads_filter(pacbio_bam2fastq.out[0].flatten())
+    }
 
     // User wants to get hifi?
     if (params.pacbio_get_hifi) {
       pacbio_bam2hifi(bams, barcodes)
       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+      if (params.lreads_min_length || params.lreads_min_quality) {
+        lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
+      }
     }
 }
 
