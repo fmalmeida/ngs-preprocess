@@ -42,7 +42,7 @@
                     "type": "string",
                     "description": "Input short reads",
                     "fa_icon": "fas fa-copy",
-                    "help_text": "Set path to your input short reads (paired or single end). For paired, users must use the following notation: \"path/to/dir/pattern*_{1,2}.fastq\".\n\nIt can be gzipped or not. The *_{1,2}* regex is required so that nextflow can properly load the exact read pairs."
+                    "help_text": "Set path to your input short reads (paired or single end). For paired, users must use the following notation: \"path/to/dir/pattern*_{1,2}.fastq\".\n\nIt can be gzipped or not. The *_{1,2}* regex is required so that nextflow can properly load the exact read pairs. Read more [in their manual](https://www.nextflow.io/docs/latest/channel.html#fromfilepairs)."
                 },
                 "shortreads_type": {
                     "type": "string",

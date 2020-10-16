@@ -29,4 +29,4 @@ Be careful, lima enables that users demultiplex data by same, different or any k
 
 ### longreads filtering
 
-Using [nanofilt](https://github.com/wdecoster/nanofilt) we have added the possibility that users filter their long reads based on min. length and quality thresholds. Check the `--lreads_min_length` and `--lreads_min_quality` parameters.
+Using [nanofilt](https://github.com/wdecoster/nanofilt) we have added the possibility that users filter their long reads (ONT or Pacbio) based on min. length and quality thresholds. Check the `--lreads_min_length` and `--lreads_min_quality` parameters.

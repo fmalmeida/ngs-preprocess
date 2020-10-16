@@ -14,6 +14,8 @@ sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the fol
 * `Porechop <https://github.com/rrwick/Porechop>`_
 * `bax2bam <https://github.com/PacificBiosciences/bax2bam>`_
 * `bam2fastx <https://github.com/PacificBiosciences/bam2fastx>`_
+* `lima <https://github.com/PacificBiosciences/barcoding>`_
+* `pacbio ccs <https://ccs.how/>`_
 * `NanoPack <https://github.com/wdecoster/nanopack>`_
 * `pycoQC <https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam>`_
 

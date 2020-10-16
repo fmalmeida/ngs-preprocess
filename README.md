@@ -84,7 +84,7 @@ nf-core launch fmalmeida/ngs-preprocess
 It will result in the following:
 
 <p align="center">
-<img src="./images/nf-core-asking.png" width="400px"/>
+<img src="./images/nf-core-asking.png" width="500px"/>
 </p>
 
 <p align="center">
@@ -95,40 +95,9 @@ It will result in the following:
 
 This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
 
-### Command line usage examples:
+### Command line usage examples
 
-> Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be double quoted as the example below.
-
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_paired \
-    --shortreads "illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" \
-    --lighter_execute --lighter_genomeSize 4.6m --clip_r1 5 --three_prime_clip_r1 5 \
-    --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
-
-> Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
-
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_single \
-    --shortreads "illumina/SRR9696*.fastq.gz" --shortreads_type "single" \
-    --clip_r1 5 --three_prime_clip_r1 5
-
-> ONT barcoded reads (fastq)
-
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/ont \
-    --nanopore_fastq kpneumoniae_25X.fastq --nanopore_is_barcoded
-
-> Pacbio raw barcoded (subreads.bam) reads
-
-    ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/pacbio \
-    --pacbio_bamPath pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam \
-    --pacbio_is_barcoded
-
-> Pacbio raw (legacy .bas.h5 to subreads.bam) reads
-
-    ./nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
-    --outdir E01_1/Analysis_Results/preprocessed --threads 3
-
-> Running with a configuration file
-
-    ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
+Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
 
 ### Using the configuration file
 

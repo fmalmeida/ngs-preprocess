@@ -28,6 +28,10 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
     ``docker pull fmalmeida/ngs-preprocess``
 
+6. (Optional) Install nf-core
+
+    ``pip install nf-core>=1.10``
+
 .. note::
 
   Now, everything is set up and ready to run.

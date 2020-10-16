@@ -13,22 +13,68 @@ Default configuration:
 .. code-block:: groovy
 
   /*
-   * Configuration File to run fmalmeida/ngs-preprocess pipeline.
+
+
+                                        fmalmeida/ngs-preprocess pipeline configuration file
+
+                      Maintained by Felipe Marques de Almeida
+                      Contact: almeidafmarques@outlook.com
+
+                      This file conatains all the parameters that are required by the pipeline.
+                      Some of them can be left in blank and other ones need a proper configuration.
+                      Every file containing a parameter will contain comments to guide its configuration.
+
+
+
+
    */
 
   /*
-   * Customizable parameters
+
+
+                      Customizable parameters
+
+                      All parameters are set under the params {} function.
+
+                      Please do not change anything before the = sign.
+
+                      Fields must be configured and set with values after the = sign.
+
+                                  E.g. param1 = 'user_value_1'
+
+
    */
+
   params {
     /*
-     * General (mandatory) Parameters
+
+
+                      General (mandatory) Parameters
+
+
      */
-    outdir = 'output'                                     // Sets output directory
-    threads = 2                                           // Sets number of threads to be used
+
+    outdir  = 'output'                                     // Sets output directory
+    threads = 2                                            // Sets number of threads to be used
 
     /*
-     * Parameters for short reads preprocessing
+
+
+                      NF tower setup parameters
+
+    */
+
+    use_tower   = false
+    tower_token = ''
+
+    /*
+
+
+                      Parameters for short reads preprocessing
+
+
      */
+
     shortreads = ''                                       // Path to shortreads. Examples: 'SRR6307304_{1,2}.fastq' | 'SRR7128258*'
     shortreads_type = ''                                  // Type of shortreads. Values: paired | single
     clip_r1 = 0                                           // Number of bases to ALWAYS clip from 5' (read 1) end, despite base qualities
@@ -44,55 +90,43 @@ Default configuration:
     flash_execute = false                                 // Tells wheter or not to merge paired reads with FLASH
 
     /*
-     * Parameters for nanopore ONT longreads preprocessing
+
+                        Optional parameter for filtering longreads from pacbio or nanopore.
+                        This command uses nanofilt for both technologies. If you prefer to
+                        filter reads from any technology with a different program you can
+                        left it blank and it you not be executed.
+
+    */
+    lreads_min_quality =                                  // If blank, lreads will not be filtered.
+    lreads_min_length  =                                  // If blank, lreads will not be filtered.
+
+    /*
+
+
+                        Parameters for nanopore ONT longreads preprocessing
+
+
      */
+
     nanopore_fastq = ''                                   // Path to nanopore ONT basecalled reads in fastq
     nanopore_is_barcoded = false                          // Tells wheter or not nanopore reads are barcoded
                                                           // It will split barcodes into single files
     nanopore_sequencing_summary = ''                      // Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a
-                                                        // sequencing statistics report using pycoQC
+                                                          // sequencing statistics report using pycoQC
 
     /*
-     * Parameters for PacBio longreads preprocessing
+
+
+                        Parameters for PacBio longreads preprocessing
+
+                        Use bamPath or h5Path, not both.
+
+
      */
-    pacbio_bamPath = ''                                   // Path to PacBio subreads in bam format
-    pacbio_h5Path = ''                                    // Path to directory containing legacy *.bas.h5 data (1 per directory)
+
+    pacbio_bamPath  = ''                                   // Path to PacBio subreads in bam format
+    pacbio_h5Path   = ''                                   // Path to directory containing legacy *.bas.h5 data (1 per directory)
+    pacbio_barcodes = ''                                   // Inform the pipeline that the data is barcoded.
+    pacbio_get_hifi = false                                // Whether or not to try to compute CCS reads
 
   }
-
-  /*
-   * Configuring Nextflow Scopes.
-   * Enable or not the production of Nextflow Reports
-   */
-
-  //Trace Report
-  trace {
-      enabled = false
-      file = "${params.outdir}" + "/annotation_pipeline_trace.txt"
-      fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
-  }
-
-  //Timeline Report
-  timeline {
-      enabled = false
-      file = "${params.outdir}" + "/annotation_pipeline_timeline.html"
-  }
-
-  //Complete Report
-  report {
-      enabled = false
-      file = "${params.outdir}" + "/annotation_pipeline_nextflow_report.html"
-  }
-
-  /*
-   * Configuration of nextflow run
-   */
-  executor.$local.queueSize = 1                             // Sets nextflow queue limit.
-                                                            // Is the number of processes to run in parallel.
-
-  /*
-   * Set Docker usage
-   * DO NOT CHANGE
-   */
-  docker.enabled = true
-  docker.runOptions = '-u $(id -u):root'

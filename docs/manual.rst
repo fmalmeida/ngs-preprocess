@@ -20,6 +20,11 @@ Input
   Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
   such as \* the pipeline will process each pair separately.
 
+.. tip::
+
+  The parameters `--use_tower` and `--tower_token` allows the user to launch the pipeline via
+  `nextflow tower <https:://tower.nf>`_ in order to visualize its execution.
+
 
 Usage example
 =============
@@ -107,6 +112,16 @@ Usage example
      - False
      - If set, FLASH will be executed to merge paired end reads
 
+   * - ``--lreads_min_length``
+     - N
+     - NA
+     - Length min. threshold for filtering long reads (ONT or Pacbio).
+
+   * - ``--lreads_min_quality``
+     - N
+     - NA
+     - Quality min. threshold for filtering long reads (ONT or Pacbio).
+
    * - ``--nanopore_fastq``
      - Y
      - NA
@@ -132,10 +147,20 @@ Usage example
      - NA
      - Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory
 
-   * - ``--pacbio_is_barcoded``
+   * - ``--pacbio_barcodes``
      - N
      - False
-     - Inform the pipeline that the data is barcoded. It will split barcodes into single files.
+     - Path to xml/fasta file containing barcode information. It will split barcodes into single files.
+
+   * - ``--pacbio_barcode_design``
+     - N
+     - same
+     - Select the combination of barcodes for demultiplexing. Options: same, different, any.
+
+   * - ``--pacbio_get_hifi``
+     - N
+     - False
+     - Whether or not to try to compute CCS reads
 
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
