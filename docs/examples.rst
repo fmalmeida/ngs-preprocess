@@ -10,7 +10,7 @@ CLI usage Examples
 
 .. tip::
 
-  The parameters `--use_tower` and `--tower_token` allows the user to launch the pipeline via `nextflow tower <https:://tower.nf>`_ in order to visualize its execution.
+  The parameters `--use_tower` and `--tower_token` allows the user to launch the pipeline via `nextflow tower <https://tower.nf>`_ in order to visualize its execution.
 
 Illumina paired end reads.
 """"""""""""""""""""""""""
@@ -45,6 +45,10 @@ ONT reads (fastq)
 
   ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir sample_dataset/outputs/ont \
   --nanopore_fastq sample_dataset/ont/kpneumoniae_25X.fastq --lreads_min_length 1000
+
+.. note::
+
+  The parameter ``--lreads_min_length`` applies a min. read length threshold to filter the reads.
 
 Pacbio raw (subreads.bam) reads
 """""""""""""""""""""""""""""""

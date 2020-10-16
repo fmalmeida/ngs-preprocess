@@ -23,9 +23,9 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [Quickstart](https://github.com/fmalmeida/ngs-preprocess#quickstart)
 * [Documentation](https://github.com/fmalmeida/ngs-preprocess#documentation)
   * [Full usage](https://github.com/fmalmeida/ngs-preprocess#usage)
-  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#interactive-graphical-configuration-and-execution)
   * [Command line examples](https://github.com/fmalmeida/ngs-preprocess#command-line-usage-examples)
   * [Configuration File](https://github.com/fmalmeida/ngs-preprocess#using-the-configuration-file)
+  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#interactive-graphical-configuration-and-execution)
 
 ## Requirements
 
@@ -55,11 +55,39 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 
 ### Usage
 
-* Complete command line explanation of paramters:
+* Complete command line explanation of parameters:
     + `nextflow run fmalmeida/ngs-preprocess --help`
 * See usage examples in the command line:
     + `nextflow run fmalmeida/ngs-preprocess --examples`
 * However, users are encouraged to read the [complete online documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
+
+### Command line usage examples
+
+Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
+
+### Using the configuration file
+
+All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/ngs-preprocess -c ./configuration-file`
+
+Your configuration file is what will tell to the pipeline the type of data you have, and which processes to execute. Therefore, it needs to be correctly set up.
+
+Create a configuration file in your working directory:
+
+* Complete config:
+
+      nextflow run fmalmeida/ngs-preprocess --get_full_config
+
+* For Illumina data:
+
+      nextflow run fmalmeida/ngs-preprocess --get_illumina_config
+
+* For Pacbio data:
+
+      nextflow run fmalmeida/ngs-preprocess --get_pacbio_config
+
+* For ONT data:
+
+      nextflow run fmalmeida/ngs-preprocess --get_ont_config
 
 ### Interactive graphical configuration and execution
 
@@ -94,34 +122,6 @@ It will result in the following:
 #### nextflow tower
 
 This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
-
-### Command line usage examples
-
-Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
-
-### Using the configuration file
-
-All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/ngs-preprocess -c ./configuration-file`
-
-Your configuration file is what will tell to the pipeline the type of data you have, and which processes to execute. Therefore, it needs to be correctly set up.
-
-Create a configuration file in your working directory:
-
-* Complete config:
-
-      nextflow run fmalmeida/ngs-preprocess --get_full_config
-
-* For Illumina data:
-
-      nextflow run fmalmeida/ngs-preprocess --get_illumina_config
-
-* For Pacbio data:
-
-      nextflow run fmalmeida/ngs-preprocess --get_pacbio_config
-
-* For ONT data:
-
-      nextflow run fmalmeida/ngs-preprocess --get_ont_config
 
 # Citation
 
