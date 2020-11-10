@@ -49,7 +49,7 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 
 3. Give it a try:
 
-       nextflow fmalmeida/ngs-preprocess --help
+       nextflow run fmalmeida/ngs-preprocess --help
 
 ## Documentation
 
