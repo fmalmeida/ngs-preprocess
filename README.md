@@ -43,6 +43,10 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 
           docker pull fmalmeida/ngs-preprocess
 
+> Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
+the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
+The latest release will always have its docker image in dockerhub.
+
 2. Install Nextflow (version 20.01 or higher):
 
        curl -s https://get.nextflow.io | bash
@@ -50,6 +54,8 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 3. Give it a try:
 
        nextflow run fmalmeida/ngs-preprocess --help
+
+> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/ngs-preprocess`
 
 ## Documentation
 
