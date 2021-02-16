@@ -62,6 +62,11 @@ Usage example
      - 2
      - Number of threads to use
 
+   * - ``--parallel_jobs``
+     - N
+     - 1
+     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+
    * - ``--shortreads``
      - Y
      - NA
