@@ -56,6 +56,11 @@ Default configuration:
 
     outdir  = 'output'                                     // Sets output directory
     threads = 2                                            // Sets number of threads to be used
+    parallel_jobs = 1                                      // Number of jobs to run in parallel. Be aware that each job (in parallel) can consume
+                                                           // N threads (set above). Be sure to carefully check your resources before augmenting
+                                                           // this parameter. For example: parallel_jobs = 2 + threads = 5 can consume until 10
+                                                           // threads at once.
+
 
     /*
 
