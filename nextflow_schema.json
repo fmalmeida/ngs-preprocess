@@ -84,6 +84,12 @@
                     "description": "Amount of threads to use",
                     "fa_icon": "fas fa-microchip",
                     "help_text": "Set the max number of threads to allocate for each process. "
+                },
+                "parallel_jobs": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
+                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory."
                 }
             }
         },
