@@ -45,7 +45,7 @@ def pacbioMessage() {
 /*
  * Define log message
  */
-def log() {
+def logMessage() {
   log.info "==================================="
   log.info " fmalmeida/ngs-preprocess pipeline "
   log.info "==================================="
