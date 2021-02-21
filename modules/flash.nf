@@ -11,11 +11,11 @@ process flash {
     file reads
     val threads
   output:
-    file "flash_merge*"
+    file "${reads[0]}*"
 
   script:
   """
   source activate flash ;
-  flash -q -o flash_merge -z -t ${threads} ${reads[1]} ${reads[2]} &> flash.log;
+  flash -q -o ${reads[0]} -z -t ${threads} ${reads[1]} ${reads[2]} &> flash.log;
   """
 }
