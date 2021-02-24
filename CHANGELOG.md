@@ -15,8 +15,6 @@ We have added a nextflow parameter schema in json that is compliant with nf-core
 nf-core launch fmalmeida/ngs-preprocess
 ```
 
-Checkout the paremeters `--use_tower` and `--tower_token` to activate pipeline execution in nextflow tower.
-
 ### pacbio hifi
 
 We have added the possibility for users to call high fidelity reads with [pacbio ccs](https://ccs.how/) software. For this, users must use the parameter `--pacbio_get_hifi`

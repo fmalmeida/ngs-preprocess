@@ -61,17 +61,6 @@ Default configuration:
                                                            // this parameter. For example: parallel_jobs = 2 + threads = 5 can consume until 10
                                                            // threads at once.
 
-
-    /*
-
-
-                      NF tower setup parameters
-
-    */
-
-    use_tower   = false
-    tower_token = ''
-
     /*
 
 

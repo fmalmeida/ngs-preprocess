@@ -125,10 +125,6 @@ It will result in the following:
 <img src="./images/nf-core-gui.png" width="400px"/>
 </p>
 
-#### nextflow tower
-
-This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
-
 # Citation
 
 To cite this tool please refer to our Zenodo tag or directly via the github url.

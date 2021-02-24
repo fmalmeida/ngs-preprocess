@@ -8,10 +8,6 @@ CLI usage Examples
   Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
   such as \* the pipeline will process each pair separately.
 
-.. tip::
-
-  The parameters `--use_tower` and `--tower_token` allows the user to launch the pipeline via `nextflow tower <https://tower.nf>`_ in order to visualize its execution.
-
 Illumina paired end reads.
 """"""""""""""""""""""""""
 

@@ -5,26 +5,6 @@
     "description": "",
     "type": "object",
     "definitions": {
-        "nf_tower_options": {
-            "title": "NF Tower options",
-            "type": "object",
-            "description": "Define your tokens of NF tower",
-            "default": "",
-            "properties": {
-                "use_tower": {
-                    "type": "boolean",
-                    "description": "Launch in NF tower?",
-                    "help_text": "This sets wheter you want or not to run the pipeline interactively in your nextflow tower section. Default is not to.",
-                    "fa_icon": "fas fa-gopuram"
-                },
-                "tower_token": {
-                    "type": "string",
-                    "description": "Your NF tower token",
-                    "help_text": "If running interactively in nextflow tower you need to supply your nf-tower user token.",
-                    "fa_icon": "fas fa-address-card"
-                }
-            }
-        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -212,9 +192,6 @@
         }
     },
     "allOf": [
-        {
-            "$ref": "#/definitions/nf_tower_options"
-        },
         {
             "$ref": "#/definitions/input_output_options"
         },

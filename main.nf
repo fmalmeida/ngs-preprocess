@@ -10,13 +10,13 @@ nextflow.enable.dsl=2
  */
 include { helpMessage } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
-include { paramsCheck } from './nf_functions/paramsCheck.nf'
+//include { paramsCheck } from './nf_functions/paramsCheck.nf'
 include { configMessage; illuminaMessage; ontMessage; pacbioMessage; logMessage } from './nf_functions/logMessages.nf'
 
 /*
  * Check parameters
  */
-paramsCheck()
+//paramsCheck()
 params.help = false
 if (params.help){
   helpMessage()

@@ -20,11 +20,6 @@ Input
   Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
   such as \* the pipeline will process each pair separately.
 
-.. tip::
-
-  The parameters `--use_tower` and `--tower_token` allows the user to launch the pipeline via
-  `nextflow tower <https://tower.nf>`_ in order to visualize its execution.
-
 
 Usage example
 =============
@@ -41,16 +36,6 @@ Usage example
      - Required
      - Default value
      - Description
-
-   * - ``--use_tower``
-     - N
-     - False
-     - Triggers the pipeline to be launched via nextflow tower
-
-   * - ``--tower_token``
-     - Y (if ``--use_tower``)
-     - NA
-     - Your nextflow tower token. Used to launch the pipeline in your nextflow tower account.
 
    * - ``--outdir``
      - Y
