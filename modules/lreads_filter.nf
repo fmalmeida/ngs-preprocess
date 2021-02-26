@@ -17,6 +17,6 @@ process lreads_filter {
   source activate nanopack;
 
   # Filtering
-  gunzip -f -c $reads | NanoFilt ${quality} ${length} | gzip > ${id}-filtered-reads.fastq.gz ;
+  gunzip -f -c $reads | NanoFilt ${quality} ${length} | gzip > ${id}_filtered.fastq.gz ;
   """
 }
