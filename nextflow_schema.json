@@ -27,7 +27,11 @@
                 "shortreads_type": {
                     "type": "string",
                     "description": "Short reads are paired or single?",
-                    "help_text": "Which is the sequencing library used for your input reads? 'paired' or 'single'?\n\nNote: single notation is used for unpaired data."
+                    "help_text": "Which is the sequencing library used for your input reads? 'paired' or 'single'?\n\nNote: single notation is used for unpaired data.",
+                    "enum": [
+                        "paired",
+                        "single"
+                    ]
                 },
                 "nanopore_fastq": {
                     "type": "string",
