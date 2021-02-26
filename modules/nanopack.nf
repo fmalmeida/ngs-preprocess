@@ -3,7 +3,7 @@ process nanopack {
   // Loads the necessary Docker image
   container 'fmalmeida/ngs-preprocess'
   tag "Checking longreads qualities with Nanopack"
-  validExitStatus 0,1 // To momentainaly fix problem with matplotlib
+  //validExitStatus 0,1 // To momentainaly fix problem with matplotlib
 
   input:
     file reads
