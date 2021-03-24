@@ -1,6 +1,24 @@
-# ngs-preprocess pipeline
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3451405.svg)](https://doi.org/10.5281/zenodo.3451405) [![Releases](https://img.shields.io/github/v/release/fmalmeida/ngs-preprocess)](https://github.com/fmalmeida/ngs-preprocess/releases) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/ngs--preprocess-informational)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/ngs-preprocess)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/ngs-preprocess) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3451405.svg)](https://doi.org/10.5281/zenodo.3451405) [![Releases](https://img.shields.io/github/v/release/fmalmeida/ngs-preprocess)](https://github.com/fmalmeida/ngs-preprocess/releases) [![Build Status](https://travis-ci.com/fmalmeida/ngs-preprocess.svg?branch=master)](https://travis-ci.com/fmalmeida/ngs-preprocess) [![Dockerhub](https://img.shields.io/badge/Docker-ngs--preprocess-informational)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/ngs-preprocess)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/ngs-preprocess) [![Documentation Status](https://readthedocs.org/projects/ngs-preprocess/badge/?version=latest)](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest) [![](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE)
+<p align="center">
+  <!-- <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a> -->
+
+  <h1 align="center">ngs-preprocess pipeline</h2>
+
+  <p align="center">
+    <h3 align="center">A pipeline for preprocessing short and long sequencing reads</h3>
+    <br />
+    <a href="https://ngs-preprocess.readthedocs.io/en/latest/index.html"><strong>See the documentation »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/fmalmeida/ngs-preprocess/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/fmalmeida/ngs-preprocess/issues">Request Feature</a>
+  </p>
+</p>
+
 
 
 ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-of-the-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow). It wraps up the following software:
