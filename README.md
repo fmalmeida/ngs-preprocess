@@ -19,7 +19,7 @@
   </p>
 </p>
 
-
+## About
 
 ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-of-the-art software for pre-procesing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow). It wraps up the following software:
 
