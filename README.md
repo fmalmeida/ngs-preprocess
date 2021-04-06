@@ -35,16 +35,6 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [pacbio ccs](https://ccs.how/)
 * [NanoPack](https://github.com/wdecoster/nanopack).
 
-## Table of contents
-
-* [Requirements](https://github.com/fmalmeida/ngs-preprocess#requirements)
-* [Quickstart](https://github.com/fmalmeida/ngs-preprocess#quickstart)
-* [Documentation](https://github.com/fmalmeida/ngs-preprocess#documentation)
-  * [Full usage](https://github.com/fmalmeida/ngs-preprocess#usage)
-  * [Command line examples](https://github.com/fmalmeida/ngs-preprocess#command-line-usage-examples)
-  * [Configuration File](https://github.com/fmalmeida/ngs-preprocess#using-the-configuration-file)
-  * [Interactive and graphical execution](https://github.com/fmalmeida/ngs-preprocess#interactive-graphical-configuration-and-execution)
-
 ## Requirements
 
 * Unix-like operating system (Linux, macOS, etc)
@@ -55,8 +45,7 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 
 ## Quickstart
 
-1. If you don't have it already install Docker in your computer. Read more [here](https://docs.docker.com/).
-    * You can give this [in-house script](https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh) a try.
+1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker image
 
           docker pull fmalmeida/ngs-preprocess
@@ -79,11 +68,12 @@ The latest release will always have its docker image in dockerhub.
 
 ### Usage
 
+<a href="https://ngs-preprocess.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
+
 * Complete command line explanation of parameters:
     + `nextflow run fmalmeida/ngs-preprocess --help`
 * See usage examples in the command line:
     + `nextflow run fmalmeida/ngs-preprocess --examples`
-* However, users are encouraged to read the [complete online documentation](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest).
 
 ### Command line usage examples
 
