@@ -21,9 +21,7 @@ def helpMessage() {
    nextflow run fmalmeida/ngs-preprocess --examples
 
    Execution Reports:
-   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-report
-   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-trace
-   nextflow run fmalmeida/ngs-preprocess [ -c nextflow.config ] -with-timeline
+   nextflow run fmalmeida/ngs-preprocess [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
    OBS: These reports can also be enabled through the configuration file.
    OBS 2: Make sure parameters set are double quoted
