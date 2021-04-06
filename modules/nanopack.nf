@@ -16,12 +16,10 @@ process nanopack {
   """
   source activate nanopack;
   # Plotting
-  #NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot -f svg --N50 \
-  #--title "${id} sample" --plots hex dot pauvre kde ;
+  #NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot --N50 --title "${id} sample" --plots hex dot pauvre kde ;
 
   # nanoplot is currently having problems with pauvre ... let's not do it
-  NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot -f svg --N50 \
-  --title "${id} sample" --plots hex dot kde ;
+  NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot  --N50 --title "${id} sample" --plots hex dot kde ;
 
   # Checking Quality
   nanoQC -o ${id}_nanoQC ${reads} ;
