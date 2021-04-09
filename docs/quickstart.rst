@@ -4,95 +4,58 @@ Quickstart
 **********
 
 Overview
---------
+========
 
-We will use few test cases for evaluating the pipeline's commands and workflow.
+As an use case, we will use 30X of one of the *Escherichia coli* sequencing data (Biosample: `SAMN10819847 <https://www.ncbi.nlm.nih.gov/biosample/10819847>`_)
+that is available from a recent study that compared the use of different long read technologies in hybrid assembly of 137 bacterial genomes [`4 <https://doi.org/10.1099/mgen.0.000294>`_].
 
-* `Dataset 1 <https://drive.google.com/file/d/1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws/view?usp=sharing>`_.
+Get the data
+------------
 
-    * Oxford Nanopore data (FAST5 and FASTQ);
-    * Illumina paired end reads;
-
-* `Dataset 2 <https://github.com/PacificBiosciences/DevNet/wiki/E.-coli-Bacterial-Assembly>`_
-
-    * Pacbio data (including metadata.xml, bas.h5, and bax.h5 files);
-
-Getting the data
-================
-
-Users can download the data with the command below.
-
-Add to your ``bashrc`` or ``bash_aliases``
-""""""""""""""""""""""""""""""""""""""""""
+We have made this subsampled dataset available in `Figshare <https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585>`_.
 
 .. code-block:: bash
 
-  function gdrive_download () {
-  CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate \
-  "https://docs.google.com/uc?export=download&id=$1" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
-  wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$1" -O $2
-  rm -rf /tmp/cookies.txt
-  }
+  # Download data from figshare
+  wget -O reads.zip https://ndownloader.figshare.com/articles/14036585/versions/4
+
+  # Unzip
+  unzip reads.zip
+
+
+Now we have the necessary data to perform the quickstart.
+
+.. note::
+
+  The pipeline will always use the fastq file name as prefix for sub-folders and output files. For instance, if users use a fastq file named SRR7128258.fastq the output files and directories will have the string "SRR7128258" in it.
 
 .. tip::
 
-  The function is used as: ``gdrive_download [gdrive id] [output name]``
-
-Then, you can download the datasets as follows:
-
-* **Dataset 1**
-
-    * ``gdrive_download 1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws dataset_1.tar.gz``
-
-* **Dataset 2**
-
-    * ``wget https://s3.amazonaws.com/files.pacb.com/datasets/secondary-analysis/e-coli-k12-P6C4/p6c4_ecoli_RSII_DDR2_with_15kb_cut_E01_1.tar.gz``
+  Remember, the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is by using a configuration file. With a proper configuration, users can easily run the pipeline.
 
 Preprocessing the data
 ----------------------
 
+Outputs will be at ``preprocessed_reads``.
+
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
-  such as \* the pipeline will process each pair separately.
-
-Dataset 1
-=========
-
-After downloaded the dataset shall be available as ``dataset_1`` directory. The data can be
-preprocessed using the following command:
-
-.. note::
-
-  These parameters can be used via configuration file
-
-Running the pipeline
-""""""""""""""""""""
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.
 
 .. code-block:: bash
 
   # Running for both Illumina and nanopore data
-  nextflow run fmalmeida/ngs-preprocess --shortreads "dataset_1/illumina/read_pair_{1,2}.fastq" \
-  --shortreads_type "paired" --quality_trim 30 --flash_execute --threads 3 \
-  --nanopore_fastq "dataset_1/ont/ont_reads.fastq" --outdir "dataset_1/preprocessed"
-
-Outputs will be at ``dataset_1/preprocessed``
-
-Dataset 2
-=========
-
-After downloaded and decompressed the dataset shall be available as ``E01_1`` directory.
-
-Running the pipeline
-""""""""""""""""""""
-
-.. code-block:: bash
-
-  # Running for both Illumina and pacbio data
-  nextflow run fmalmeida/ngs-preprocess --pacbio_h5Path E01_1/Analysis_Results/ \
-  --outdir E01_1/Analysis_Results/preprocessed --threads 3
-
-Outputs will be at ``E01_1/Analysis_Results/preprocessed``
+  nextflow run fmalmeida/ngs-preprocess \
+    --outdir preprocessed_reads \
+    --threads 4 \
+    --shortreads "SRR8482585_30X_{1,2}.fastq.gz" \
+    --shortreads_type paired \
+    --lighter_execute \
+    --lighter_genomeSize 4m \
+    --flash_execute \
+    --nanopore_fastq "SRX5299443_30X.fastq.gz" \
+    --lreads_min_length 1000 \
+    --lreads_min_quality 10
 
 .. note::
 
@@ -101,7 +64,4 @@ Outputs will be at ``E01_1/Analysis_Results/preprocessed``
 Afterwards
 ----------
 
-Now you can used these datasets to, for example, assemble a genome.
-
-For this, check `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_ out that we've
-developed for assembling reads from Illumina, Pacbio and Oxford Nanopore sequencing platforms.
+Now you can used these datasets to, for example, assemble and annotate a genome. For this, check out the `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_ and `Bacannot <https://bacannot.readthedocs.io/en/latest/index.html>`_ pipelines that we've developed for such tasks.

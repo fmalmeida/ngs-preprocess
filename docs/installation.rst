@@ -10,8 +10,10 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
 
 1. Installing Docker
+
   * Read more in their `manual <https://docs.docker.com/>`_
   * Or give this `in-house script <https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh>`_ a try.
+  
 2. Installing Nextflow
 
     ``curl -s https://get.nextflow.io | bash``
