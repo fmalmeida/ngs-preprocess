@@ -28,6 +28,9 @@ Usage example
 
    nextflow run fmalmeida/ngs-preprocess [OPTIONS]
 
+Output directory
+""""""""""""""""
+
 .. list-table::
    :widths: 20 10 20 50
    :header-rows: 1
@@ -42,6 +45,18 @@ Usage example
      - output
      - Name of directory to store output values
 
+
+Max job request
+"""""""""""""""
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+
    * - ``--threads``
      - N
      - 2
@@ -51,6 +66,17 @@ Usage example
      - N
      - 1
      - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+
+Short reads
+"""""""""""
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
 
    * - ``--shortreads``
      - Y
@@ -111,6 +137,17 @@ Usage example
      - N
      - False
      - If set, FLASH will be executed to merge paired end reads
+
+Long reads (Pacbio or Nanopore)
+"""""""""""""""""""""""""""""""
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
 
    * - ``--lreads_min_length``
      - N
