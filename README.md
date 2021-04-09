@@ -35,6 +35,10 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [pacbio ccs](https://ccs.how/)
 * [NanoPack](https://github.com/wdecoster/nanopack).
 
+## Further reading
+
+This pipeline has two complementary pipelines (also written in nextflow) for [genome assembly](https://github.com/fmalmeida/mpgap) and [prokaryotic genome annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
+
 ## Requirements
 
 * Unix-like operating system (Linux, macOS, etc)
