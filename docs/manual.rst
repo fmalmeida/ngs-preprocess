@@ -56,6 +56,7 @@ Max job request
    * - Arguments
      - Required
      - Default value
+     - Description
 
    * - ``--threads``
      - N
@@ -67,8 +68,9 @@ Max job request
      - 1
      - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
 
-Short reads
-"""""""""""
+
+Short reads (Illumina)
+""""""""""""""""""""""
 
 .. list-table::
    :widths: 20 10 20 50
@@ -77,6 +79,7 @@ Short reads
    * - Arguments
      - Required
      - Default value
+     - Description
 
    * - ``--shortreads``
      - Y
@@ -138,6 +141,7 @@ Short reads
      - False
      - If set, FLASH will be executed to merge paired end reads
 
+
 Long reads (Pacbio or Nanopore)
 """""""""""""""""""""""""""""""
 
@@ -148,6 +152,7 @@ Long reads (Pacbio or Nanopore)
    * - Arguments
      - Required
      - Default value
+     - Description
 
    * - ``--lreads_min_length``
      - N
