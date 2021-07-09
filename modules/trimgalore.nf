@@ -39,7 +39,7 @@ process trimgalore {
       }
 
     """
-    trim_galore -q ${params.quality_trim} --fastqc --gzip $param ;
+    trim_galore -q ${params.quality_trim} --fastqc --gzip $param -j $threads ;
     ${rename}
     """
 }
