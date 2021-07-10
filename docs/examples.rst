@@ -11,7 +11,7 @@ CLI usage Examples
 Illumina paired end reads.
 """"""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
         --threads 3 \
@@ -31,7 +31,7 @@ Illumina paired end reads.
 Illumina single end reads.
 """"""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
         --threads 3 \
@@ -47,7 +47,7 @@ Illumina single end reads.
 ONT reads (fastq)
 """""""""""""""""
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
@@ -62,7 +62,7 @@ ONT reads (fastq)
 Pacbio raw (subreads.bam) reads
 """""""""""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
@@ -82,7 +82,7 @@ Pacbio raw (subreads.bam) reads
 Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --pacbio_h5Path E01_1/Analysis_Results/ \
@@ -100,7 +100,7 @@ Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 Running with a nf-core interactive graphical interface
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
       ./nf-core launch fmalmeida/ngs-preprocess
 
@@ -108,6 +108,6 @@ Running with a nf-core interactive graphical interface
 Running with a configuration file
 """""""""""""""""""""""""""""""""
 
-::
+.. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config

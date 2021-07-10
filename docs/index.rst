@@ -1,23 +1,64 @@
 .. _index:
 
-ngs-preprocess pipeline
-***********************
+NGS-preprocess
+**************
 
-`ngs-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
-and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for performing the pre-process of data from multiple
-sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the following tools:
+`NGS-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
+and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for preprocessing sequencing reads from Illumina, Pacbio and Oxford Nanopore platforms.
 
-* `FastQC <https://github.com/s-andrews/FastQC>`_
-* `TrimGalore <https://github.com/FelixKrueger/TrimGalore>`_
-* `FLASH <https://ccb.jhu.edu/software/FLASH/>`_
-* `Lighter <https://github.com/mourisl/Lighter>`_
-* `Porechop <https://github.com/rrwick/Porechop>`_
-* `bax2bam <https://github.com/PacificBiosciences/bax2bam>`_
-* `bam2fastx <https://github.com/PacificBiosciences/bam2fastx>`_
-* `lima <https://github.com/PacificBiosciences/barcoding>`_
-* `pacbio ccs <https://ccs.how/>`_
-* `NanoPack <https://github.com/wdecoster/nanopack>`_
-* `pycoQC <https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam>`_
+It wraps up the following tools:
+
+.. list-table::
+   :widths: 10 60 40
+   :header-rows: 1
+
+   * - Software
+     - Analysis step
+     - Source
+
+   * - TrimGalore
+     - Trimming and quality control of Illumina reads
+     - https://github.com/FelixKrueger/TrimGalore
+
+   * - Lighter
+     - Illumina reads error correction
+     - https://github.com/mourisl/Lighter
+
+   * - FLASH
+     - Illumina paired end read merger
+     - https://ccb.jhu.edu/software/FLASH/
+
+   * - FastQC
+     - Illumina reads QC
+     - https://github.com/s-andrews/FastQC
+
+   * - Porechop
+     - ONT reads trimming and demultiplexing
+     - https://github.com/rrwick/Porechop
+
+   * - pycoQC
+     - ONT reads QC
+     - https://github.com/a-slide/pycoQC
+
+   * - NanoPack
+     - Long reads QC and filter
+     - https://github.com/wdecoster/nanopack
+
+   * - bax2bam
+     - Convert PacBio bax files to bam
+     - https://github.com/PacificBiosciences/bax2bam
+
+   * - bam2fastx
+     - Extract reads from PacBio bam files
+     - https://github.com/PacificBiosciences/bam2fastx
+
+   * - lima
+     - PacBio reads demultiplexing
+     - https://github.com/PacificBiosciences/barcoding
+
+   * - pacbio ccs
+     - Generate PacBio Highly Accurate Single-Molecule Consensus Reads
+     - https://ccs.how/
 
 
 .. toctree::
@@ -30,5 +71,6 @@ sequencing platforms (Illumina, Pacbio and Oxford Nanopore). It wraps up the fol
    examples
 
 Support Contact
-===============
+***************
+
 Feel free to contact me at almeidafmarques@gmail.com

@@ -10,7 +10,7 @@ As an use case, we will use 30X of one of the *Escherichia coli* sequencing data
 that is available from a recent study that compared the use of different long read technologies in hybrid assembly of 137 bacterial genomes [`4 <https://doi.org/10.1099/mgen.0.000294>`_].
 
 Get the data
-------------
+============
 
 We have made this subsampled dataset available in `Figshare <https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585>`_.
 
@@ -34,13 +34,13 @@ Now we have the necessary data to perform the quickstart.
   Remember, the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is by using a configuration file. With a proper configuration, users can easily run the pipeline.
 
 Preprocessing the data
-----------------------
+======================
 
 Outputs will be at ``preprocessed_reads``.
 
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.
+  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.
 
 .. code-block:: bash
 
@@ -59,9 +59,9 @@ Outputs will be at ``preprocessed_reads``.
 
 .. note::
 
-  These parameters can be used via configuration file
+  These parameters can be used via configuration file. See :ref:`config`.
 
 Afterwards
-----------
+==========
 
 Now you can used these datasets to, for example, assemble and annotate a genome. For this, check out the `MpGAP <https://mpgap.readthedocs.io/en/latest/index.html>`_ and `Bacannot <https://bacannot.readthedocs.io/en/latest/index.html>`_ pipelines that we've developed for such tasks.

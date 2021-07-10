@@ -6,8 +6,8 @@ Manual
 Input
 =====
 
-    * path to fastq files containing sequencing reads (Illumina or Nanopore)
-    * path to Pacbio .bam or .h5 files containing raw data
+* path to fastq files containing sequencing reads (Illumina or Nanopore)
+* path to Pacbio .bam or .h5 files containing raw data
 
 .. note::
 
@@ -17,19 +17,19 @@ Input
 
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern
+  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern
   such as \* the pipeline will process each pair separately.
 
 
 Usage example
 =============
 
-::
+.. code-block:: bash
 
-   nextflow run fmalmeida/ngs-preprocess [OPTIONS]
+   nextflow run fmalmeida/ngs-preprocess [--help] [OPTIONS]
 
 Output directory
-""""""""""""""""
+================
 
 .. list-table::
    :widths: 20 10 20 50
@@ -47,7 +47,7 @@ Output directory
 
 
 Max job request
-"""""""""""""""
+===============
 
 .. list-table::
    :widths: 20 10 20 50
@@ -70,7 +70,7 @@ Max job request
 
 
 Short reads (Illumina)
-""""""""""""""""""""""
+======================
 
 .. list-table::
    :widths: 20 10 20 50
@@ -143,7 +143,7 @@ Short reads (Illumina)
 
 
 Long reads (Pacbio or Nanopore)
-"""""""""""""""""""""""""""""""
+===============================
 
 .. list-table::
    :widths: 20 10 20 50
@@ -209,6 +209,6 @@ All this parameters are configurable through a configuration file. We encourage 
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
 
 Examples
---------
+========
 
 For a better understanding of the usage we provided a feel examples. See :ref:`examples`

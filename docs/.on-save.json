@@ -1,0 +1,8 @@
+[
+  {
+    "files": ["*/*", "*"],
+    "command": "sphinx-build . _site &> /dev/null",
+    "showOutput": "false",
+    "showError": "false"
+  }
+]

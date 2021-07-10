@@ -17,9 +17,9 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
+project   = 'ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
 copyright = '2019, fmalmeida/ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
-author = 'Felipe Marques de Almeida'
+author    = 'Felipe Marques de Almeida'
 
 
 # -- General configuration ---------------------------------------------------
@@ -35,7 +35,13 @@ master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.viewcode",
+    "sphinx_copybutton"
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -51,10 +57,41 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+#html_theme = 'sphinx_rtd_theme'
+# --- material ---
+html_theme = "sphinx_material"
+# Material theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the color and the accent color
+    # Primary color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey, and white.
+    'color_primary': 'red',
+    #Accent color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, and deep-orange.
+    'color_accent': 'blue',
+
+    # Visible levels of the global TOC; -1 means unlimited
+    'globaltoc_depth': 1,
+    # If False, expand all TOC entries
+    'globaltoc_collapse': True,
+    # If True, show hidden TOC entries
+    'globaltoc_includehidden': True,
+
+    # logo
+    'logo_icon': "book",
+
+    # repo info
+    "repo_url": "https://github.com/fmalmeida/ngs-preprocess",
+    "repo_name": "ngs-preprocess",
+    "repo_type": "github",
+
+}
+html_sidebars = {
+    "**": ["globaltoc.html", "localtoc.html", "searchbox.html"]
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
+html_title       = project
 html_static_path = ['_static']
-html_css_files = ['style.css']
+html_css_files   = ['style.css']
