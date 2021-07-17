@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER Felipe Marques <180039822@aluno.unb.br>
+LABEL MAINTAINER "Felipe Marques <180039822@aluno.unb.br>"
 SHELL ["/bin/bash", "-c"]
 
 RUN apt-get update
@@ -27,20 +27,21 @@ RUN conda config --add channels defaults && \
 			conda config --add channels conda-forge && \
 			conda init --all
 
-RUN pip3 install --user --upgrade cutadapt
+RUN python3 -m pip install cutadapt
 
 RUN pip install --upgrade pip ; pip3 install --upgrade pip
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python3-matplotlib python-matplotlib
 
 # Install Trim Galore
-RUN curl -fsSL https://github.com/FelixKrueger/TrimGalore/archive/0.6.0.tar.gz -o trim_galore.tar.gz ; tar xvzf trim_galore.tar.gz ; ln -rs TrimGalore-0.6.0/* /usr/local/bin
+RUN export TRIM_GALORE_TAG=$(curl -s "https://api.github.com/repos/FelixKrueger/TrimGalore/releases/latest" | grep "tag_name" | cut -d ":" -f 2,3  | tr -d '"' | tr -d "," | tr -d " ") && \
+			curl -fsSL "https://github.com/FelixKrueger/TrimGalore/archive/${TRIM_GALORE_TAG}.tar.gz" -o trim_galore.tar.gz ; tar xvzf trim_galore.tar.gz ; ln -rs TrimGalore-0.6.0/* /usr/local/bin
 
 # INSTALL PORECHOP
 RUN git clone https://github.com/rrwick/Porechop.git ; cd Porechop ; python3 setup.py install
 
 # INSTALL LIGHTER ILLUMINA READ CORRECTION
-#RUN git clone https://github.com/mourisl/Lighter.git ; cd Lighter/ ; make ; ln -rs lighter /usr/local/bin
+# RUN git clone https://github.com/mourisl/Lighter.git ; cd Lighter/ ; make ; ln -rs lighter /usr/local/bin
 RUN conda install -c bioconda lighter nomkl && \
 			conda clean -afy
 
