@@ -27,9 +27,11 @@ RUN conda config --add channels defaults && \
 			conda config --add channels conda-forge && \
 			conda init --all
 
-RUN python3 -m pip install cutadapt
+RUN conda install -y -c bioconda cutadapt && \
+			cutadapt --version
 
-RUN pip install --upgrade pip ; pip3 install --upgrade pip
+RUN pip install --upgrade pip && \
+			pip3 install --upgrade pip
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python3-matplotlib python-matplotlib
 
