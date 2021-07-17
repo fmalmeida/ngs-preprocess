@@ -62,7 +62,7 @@ RUN conda create -y -n pbtools && \
 # INSTALL NANOPACK
 RUN conda create -y -n nanopack python=3.7 && \
 			source activate nanopack && \
-			pip install nanopack
+			pip install nanopack biopython==1.78
 
 # INSTALL FILTLONG
 RUN conda create -y -n filtlong && \
