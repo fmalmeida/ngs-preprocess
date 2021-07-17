@@ -35,7 +35,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y python3-matplotlib python-
 
 # Install Trim Galore
 RUN export TRIM_GALORE_TAG=$(curl -s "https://api.github.com/repos/FelixKrueger/TrimGalore/releases/latest" | grep "tag_name" | cut -d ":" -f 2,3  | tr -d '"' | tr -d "," | tr -d " ") && \
-			curl -fsSL "https://github.com/FelixKrueger/TrimGalore/archive/${TRIM_GALORE_TAG}.tar.gz" -o trim_galore.tar.gz ; tar xvzf trim_galore.tar.gz ; ln -rs TrimGalore-0.6.0/* /usr/local/bin
+			curl -fsSL "https://github.com/FelixKrueger/TrimGalore/archive/${TRIM_GALORE_TAG}.tar.gz" -o trim_galore.tar.gz && \
+			tar xvzf trim_galore.tar.gz ; ln -rs TrimGalore-*/* /usr/local/bin
 
 # INSTALL PORECHOP
 RUN git clone https://github.com/rrwick/Porechop.git ; cd Porechop ; python3 setup.py install
