@@ -1,7 +1,7 @@
 process pacbio_h52bam {
   publishDir "${params.outdir}/longreads/pacbio", mode: 'copy'
   container 'fmalmeida/ngs-preprocess'
-  tag "Extracting FASTQ from pacbio legacy h5 files"
+  tag "Converting pacbio legacy h5 files to bam"
 
   input:
     file h5bas
