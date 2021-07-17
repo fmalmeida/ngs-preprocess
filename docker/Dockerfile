@@ -56,7 +56,7 @@ RUN conda create -y -n flash && \
 # INSTALL TOOLS FOR PACBIO READS EXTRACTION
 RUN apt-get install -y pbh5tools
 RUN conda create -y -n pbtools && \
-			conda install -y --freeze-installed -n pbtools -c bioconda 'bax2bam=0.0.9' bam2fastx pbccs lima nomkl && \
+			conda install -y --freeze-installed -n pbtools -c bioconda 'bax2bam=0.0.9' 'pbbam=0.18.0' bam2fastx pbccs lima nomkl && \
 			conda clean -afy
 
 # INSTALL NANOPACK
