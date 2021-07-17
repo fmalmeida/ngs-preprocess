@@ -7,7 +7,7 @@ RUN apt-get update
 
 RUN apt-get upgrade -y
 
-RUN apt-get install -y python python3 python-pip git default-jre fastqc wget cutadapt \
+RUN apt-get install -y python python3 python-pip git default-jre fastqc wget \
 			curl python-pkg-resources python3-pip python3-pkg-resources git python-setuptools \
 			python-dev cython libhdf5-serial-dev
 
