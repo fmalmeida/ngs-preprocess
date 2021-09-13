@@ -74,6 +74,10 @@ Max job request
 Short reads (Illumina)
 ======================
 
+.. note::
+
+  When using paired end reads it is required that inputs are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
+
 .. list-table::
    :widths: 20 10 20 50
    :header-rows: 1

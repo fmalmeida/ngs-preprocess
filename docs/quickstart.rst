@@ -46,6 +46,10 @@ Outputs will be at ``preprocessed_reads``.
 
   **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.
 
+.. note::
+
+  When using paired end reads it is required that inputs are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
+
 .. code-block:: bash
 
   # Running for both Illumina and nanopore data
