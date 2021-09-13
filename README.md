@@ -83,6 +83,8 @@ The latest release will always have its docker image in dockerhub.
 
 Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
 
+**Remember**: Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be inside double quotes.
+
 ### Using the configuration file
 
 All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/ngs-preprocess -c ./configuration-file`

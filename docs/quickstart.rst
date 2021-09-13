@@ -38,6 +38,10 @@ Preprocessing the data
 
 Outputs will be at ``preprocessed_reads``.
 
+.. note::
+
+  Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
+
 .. warning::
 
   **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.

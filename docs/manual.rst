@@ -11,9 +11,11 @@ Input
 
 .. note::
 
+  Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
+
+.. note::
+
    Users must **never** use hard or symbolic links. This will make nextflow fail.
-   When setting the parameters, please **always** give full path to a hard file,
-   not to a link. This will prevent file access fail.
 
 .. warning::
 

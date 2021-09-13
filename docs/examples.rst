@@ -42,7 +42,11 @@ Illumina single end reads.
 
 .. note::
 
-  Multiple files at once, using fixed number of bases to be trimmed (``--clip_r1`` and ``--three_prime_clip_r1``). If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
+  Multiple files at once, using fixed number of bases to be trimmed (``--clip_r1`` and ``--three_prime_clip_r1``).
+  
+.. note::
+  
+  If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
 ONT reads (fastq)
 """""""""""""""""
@@ -78,6 +82,10 @@ Pacbio raw (subreads.bam) reads
 .. note::
 
   ``-with-report`` will generate nextflow execution reports.
+
+.. note::
+  
+  If multiple reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
 Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 """""""""""""""""""""""""""""""""""""""""""""""""
