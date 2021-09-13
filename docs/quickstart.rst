@@ -44,7 +44,7 @@ Outputs will be at ``preprocessed_reads``.
 
 .. warning::
 
-  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each pair separately.
+  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* with unpaired reads the pipeline will process each read separately.
 
 .. note::
 
