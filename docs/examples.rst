@@ -10,6 +10,8 @@ CLI usage Examples
 Illumina paired end reads.
 """"""""""""""""""""""""""
 
+This command will select all the read pairs that match the pattern "path-to/SRR*_{1,2}.fastq.gz" and process each pair separately.
+
 .. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
@@ -34,12 +36,14 @@ Illumina paired end reads.
 Illumina single end reads.
 """"""""""""""""""""""""""
 
+This command will select all the reads that match the pattern "path-to/SRR*.fastq.gz" and process each one separately.
+
 .. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
         --threads 3 \
         --outdir illumina_single \
-        --shortreads "path-to/SRR9696*.fastq.gz" \
+        --shortreads "path-to/SRR*.fastq.gz" \
         --shortreads_type "single" \
         --clip_r1 5 --three_prime_clip_r1 5
 
@@ -54,12 +58,14 @@ Illumina single end reads.
 ONT reads (fastq)
 """""""""""""""""
 
+This command will select all the reads that match the pattern "path-to/SRR*.fastq.gz" and process each one separately.
+
 .. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
     --outdir ONT \
-    --nanopore_fastq "path-to/ont_reads.fastq" \
+    --nanopore_fastq "path-to/SRR*.fastq.gz" \
     --lreads_min_length 1000
 
 .. note::
@@ -68,6 +74,8 @@ ONT reads (fastq)
 
 Pacbio raw (subreads.bam) reads
 """""""""""""""""""""""""""""""
+
+This command will select all the reads that match the pattern "path-to/m140905_*.subreads.bam" and process each one separately.
 
 .. code-block:: bash
 

@@ -19,7 +19,7 @@ Input
 
 .. warning::
 
-  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* with unpaired reads the pipeline will process each read separately.
+  **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each read (or pair) that match this pattern separately.
 
 
 Usage example
