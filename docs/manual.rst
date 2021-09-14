@@ -94,7 +94,7 @@ Short reads (Illumina)
    * - ``--shortreads_type``
      - Y
      - NA
-     - (single | paired). Tells wheter input is unpaired or paired end.
+     - (single | paired). Tells whether input is unpaired or paired end.
 
    * - ``--clip_r1``
      - N
@@ -124,7 +124,7 @@ Short reads (Illumina)
    * - ``--lighter_execute``
      - N
      - False
-     - Tells wheter to run or not Lighter correction tool
+     - Tells whether to run or not Lighter correction tool
 
    * - ``--lighter_kmer``
      - N
@@ -177,7 +177,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--nanopore_is_barcoded``
      - N
      - False
-     - Tells wheter your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
+     - Tells whether your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
 
    * - ``--nanopore_sequencing_summary``
      - N

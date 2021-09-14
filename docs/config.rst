@@ -40,7 +40,10 @@ Default configuration:
 
                       Fields must be configured and set with values after the = sign.
 
-                                  E.g. param1 = 'user_value_1'
+                      Since the input file parameters will always work as a pattern match
+                      it is required that it MUST ALWAYS be double quoted as the example below.
+
+                                E.g. param1 = "my_reads/input*.fastq"
 
 
    */
@@ -69,7 +72,8 @@ Default configuration:
 
      */
 
-    shortreads = ''                                       // Path to shortreads. Examples: 'SRR6307304_{1,2}.fastq' | 'SRR7128258*'
+    shortreads = ''                                       // Path to shortreads. Examples: 'SRR6307304_{1,2}.fastq' | 'SRR7128258*'.
+                                                          // Must be double quoted and paired end reads must have the pattern {1,2}.
     shortreads_type = ''                                  // Type of shortreads. Values: paired | single
     clip_r1 = 0                                           // Number of bases to ALWAYS clip from 5' (read 1) end, despite base qualities
     clip_r2 = 0                                           // Number of bases to ALWAYS clip from 5' (read 2) end, despite base qualities
@@ -81,7 +85,7 @@ Default configuration:
     lighter_genomeSize = 0                                // Tells lighter the expected genome size for correction of reads
     lighter_alpha = ''                                    // Lighter alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                                           // If left blank, Lighter will automatically calculate the best value.
-    flash_execute = false                                 // Tells wheter or not to merge paired reads with FLASH
+    flash_execute = false                                 // Tells whether or not to merge paired reads with FLASH
 
     /*
 
@@ -103,7 +107,7 @@ Default configuration:
      */
 
     nanopore_fastq = ''                                   // Path to nanopore ONT basecalled reads in fastq
-    nanopore_is_barcoded = false                          // Tells wheter or not nanopore reads are barcoded
+    nanopore_is_barcoded = false                          // Tells whether or not nanopore reads are barcoded
                                                           // It will split barcodes into single files
     nanopore_sequencing_summary = ''                      // Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a
                                                           // sequencing statistics report using pycoQC
