@@ -1,3 +1,5 @@
+<img src="images/lOGO_3.png" width="300px">
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3451405.svg)](https://doi.org/10.5281/zenodo.3451405) [![Releases](https://img.shields.io/github/v/release/fmalmeida/ngs-preprocess)](https://github.com/fmalmeida/ngs-preprocess/releases) [![Documentation](https://img.shields.io/badge/Documentation-readthedocs-brightgreen)](https://ngs-preprocess.readthedocs.io/en/latest/?badge=latest) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/ngs--preprocess-informational)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/ngs-preprocess)](https://hub.docker.com/r/fmalmeida/ngs-preprocess) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/ngs-preprocess) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE)
 
 <p align="center">
