@@ -17,6 +17,4 @@ jobs:
     - name: Build the Docker image
       run: | 
       echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      sudo rm -rf /usr/local/lib/android
-      sudo rm -rf /usr/share/dotnet
       docker pull fmalmeida/ngs-preprocess
