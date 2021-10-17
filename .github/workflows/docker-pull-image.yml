@@ -1,0 +1,26 @@
+name: Pull Docker Image to keep it activated
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 */3 *'
+    
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: | 
+      # login in dockerhub
+      echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      # will release about 10 GB if you don't need Android
+      sudo rm -rf /usr/local/lib/android
+      # will release about 20GB if you don't need .NET
+      sudo rm -rf /usr/share/dotnet
+      # pull image
+      docker pull fmalmeida/ngs-preprocess
