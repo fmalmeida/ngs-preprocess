@@ -75,10 +75,9 @@ RUN conda create -y -n filtlong && \
 # INSTALL pycoQC
 RUN conda create -y -n pycoQC python=3.6 && \
 			source activate pycoQC && \
-			conda install -y --freeze-installed -c aleg pycoqc nomkl && \
 			conda config --add channels r && \
 			conda config --add channels bioconda && \
-			conda install -y --freeze-installed pysam nomkl
+			conda install -y --freeze-installed pycoqc pysam nomkl
 
 # Fix matplotlib
 RUN source activate nanopack && \

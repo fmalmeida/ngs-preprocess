@@ -44,7 +44,7 @@ It wraps up the following tools:
 
    * - pycoQC
      - ONT reads QC
-     - https://github.com/a-slide/pycoQC
+     - https://github.com/tleonardi/pycoQC
 
    * - NanoPack
      - Long reads QC and filter

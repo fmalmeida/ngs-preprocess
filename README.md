@@ -30,7 +30,7 @@ ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-
 * [FLASH](https://ccb.jhu.edu/software/FLASH/)
 * [Lighter](https://github.com/mourisl/Lighter)
 * [Porechop](https://github.com/rrwick/Porechop)
-* [pycoQC](https://github.com/a-slide/pycoQC)
+* [pycoQC](https://github.com/tleonardi/pycoQC)
 * [bam2fastx](https://github.com/PacificBiosciences/bam2fastx)
 * [bax2bam](https://github.com/PacificBiosciences/bax2bam)
 * [lima](https://github.com/PacificBiosciences/barcoding)
