@@ -1,6 +1,5 @@
 process fastqc {
   publishDir "${params.outdir}/shortreads/before_trimming", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
   tag "Evaluating short reads with FastQC"
 
     input:
@@ -22,6 +21,7 @@ process fastqc {
       }
       
     """
+    # run fastqc
     mkdir fastqc_${id} ;
     fastqc -t $threads -o fastqc_${id} $param
     """

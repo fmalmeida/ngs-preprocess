@@ -7,7 +7,6 @@ process trimgalore {
             else if (filename.indexOf(".fq.gz") > 0) "reads/trim_galore/$filename"
             else null
         }
-    container 'fmalmeida/ngs-preprocess'
     tag "Executing TrimGalore"
 
     input:
@@ -39,6 +38,7 @@ process trimgalore {
       }
 
     """
+    # run trim_galore
     trim_galore -q ${params.quality_trim} --fastqc --gzip $param -j $threads ;
     ${rename}
     """

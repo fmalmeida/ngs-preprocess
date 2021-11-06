@@ -1,6 +1,5 @@
 process porechop {
   publishDir "${params.outdir}/longreads/porechop_out", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
   tag "Trimming longreads with Porechop"
 
   input:

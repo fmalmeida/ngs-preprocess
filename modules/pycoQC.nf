@@ -1,6 +1,5 @@
 process pycoQC {
   publishDir "${params.outdir}/longreads/pycoQC_quality_check", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
   tag "Checking sequencing statistics with pycoQC"
 
   input:
@@ -10,7 +9,7 @@ process pycoQC {
 
   script:
     """
-    source activate pycoQC ;
+    # run pycoQC
     pycoQC --summary_file ${summary} --html_outfile pycoQC_report.html \
     --filter_calibration --filter_duplicated --min_pass_qual 8
     """

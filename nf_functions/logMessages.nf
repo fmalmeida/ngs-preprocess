@@ -46,9 +46,9 @@ def pacbioMessage() {
  * Define log message
  */
 def logMessage() {
-  log.info "==================================="
-  log.info " fmalmeida/ngs-preprocess pipeline "
-  log.info "==================================="
+  log.info "================================="
+  log.info "fmalmeida/ngs-preprocess pipeline"
+  log.info "================================="
   def summary = [:]
   summary['Output dir']   = params.outdir
   if(workflow.revision) summary['Pipeline Release'] = workflow.revision

@@ -4,7 +4,6 @@ process lighter {
    // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "reads/lighter_corrected/$filename"
             else "reads/lighter_corrected/$filename"}
-   container 'fmalmeida/ngs-preprocess'
    tag "Executing Ligther (read correction) step"
 
    input:
@@ -29,6 +28,7 @@ process lighter {
         quality = "*.cor{.fq.gz, .fq}"
       }
    """
+   # run lighter
    lighter ${param} ${alpha_param} ${params.lighter_genomeSize};
    mkdir fastqc_after_correction ;
    fastqc -t ${threads} -o fastqc_after_correction -q ${quality}
