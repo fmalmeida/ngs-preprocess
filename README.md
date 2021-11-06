@@ -25,17 +25,11 @@
 
 ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-of-the-art software for quality check and pre-processing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow). It wraps up the following software:
 
-* [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
-* [TrimGalore](https://github.com/FelixKrueger/TrimGalore)
-* [FLASH](https://ccb.jhu.edu/software/FLASH/)
-* [Lighter](https://github.com/mourisl/Lighter)
-* [Porechop](https://github.com/rrwick/Porechop)
-* [pycoQC](https://github.com/tleonardi/pycoQC)
-* [bam2fastx](https://github.com/PacificBiosciences/bam2fastx)
-* [bax2bam](https://github.com/PacificBiosciences/bax2bam)
-* [lima](https://github.com/PacificBiosciences/barcoding)
-* [pacbio ccs](https://ccs.how/)
-* [NanoPack](https://github.com/wdecoster/nanopack).
+| Step | tools |
+| :--- | :---- |
+| Illumina pre-processing | [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/); [TrimGalore](https://github.com/FelixKrueger/TrimGalore); [FLASH](https://ccb.jhu.edu/software/FLASH/); [Lighter](https://github.com/mourisl/Lighter) |
+| Nanopore pre-processing | [Porechop](https://github.com/rrwick/Porechop); [pycoQC](https://github.com/tleonardi/pycoQC); [NanoPack](https://github.com/wdecoster/nanopack) |
+| Pacbio pre-processing | [bam2fastx](https://github.com/PacificBiosciences/bam2fastx); [bax2bam](https://github.com/PacificBiosciences/bax2bam); [lima](https://github.com/PacificBiosciences/barcoding); [pacbio ccs](https://ccs.how/) |
 
 ## Further reading
 
@@ -46,19 +40,22 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 * Unix-like operating system (Linux, macOS, etc)
 * Nextflow (version 20.01 or higher)
 * Java 8
-* Docker
-  * Image: `fmalmeida/ngs-preprocess`
+* Docker, conda or singularity
 
 ## Quickstart
 
-1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
-    * After installed, you need to download the required Docker image
+1. Download tools
 
-          docker pull fmalmeida/ngs-preprocess
+      + for conda
+      + the pipeline will search for the local environment created
+       
+       wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
+       mamba create -f environment.yml
 
-> Each release is accompanied by a Dockerfile in the docker folder. When using older releases, users can create the correct image using
-the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
-The latest release will always have its docker image in dockerhub.
+      + for docker and singularity
+      + both use the image available in dockerhub
+      
+       docker pull fmalmeida/ngs-preprocess:v2.3
 
 2. Install Nextflow (version 20.01 or higher):
 
@@ -68,9 +65,18 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/ngs-preprocess --help
 
-> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/ngs-preprocess`
+:fire: Users can get let the pipeline always updated with: `nextflow pull fmalmeida/ngs-preprocess`
 
 ## Documentation
+
+### Selecting between conda, docker and singularity
+
+By default, the standard profile of the pipeline will search for the existance of the conda environment. If users want to execute it with docker or singularity, please use the folowing:
+
+* docker
+    + `nextflow run fmalmeida/ngs-preprocess -profile docker [options]`
+* singularity
+    + `nextflow run fmalmeida/ngs-preprocess -profile singularity [options]`
 
 ### Usage
 
