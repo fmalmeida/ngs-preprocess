@@ -25,15 +25,11 @@
 
 ngs-preprocess is an easy to use nextflow docker-based pipeline that uses state-of-the-art software for quality check and pre-processing ngs reads of Illumina, Pacbio and Oxford Nanopore Technologies and has only two dependencies: [Docker](https://www.docker.com/) and [Nextflow](https://github.com/nextflow-io/nextflow). It wraps up the following software:
 
-<center>
-
 | Step | tools |
 | :--- | :---- |
 | Illumina pre-processing | [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [FLASH](https://ccb.jhu.edu/software/FLASH/), [Lighter](https://github.com/mourisl/Lighter) |
 | Nanopore pre-processing | [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/tleonardi/pycoQC), [NanoPack](https://github.com/wdecoster/nanopack) |
 | Pacbio pre-processing | [bam2fastx](https://github.com/PacificBiosciences/bam2fastx), [bax2bam](https://github.com/PacificBiosciences/bax2bam), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) |
-
-</center>
 
 ## Further reading
 
@@ -49,25 +45,11 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 ## Quickstart
 
 1. Download tools
-
-      ```bash
-      # create the default conda environment that is searched
-      # by the pipeline if no container profile is chosen
-       wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
-       mamba create -f environment.yml
-
-      # container image from dockerhub for running with
-      # docker or singularity
-      docker pull fmalmeida/ngs-preprocess:v2.3
-      ```
-
+    + Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/ngs-preprocess/tree/master#selecting-between-conda-docker-and-singularity) profiles, since the tools will be made available differently depending on the profile desired.
 2. Install Nextflow (version 20.01 or higher):
-
-       curl -s https://get.nextflow.io | bash
-
+    + `curl -s https://get.nextflow.io | bash`
 3. Give it a try:
-
-       nextflow run fmalmeida/ngs-preprocess --help
+    + `nextflow run fmalmeida/ngs-preprocess --help`
 
 :fire: Users can get let the pipeline always updated with: `nextflow pull fmalmeida/ngs-preprocess`
 
