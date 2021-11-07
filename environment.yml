@@ -30,7 +30,7 @@ dependencies:
   - bioconda::trim-galore
   - bioconda::samtools
   - bioconda::lighter
-  - bioconda::pbh5tools
+#  - bioconda::pbh5tools                  # this one require python 2
   - bioconda::bax2bam=0.0.9
   - bioconda::pbbam
   - bioconda::bam2fastx
