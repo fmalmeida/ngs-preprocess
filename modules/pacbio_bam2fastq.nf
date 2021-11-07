@@ -1,4 +1,4 @@
-process pacbio_bam2fastq {
+process bam2fastq {
   publishDir "${params.outdir}/longreads/pacbio", mode: 'copy'
   tag "Extracting FASTQ from pacbio subreads.bam files"
 

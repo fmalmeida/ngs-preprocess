@@ -39,13 +39,13 @@
                     "fa_icon": "fas fa-file",
                     "help_text": "Path to your nanopore reads. It can be gzipped or not."
                 },
-                "pacbio_bamPath": {
+                "pacbio_bam": {
                     "type": "string",
                     "description": "Input pacbio subreads (.bam)",
                     "fa_icon": "fas fa-file",
                     "help_text": "Path to pacbio subreads in bam format. This applies to the majority of pacbio sequencers and chemistries."
                 },
-                "pacbio_h5Path": {
+                "pacbio_h5": {
                     "type": "string",
                     "description": "Folder with pacbio reads (.h5)",
                     "fa_icon": "fas fa-folder",

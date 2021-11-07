@@ -125,8 +125,8 @@ Default configuration:
 
      */
 
-    pacbio_bamPath  = ''                                   // Path to PacBio subreads in bam format
-    pacbio_h5Path   = ''                                   // Path to directory containing legacy *.bas.h5 data (1 per directory)
+    pacbio_bam  = ''                                   // Path to PacBio subreads in bam format
+    pacbio_h5   = ''                                   // Path to directory containing legacy *.bas.h5 data (1 per directory)
     pacbio_barcodes = ''                                   // Path to xml/fasta file containing barcode information. It will split barcodes into single files.
     pacbio_barcode_design = ''                             // By default, only reads with "same" barcodes are given. You can also select reads with only
                                                            // "different" barcodes or any of them. Options: same, different, any

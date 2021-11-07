@@ -87,9 +87,9 @@ def helpMessage() {
             # Parameters for preprocessing PACBIO long reads
             # PACBIO bam files or legacy h5
 
-    --pacbio_bamPath <string>                      Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
+    --pacbio_bam <string>                      Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ.
 
-    --pacbio_h5Path <string>                       Path to directory containing legacy *.bas.h5 data (1 per directory). It will be used to
+    --pacbio_h5 <string>                       Path to directory containing legacy *.bas.h5 data (1 per directory). It will be used to
                                                    extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory.
 
     --pacbio_barcodes                              Path to xml/fasta file containing barcode information. It will split barcodes into single files.

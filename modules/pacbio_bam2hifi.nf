@@ -1,4 +1,4 @@
-process pacbio_bam2hifi {
+process bam2hifi {
   publishDir "${params.outdir}/longreads/pacbio/ccs_hifi", mode: 'copy'
   tag "Computing HIFI reads from pacbio subreads.bam files"
 

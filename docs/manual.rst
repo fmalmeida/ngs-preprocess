@@ -184,12 +184,12 @@ Long reads (Pacbio or Nanopore)
      - NA
      - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC
 
-   * - ``--pacbio_bamPath``
+   * - ``--pacbio_bam``
      - N
      - NA
      - Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
 
-   * - ``--pacbio_h5Path``
+   * - ``--pacbio_h5``
      - N
      - NA
      - Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory

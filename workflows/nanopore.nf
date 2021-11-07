@@ -2,7 +2,7 @@
  * Include modules
  */
 include { porechop } from '../modules/porechop.nf'
-include { nanopack; nanopack as nanopack_hifi } from '../modules/nanopack.nf'
+include { nanopack } from '../modules/nanopack.nf'
 include { filter } from '../modules/lreads_filter.nf'
 include { pycoQC } from '../modules/pycoQC.nf'
 

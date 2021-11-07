@@ -98,8 +98,8 @@ params.nanopore_sequencing_summary = ''
 /*
  * Parameters for pacbio longreads
  */
-params.pacbio_bamPath = ''
-params.pacbio_h5Path = ''
+params.pacbio_bam = ''
+params.pacbio_h5 = ''
 params.pacbio_barcodes = ''
 params.pacbio_barcode_design = 'same'
 params.pacbio_get_hifi = false
@@ -112,17 +112,10 @@ logMessage()
 /*
  * Load workflows
  */
-include { NANOPORE } from '../workflows/nanopore.nf'
+include { NANOPORE } from './workflows/nanopore.nf'
+include { PACBIO   } from './workflows/pacbio.nf'
 
-include { pacbio_bam2fastq } from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
-  pacbio_barcodes: params.pacbio_barcodes, pacbio_barcode_design: params.pacbio_barcode_design,
-  threads: params.threads)
 
-include { pacbio_bam2hifi } from './modules/pacbio_bam2hifi.nf' params(outdir: params.outdir,
-  pacbio_barcodes: params.pacbio_barcodes, pacbio_barcode_design: params.pacbio_barcode_design,
-  threads: params.threads)
-
-include { pacbio_h52bam } from './modules/pacbio_h52bam.nf' params(outdir: params.outdir)
 
 include { fastqc } from './modules/fastqc.nf' params(outdir: params.outdir,
   shortreads_type: params.shortreads_type)
@@ -141,53 +134,6 @@ include { flash } from './modules/flash.nf' params(outdir: params.outdir)
 /*
  * Define custom workflows
  */
-
-// workflow pacbio_bam_nf {
-//   take:
-//     subreads
-//     barcodes
-//     threads
-//   main:
-//     pacbio_bam2fastq(subreads, barcodes)
-//     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
-//     if (params.lreads_min_length || params.lreads_min_quality) {
-//       lreads_filter(pacbio_bam2fastq.out[0].flatten())
-//     }
-
-//     // User wants to get hifi?
-//     if (params.pacbio_get_hifi) {
-//       pacbio_bam2hifi(subreads, barcodes)
-//       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
-//       if (params.lreads_min_length || params.lreads_min_quality) {
-//         lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
-//       }
-//     }
-// }
-
-// workflow pacbio_bas_nf {
-//   take:
-//     h5bas
-//     h5bas_dir
-//     barcodes
-//     threads
-//   main:
-//     pacbio_h52bam(h5bas, h5bas_dir)
-//     bams = pacbio_h52bam.out[0]
-//     pacbio_bam2fastq(bams, barcodes)
-//     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
-//     if (params.lreads_min_length || params.lreads_min_quality) {
-//       lreads_filter(pacbio_bam2fastq.out[0].flatten())
-//     }
-
-//     // User wants to get hifi?
-//     if (params.pacbio_get_hifi) {
-//       pacbio_bam2hifi(bams, barcodes)
-//       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
-//       if (params.lreads_min_length || params.lreads_min_quality) {
-//         lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
-//       }
-//     }
-// }
 
 // workflow shortreads_nf {
 //   take:
@@ -225,28 +171,22 @@ workflow {
   /*
    * User has nanopore longreads
    */
-  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : Channel.empty()
-  NANOPORE(Channel.fromPath(params.nanopore_fastq), sequencing_summary)
+  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : ''
+  nanopore_fastq = (params.nanopore_fastq) ? Channel.fromPath(params.nanopore_fastq) : ''
+  if (params.nanopore_fastq) {
+    NANOPORE(nanopore_fastq, sequencing_summary)
+  }
 
   /*
-   * User has pacbio subreads in bam format
+   * User has pacbio subreads
    */
-  // if (params.pacbio_bamPath) {
-  //   pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath),
-  //                 (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
-  //                 params.threads)
-  // }
-
-  // /*
-  //  * User has pacbio subreads in legacy h5 (bas and bax) files
-  //  */
-  // if (params.pacbio_h5Path) {
-  //   pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
-  //                 Channel.fromPath(params.pacbio_h5Path, type: 'dir'),
-  //                 (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
-  //                 params.threads)
-  // }
-
+  subreads_bam = (params.pacbio_bam) ? Channel.fromPath(params.pacbio_bam) : ''
+  subreads_h5  = (params.pacbio_h5)  ? Channel.fromPath(params.pacbio_h5)  : ''
+  subreads_barcodes = (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : ''
+  if (params.pacbio_h5 || params.pacbio_bam) {
+    PACBIO(subreads_h5, subreads_bam, subreads_barcodes)
+  }
+  
   // /*
   //  * User has short paired end reads
   //  */

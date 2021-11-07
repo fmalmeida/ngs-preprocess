@@ -82,7 +82,7 @@ This command will select all the reads that match the pattern "path-to/m140905_*
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
     --outdir pacbio_subreads \
-    --pacbio_bamPath "path-to/m140905_*.subreads.bam" \
+    --pacbio_bam "path-to/m140905_*.subreads.bam" \
     --pacbio_get_hifi \
     -with-report
 
@@ -104,7 +104,7 @@ Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 .. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
-    --pacbio_h5Path E01_1/Analysis_Results/ \
+    --pacbio_h5 E01_1/Analysis_Results/ \
     --outdir E01_1/Analysis_Results/preprocessed \
     --threads 3
 

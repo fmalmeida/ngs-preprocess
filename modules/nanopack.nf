@@ -12,7 +12,7 @@ process nanopack {
   id = (reads.getBaseName() - "fastq.gz" - ".fastq")
   """
   # Plotting
-  NanoPlot -t ${params.threads} --fastq ${reads} -o ${id}_nanoplot --N50 --title "${id} sample" --plots hex dot pauvre kde ;
+  NanoPlot -t ${params.threads} --fastq ${reads} -o ${id}_nanoplot --N50 --title "${id} sample" --plots hex dot kde ;
 
   # Checking Quality
   nanoQC -o ${id}_nanoQC ${reads} ;
