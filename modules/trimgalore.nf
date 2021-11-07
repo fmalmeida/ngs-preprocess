@@ -2,9 +2,9 @@ process trimgalore {
     publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
         saveAs: {filename ->
     // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf("_fastqc") > 0) "reads/trim_galore/quality_check/$filename"
-            else if (filename.indexOf("trimming_report.txt") > 0) "reads/trim_galore/quality_check/$filename"
-            else if (filename.indexOf(".fq.gz") > 0) "reads/trim_galore/$filename"
+            if (filename.indexOf("_fastqc") > 0) "trim_galore/quality_check/$filename"
+            else if (filename.indexOf("trimming_report.txt") > 0) "trim_galore/quality_check/$filename"
+            else if (filename.indexOf(".fq.gz") > 0) "trim_galore/$filename"
             else null
         }
     tag "Executing TrimGalore"

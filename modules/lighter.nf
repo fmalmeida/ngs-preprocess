@@ -2,8 +2,8 @@ process lighter {
    publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
    saveAs: {filename ->
    // This line saves the files with specific sufixes in specific folders
-            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "reads/lighter_corrected/$filename"
-            else "reads/lighter_corrected/$filename"}
+            if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighter_corrected/$filename"
+            else "lighter_corrected/$filename"}
    tag "Executing Ligther (read correction) step"
 
    input:
