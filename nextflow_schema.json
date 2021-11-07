@@ -162,7 +162,7 @@
                     "help_text": "Tells to trim_galore the base quality threshold to use when trimming.",
                     "fa_icon": "fas fa-filter"
                 },
-                "lighter_execute": {
+                "lighter": {
                     "type": "boolean",
                     "description": "Correct reads with lighter?",
                     "help_text": "Run short reads correction step with lighter.",
@@ -174,7 +174,7 @@
                     "fa_icon": "fas fa-arrows-alt-h",
                     "help_text": "Sets the k-mer to be used by lighter when correcting the reads"
                 },
-                "lighter_genomeSize": {
+                "lighter_genome_size": {
                     "type": "string",
                     "fa_icon": "fas fa-arrows-alt-h",
                     "description": "Tells lighter the expected genome size",
@@ -185,7 +185,7 @@
                     "description": "Ligther alpha value",
                     "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it"
                 },
-                "flash_execute": {
+                "flash": {
                     "type": "boolean",
                     "description": "Merge read pairs?",
                     "help_text": "If used, the pipeline will use FLASH to merge paired reads.",

@@ -19,7 +19,7 @@ This command will select all the read pairs that match the pattern "path-to/SRR*
         --outdir illumina_paired \
         --shortreads "path-to/SRR*_{1,2}.fastq.gz" \
         --shortreads_type "paired" \
-        --flash_execute
+        --flash
 
 .. note::
 
@@ -31,7 +31,7 @@ This command will select all the read pairs that match the pattern "path-to/SRR*
 
 .. note::
 
-  ``--flash_execute`` triggers paired end reads merge with FLASH.
+  ``--flash`` triggers paired end reads merge with FLASH.
 
 Illumina single end reads.
 """"""""""""""""""""""""""

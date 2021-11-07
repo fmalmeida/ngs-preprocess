@@ -8,7 +8,6 @@ process lighter {
 
    input:
     file reads
-    val threads
 
    output:
     tuple val('lighter'), file("*_1.cor.fq.gz"), file("*_2.cor.fq.gz") optional true
@@ -17,7 +16,7 @@ process lighter {
 
    script:
    // Check if alpha is given
-   alpha_param = (params.lighter_alpha) ? "-k ${params.lighter_kmer} ${params.lighter_alpha}" : "-K ${params.lighter_kmer}"
+   alpha_param = (params.lighter_alpha) ? "-k ${params.lighter_kmer} ${params.lighter_genome_size} ${params.lighter_alpha}" : "-K ${params.lighter_kmer} ${params.lighter_genome_size}"
    // Check reads library
    if (params.shortreads_type == 'paired') {
         param = "-r ${reads[1]} -r ${reads[2]}"
@@ -29,8 +28,8 @@ process lighter {
       }
    """
    # run lighter
-   lighter ${param} ${alpha_param} ${params.lighter_genomeSize};
+   lighter ${param} ${alpha_param};
    mkdir fastqc_after_correction ;
-   fastqc -t ${threads} -o fastqc_after_correction -q ${quality}
+   fastqc -t ${params.threads} -o fastqc_after_correction -q ${quality}
    """
 }

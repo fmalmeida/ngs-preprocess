@@ -8,13 +8,12 @@ process flash {
 
   input:
     file reads
-    val threads
   output:
     file "flash_merged*"
 
   script:
   """
   # run FLASH
-  flash -q -o flash_merged -z -t ${threads} ${reads[1]} ${reads[2]} &> flash.log;
+  flash -q -o flash_merged -z -t ${params.threads} ${reads[1]} ${reads[2]} &> flash.log;
   """
 }

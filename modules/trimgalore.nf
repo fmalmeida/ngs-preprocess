@@ -12,7 +12,6 @@ process trimgalore {
     input:
       tuple val(id), file(read1), file(read2)
       file(sreads)
-      val threads
 
     output:
       tuple val('trimgalore'), file("${id}_1.fq.gz"), file("${id}_2.fq.gz") optional true
@@ -39,7 +38,7 @@ process trimgalore {
 
     """
     # run trim_galore
-    trim_galore -q ${params.quality_trim} --fastqc --gzip $param -j $threads ;
+    trim_galore -q ${params.quality_trim} --fastqc --gzip $param -j ${params.threads} ;
     ${rename}
     """
 }

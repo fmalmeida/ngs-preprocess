@@ -54,16 +54,16 @@ def helpMessage() {
 
     --quality_trim <int>                           Phred quality threshold for trimming. [Default: 20]
 
-    --lighter_execute                              Tells wheter to run or not Lighter correction tool
+    --lighter                              Tells wheter to run or not Lighter correction tool
 
     --lighter_kmer <int>                           Lighter k-mer to use in correction step. [Default: 21]
 
-    --lighter_genomeSize <int>                     Approximate genome size
+    --lighter_genome_size <int>                     Approximate genome size
 
     --lighter_alpha <float>                        Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                                    If not set, Lighter will automatically calculate the best value
 
-    --flash_execute                                If set, FLASH will be executed to merge paired end reads
+    --flash                                If set, FLASH will be executed to merge paired end reads
 
 
             # Parameters for long reads filtering

@@ -121,7 +121,7 @@ Short reads (Illumina)
      - 20
      - Phred quality threshold for trimming.
 
-   * - ``--lighter_execute``
+   * - ``--lighter``
      - N
      - False
      - Tells whether to run or not Lighter correction tool
@@ -131,8 +131,8 @@ Short reads (Illumina)
      - 21
      - Lighter k-mer to use in correction step.
 
-   * - ``--lighter_genomeSize``
-     - Y (If ``--lighter_execute``)
+   * - ``--lighter_genome_size``
+     - Y (If ``--lighter``)
      - NA
      - Approximate genome size
 
@@ -141,7 +141,7 @@ Short reads (Illumina)
      - NA
      - Lighter sample rate alpha parameter. If empty, Lighter will automatically calculate its value.
 
-   * - ``--flash_execute``
+   * - ``--flash``
      - N
      - False
      - If set, FLASH will be executed to merge paired end reads

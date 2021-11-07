@@ -83,12 +83,12 @@ Default configuration:
     three_prime_clip_r1 = 0                               // Number of bases to ALWAYS clip from 3' (read 1) end, despite base qualities
     three_prime_clip_r2 = 0                               // Number of bases to ALWAYS clip from 3' (read 2) end, despite base qualities
     quality_trim = 20                                     // Quality threshold for trimming
-    lighter_execute = false                               // Tells whether or not to execute lighter correction step
+    lighter = false                               // Tells whether or not to execute lighter correction step
     lighter_kmer = 21                                     // Which k-mer to use in lighter correction. Check Ligther's manual (https://github.com/mourisl/Lighter)
-    lighter_genomeSize = 0                                // Tells lighter the expected genome size for correction of reads
+    lighter_genome_size = 0                                // Tells lighter the expected genome size for correction of reads
     lighter_alpha = ''                                    // Lighter alpha parameter. Rule of thumb: (7/C) where C is coverage.
                                                           // If left blank, Lighter will automatically calculate the best value.
-    flash_execute = false                                 // Tells whether or not to merge paired reads with FLASH
+    flash = false                                 // Tells whether or not to merge paired reads with FLASH
 
     /*
 

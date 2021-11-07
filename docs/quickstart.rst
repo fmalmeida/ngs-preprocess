@@ -58,9 +58,9 @@ Outputs will be at ``preprocessed_reads``.
     --threads 4 \
     --shortreads "SRR8482585_30X_{1,2}.fastq.gz" \
     --shortreads_type paired \
-    --lighter_execute \
-    --lighter_genomeSize 4m \
-    --flash_execute \
+    --lighter \
+    --lighter_genome_size 4m \
+    --flash \
     --nanopore_fastq "SRX5299443_30X.fastq.gz" \
     --lreads_min_length 1000 \
     --lreads_min_quality 10

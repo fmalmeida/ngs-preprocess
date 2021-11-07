@@ -7,8 +7,8 @@ def exampleMessage() {
       it MUST ALWAYS be double quoted as the example below.
 
 ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outdir outputs/illumina_paired --shortreads \
-"illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" --lighter_execute --lighter_genomeSize 4600000 \
---clip_r1 5 --three_prime_clip_r1 5 --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
+"illumina/SRR9847694_{1,2}.fastq.gz" --shortreads_type "paired" --lighter --lighter_genome_size 4600000 \
+--clip_r1 5 --three_prime_clip_r1 5 --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash
 
 
       Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed

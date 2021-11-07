@@ -5,7 +5,6 @@ process fastqc {
     input:
       tuple val(id), file(read1), file(read2)
       file(sreads)
-      val threads
 
     output:
       file "fastqc_${id}/*_fastqc.{zip,html}"
@@ -25,6 +24,6 @@ process fastqc {
     mkdir fastqc_${id} ;
 
     # run fastqc
-    fastqc -t $threads -o fastqc_${id} $param
+    fastqc -t ${params.threads} -o fastqc_${id} $param
     """
 }
