@@ -5,11 +5,18 @@ channels:
   - conda-forge
   - bioconda
   - defaults
+  - anaconda
+  - r
 dependencies:
   ## python pip dependencies
   - pip
   - pip:
     - nanopack
+    - matplotlib==3.1.3
+    - biopython==1.78
+  
+  ## anaconda packages
+  - anaconda::hdf5
   
   ## conda-forge packages
   - conda-forge::pigz=2.3.4               ## Required for TrimGalore multi-threading
@@ -18,10 +25,12 @@ dependencies:
   ## bioconda packages
   - bioconda::porechop
   - bioconda::fastqc
+  - bioconda::cutadapt
   - bioconda::flash
   - bioconda::trim-galore
   - bioconda::samtools
   - bioconda::lighter
+  - bioconda::pbh5tools
   - bioconda::bax2bam=0.0.9
   - bioconda::pbbam
   - bioconda::bam2fastx
@@ -29,3 +38,5 @@ dependencies:
   - bioconda::lima
   - bioconda::pbbam>=0.23.0
   - bioconda::pycoqc
+  - bioconda::pysam
+  - bioconda::filtlong
