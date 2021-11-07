@@ -57,12 +57,28 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 
 ### Selecting between conda, docker and singularity
 
-By default, the standard profile of the pipeline will search for the existance of the conda environment. If users want to execute it with docker or singularity, please use the folowing:
+By default, the standard profile of the pipeline will search for the existance of the conda environment. Therefore, to chose between profiles, users must use the parameter `-profile`, as below:
 
+* conda (default)
+    + does not require the parameter `-profile`
+    + `nextflow run fmalmeida/ngs-preprocess [options]`
 * docker
     + `nextflow run fmalmeida/ngs-preprocess -profile docker [options]`
 * singularity
     + `nextflow run fmalmeida/ngs-preprocess -profile singularity [options]`
+
+The tools for each profile are acquired as follows:
+
+```bash
+# to use it with conda
+wget https://raw.githubusercontent.com/fmalmeida/ngs-preprocess/master/environment.yml  # download the conda env.yml
+mamba env create -f environment.yml    # create the ngs-preprocess environment
+
+# to use it with docker or singularity
+docker pull fmalmeida/ngs-preprocess:v2.3      # singularity will also use this image
+```
+
+:fire: Instead of mamba users can use conda, however, mamba is extremely faster.
 
 ### Usage
 
