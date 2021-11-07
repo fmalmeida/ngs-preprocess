@@ -21,8 +21,10 @@ process fastqc {
       }
       
     """
-    # run fastqc
+    # create directory for results
     mkdir fastqc_${id} ;
+
+    # run fastqc
     fastqc -t $threads -o fastqc_${id} $param
     """
 }

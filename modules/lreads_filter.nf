@@ -1,4 +1,4 @@
-process lreads_filter {
+process filter {
   publishDir "${params.outdir}/longreads/filtered_reads", mode: 'copy'
   tag "filtering longreads with nanofilt"
 

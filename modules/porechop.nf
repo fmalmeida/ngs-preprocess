@@ -4,20 +4,18 @@ process porechop {
 
   input:
     file reads
-    val threads
-    val barcode
   output:
     file "${id}_trimmed.fastq" optional true
     file "porechop_barcodes/*.fastq" optional true
 
   script:
     id = (reads.getBaseName() - "fastq.gz" - ".fastq")
-    if (barcode)
+    if (params.nanopore_is_barcoded)
     """
-    porechop -i ${reads} -b porechop_barcodes --barcode_threshold 85
+    porechop -i ${reads} -t ${params.threads} -b porechop_barcodes --barcode_threshold 85
     """
     else
     """
-    porechop -i ${reads} -t ${threads} --format fastq -o ${id}_trimmed.fastq ;
+    porechop -i ${reads} -t ${params.threads} --format fastq -o ${id}_trimmed.fastq ;
     """
 }

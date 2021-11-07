@@ -110,16 +110,9 @@ params.pacbio_get_hifi = false
 logMessage()
 
 /*
- * Include modules
+ * Load workflows
  */
-include { porechop } from './modules/porechop.nf' params(outdir: params.outdir)
-
-include { nanopack; nanopack as nanopack_hifi } from './modules/nanopack.nf' params(outdir: params.outdir)
-
-include { lreads_filter; lreads_filter as lreads_filter_hifi } from './modules/lreads_filter.nf' params(outdir: params.outdir,
-  lreads_min_length: params.lreads_min_length, lreads_min_quality: params.lreads_min_quality)
-
-include { pycoQC } from './modules/pycoQC.nf' params(outdir: params.outdir)
+include { NANOPORE } from '../workflows/nanopore.nf'
 
 include { pacbio_bam2fastq } from './modules/pacbio_bam2fastq.nf' params(outdir: params.outdir,
   pacbio_barcodes: params.pacbio_barcodes, pacbio_barcode_design: params.pacbio_barcode_design,
@@ -148,101 +141,82 @@ include { flash } from './modules/flash.nf' params(outdir: params.outdir)
 /*
  * Define custom workflows
  */
-workflow nanopore_nf {
-  take:
-    reads
-    threads
-    barcode
-  main:
-    porechop(reads, threads, barcode)
-    nanopack(porechop.out[0].flatten(), threads)
-    if (params.lreads_min_length || params.lreads_min_quality) {
-      lreads_filter(porechop.out[0].flatten())
-    }
-}
 
-workflow pycoQC_nf {
-  take:
-    input
-  main:
-    pycoQC(input)
-}
+// workflow pacbio_bam_nf {
+//   take:
+//     subreads
+//     barcodes
+//     threads
+//   main:
+//     pacbio_bam2fastq(subreads, barcodes)
+//     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+//     if (params.lreads_min_length || params.lreads_min_quality) {
+//       lreads_filter(pacbio_bam2fastq.out[0].flatten())
+//     }
 
-workflow pacbio_bam_nf {
-  take:
-    subreads
-    barcodes
-    threads
-  main:
-    pacbio_bam2fastq(subreads, barcodes)
-    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
-    if (params.lreads_min_length || params.lreads_min_quality) {
-      lreads_filter(pacbio_bam2fastq.out[0].flatten())
-    }
+//     // User wants to get hifi?
+//     if (params.pacbio_get_hifi) {
+//       pacbio_bam2hifi(subreads, barcodes)
+//       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+//       if (params.lreads_min_length || params.lreads_min_quality) {
+//         lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
+//       }
+//     }
+// }
 
-    // User wants to get hifi?
-    if (params.pacbio_get_hifi) {
-      pacbio_bam2hifi(subreads, barcodes)
-      nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
-      if (params.lreads_min_length || params.lreads_min_quality) {
-        lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
-      }
-    }
-}
+// workflow pacbio_bas_nf {
+//   take:
+//     h5bas
+//     h5bas_dir
+//     barcodes
+//     threads
+//   main:
+//     pacbio_h52bam(h5bas, h5bas_dir)
+//     bams = pacbio_h52bam.out[0]
+//     pacbio_bam2fastq(bams, barcodes)
+//     nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
+//     if (params.lreads_min_length || params.lreads_min_quality) {
+//       lreads_filter(pacbio_bam2fastq.out[0].flatten())
+//     }
 
-workflow pacbio_bas_nf {
-  take:
-    h5bas
-    h5bas_dir
-    barcodes
-    threads
-  main:
-    pacbio_h52bam(h5bas, h5bas_dir)
-    bams = pacbio_h52bam.out[0]
-    pacbio_bam2fastq(bams, barcodes)
-    nanopack(pacbio_bam2fastq.out[0].flatten(), threads)
-    if (params.lreads_min_length || params.lreads_min_quality) {
-      lreads_filter(pacbio_bam2fastq.out[0].flatten())
-    }
+//     // User wants to get hifi?
+//     if (params.pacbio_get_hifi) {
+//       pacbio_bam2hifi(bams, barcodes)
+//       nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
+//       if (params.lreads_min_length || params.lreads_min_quality) {
+//         lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
+//       }
+//     }
+// }
 
-    // User wants to get hifi?
-    if (params.pacbio_get_hifi) {
-      pacbio_bam2hifi(bams, barcodes)
-      nanopack_hifi(pacbio_bam2hifi.out[0].flatten(), threads)
-      if (params.lreads_min_length || params.lreads_min_quality) {
-        lreads_filter_hifi(pacbio_bam2hifi.out[0].flatten())
-      }
-    }
-}
+// workflow shortreads_nf {
+//   take:
+//     preads
+//     sreads
+//     threads
+//   main:
+//     fastqc(preads, sreads, threads)
+//     trimgalore(preads, sreads, threads)
 
-workflow shortreads_nf {
-  take:
-    preads
-    sreads
-    threads
-  main:
-    fastqc(preads, sreads, threads)
-    trimgalore(preads, sreads, threads)
+//     // Paired
+//     if (params.shortreads_type == 'paired') {
+//       if (params.lighter_execute && params.flash_execute) {
+//         lighter(trimgalore.out[0], threads)
+//         flash(lighter.out[0], threads)
+//       } else if (params.lighter_execute && !params.flash_execute) {
+//         lighter(trimgalore.out[0], threads)
+//       } else if (!params.lighter_execute && params.flash_execute) {
+//         flash(trimgalore.out[0], threads)
+//       }
+//     }
 
-    // Paired
-    if (params.shortreads_type == 'paired') {
-      if (params.lighter_execute && params.flash_execute) {
-        lighter(trimgalore.out[0], threads)
-        flash(lighter.out[0], threads)
-      } else if (params.lighter_execute && !params.flash_execute) {
-        lighter(trimgalore.out[0], threads)
-      } else if (!params.lighter_execute && params.flash_execute) {
-        flash(trimgalore.out[0], threads)
-      }
-    }
-
-    // Single
-    if (params.shortreads_type == 'single') {
-      if (params.lighter_execute) {
-        lighter(trimgalore.out[1].flatten(), threads)
-      }
-    }
-}
+//     // Single
+//     if (params.shortreads_type == 'single') {
+//       if (params.lighter_execute) {
+//         lighter(trimgalore.out[1].flatten(), threads)
+//       }
+//     }
+// }
 
 /*
  * Define main workflow
@@ -251,50 +225,42 @@ workflow {
   /*
    * User has nanopore longreads
    */
-  if (params.nanopore_fastq) {
-    nanopore_nf(Channel.fromPath(params.nanopore_fastq), params.threads, params.nanopore_is_barcoded)
-  }
-
-  /*
-   * User wants to render a report with pycoQC
-   */
-  if (params.nanopore_sequencing_summary) {
-    pycoQC_nf(Channel.fromPath(params.nanopore_sequencing_summary))
-  }
+  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : Channel.empty()
+  NANOPORE(Channel.fromPath(params.nanopore_fastq), sequencing_summary)
 
   /*
    * User has pacbio subreads in bam format
    */
-  if (params.pacbio_bamPath) {
-    pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath),
-                  (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
-                  params.threads)
-  }
+  // if (params.pacbio_bamPath) {
+  //   pacbio_bam_nf(Channel.fromPath(params.pacbio_bamPath),
+  //                 (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
+  //                 params.threads)
+  // }
 
-  /*
-   * User has pacbio subreads in legacy h5 (bas and bax) files
-   */
-  if (params.pacbio_h5Path) {
-    pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
-                  Channel.fromPath(params.pacbio_h5Path, type: 'dir'),
-                  (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
-                  params.threads)
-  }
+  // /*
+  //  * User has pacbio subreads in legacy h5 (bas and bax) files
+  //  */
+  // if (params.pacbio_h5Path) {
+  //   pacbio_bas_nf(Channel.fromPath(params.pacbio_h5Path),
+  //                 Channel.fromPath(params.pacbio_h5Path, type: 'dir'),
+  //                 (params.pacbio_barcodes) ? Channel.fromPath(params.pacbio_barcodes) : Channel.value(''),
+  //                 params.threads)
+  // }
 
-  /*
-   * User has short paired end reads
-   */
-  if (params.shortreads && params.shortreads_type == 'paired') {
-    shortreads_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2),
-                  Channel.value(''), params.threads)
-  }
+  // /*
+  //  * User has short paired end reads
+  //  */
+  // if (params.shortreads && params.shortreads_type == 'paired') {
+  //   shortreads_nf(Channel.fromFilePairs(params.shortreads, flat: true, size: 2),
+  //                 Channel.value(''), params.threads)
+  // }
 
-  /*
-   * User has short single end reads
-   */
-  if (params.shortreads && params.shortreads_type == 'single') {
-    shortreads_nf(Channel.value(['', '', '']), Channel.fromPath(params.shortreads), params.threads)
-  }
+  // /*
+  //  * User has short single end reads
+  //  */
+  // if (params.shortreads && params.shortreads_type == 'single') {
+  //   shortreads_nf(Channel.value(['', '', '']), Channel.fromPath(params.shortreads), params.threads)
+  // }
 }
 
 workflow.onComplete {
