@@ -28,7 +28,7 @@ process lighter {
       }
    """
    # run lighter
-   lighter ${param} ${alpha_param};
+   lighter -t ${params.threads} ${param} ${alpha_param};
    mkdir fastqc_after_correction ;
    fastqc -t ${params.threads} -o fastqc_after_correction -q ${quality}
    """
