@@ -34,11 +34,11 @@ workflow PACBIO {
     }
 
     // QC on fastq
-    nanopack(reads.flatten())
+    nanopack(reads)
 
     // filter reads
     if (params.lreads_min_length || params.lreads_min_quality) {
-      filter(reads.flatten())
+      filter(reads)
     }
 
 }

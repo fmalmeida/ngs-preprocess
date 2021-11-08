@@ -7,7 +7,7 @@ process bam2fastq {
   file barcodes
   
   output:
-  file "*.fastq"
+  tuple val(id), file("*.fastq"), val('pacbio')
   file "*"
   
   when:

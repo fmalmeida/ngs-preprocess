@@ -13,13 +13,13 @@ process porechop {
   !(reads =~ /input.*/)
 
   script:
-    id = (reads.getBaseName() - "fastq.gz" - ".fastq")
-    if (params.nanopore_is_barcoded)
-    """
-    porechop -i ${reads} -t ${params.threads} -b porechop_barcodes --barcode_threshold 85
-    """
-    else
-    """
-    porechop -i ${reads} -t ${params.threads} --format fastq -o ${id}_trimmed.fastq ;
-    """
+  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  if (params.nanopore_is_barcoded)
+  """
+  porechop -i ${reads} -t ${params.threads} -b porechop_barcodes --barcode_threshold 85
+  """
+  else
+  """
+  porechop -i ${reads} -t ${params.threads} --format fastq -o ${id}_trimmed.fastq ;
+  """
 }
