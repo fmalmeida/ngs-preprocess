@@ -107,7 +107,11 @@ For understading pipeline usage and configuration, users must read the <a href="
 
 ### Using the configuration file
 
-All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/ngs-preprocess -c ./configuration-file`
+All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing:
+
+```bash
+nextflow run fmalmeida/ngs-preprocess -c ./configuration-file
+```
 
 Your configuration file is what will tell to the pipeline the type of data you have, and which processes to execute. Therefore, it needs to be correctly set up.
 

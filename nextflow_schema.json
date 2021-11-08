@@ -31,7 +31,8 @@
                     "enum": [
                         "paired",
                         "single"
-                    ]
+                    ],
+                    "fa_icon": "fas fa-question-circle"
                 },
                 "nanopore_fastq": {
                     "type": "string",
@@ -71,9 +72,9 @@
                 },
                 "parallel_jobs": {
                     "type": "integer",
-                    "default": 1,
                     "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
-                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory."
+                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory.",
+                    "fa_icon": "fas fa-network-wired"
                 }
             }
         },
@@ -116,13 +117,20 @@
                 },
                 "pacbio_barcode_design": {
                     "type": "string",
-                    "description": "Pacbio barcode design (same, different, any)",
-                    "help_text": "For demultiplexing you can choose how to associate the barcodes: same, different or any type of combination.\n\nBy default, only reads with 'same' barcodes in both ends are demultiplexed."
+                    "description": "Pacbio barcode design",
+                    "help_text": "For demultiplexing you can choose how to associate the barcodes: same, different or any type of combination. By default, only reads with 'same' barcodes in both ends are demultiplexed.",
+                    "fa_icon": "fas fa-question-circle",
+                    "enum": [
+                        "same",
+                        "different",
+                        "any"
+                    ]
                 },
                 "pacbio_get_hifi": {
                     "type": "boolean",
                     "description": "Try to obtain hifi reads?",
-                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error."
+                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error.",
+                    "fa_icon": "fas fa-question-circle"
                 }
             }
         },
@@ -183,7 +191,8 @@
                 "lighter_alpha": {
                     "type": "integer",
                     "description": "Ligther alpha value",
-                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it"
+                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it",
+                    "fa_icon": "fas fa-question"
                 },
                 "flash": {
                     "type": "boolean",
