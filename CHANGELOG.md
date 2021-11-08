@@ -2,9 +2,15 @@
 
 The tracking for changes started in v2.2
 
+## v2.3
+
+This version is related to issue https://github.com/fmalmeida/ngs-preprocess/issues/5. It re-configured the pipeline to be more likely to nf-core pipelines, enabling users to run it using docker, conda or singularity. More explanation on how to run with different profiles is given at: https://github.com/fmalmeida/ngs-preprocess/tree/master#selecting-between-profiles
+
+Moreover, some small fixes have been done in all the workflows so that the pre-processed reads are stored in sub-folders named as the reads basename. Before the pipeline was placing it all under the `--outdir` directory without sub-folders organization.
+
 ## v2.2
 
-This versions have a few additions to the pipeline workflow, they are highlighted and explained below:
+This version have a few additions to the pipeline workflow, they are highlighted and explained below:
 
 ### nf-core schema
 
