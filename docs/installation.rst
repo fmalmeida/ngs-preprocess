@@ -6,7 +6,7 @@ Installation
 Dependencies
 ============
 
-This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requires `Docker <https://www.docker.com/>`_, `Singularity <https://sylabs.io/singularity/>`_ or `conda <https://conda.io/>`_ to run.
+This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requires `Docker <https://www.docker.com/>`_, `Singularity <https://sylabs.io/singularity/>`_ or `conda <https://conda.io/>`_ to run. Please read the information about how to proper :ref:`choose between conda, docker and singularity profiles<profiles>`.
 
 1. Installing Nextflow
 

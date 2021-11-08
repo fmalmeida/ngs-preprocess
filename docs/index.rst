@@ -72,6 +72,7 @@ It wraps up the following tools:
    :hidden:
 
    installation
+   profiles
    quickstart
    manual
    config
