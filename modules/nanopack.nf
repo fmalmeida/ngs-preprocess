@@ -1,5 +1,5 @@
 process nanopack {
-  publishDir "${params.outdir}/longreads/nanopack_out", mode: 'copy'
+  publishDir "${params.outdir}/longreads/${id}/nanopack_out", mode: 'copy'
   tag "Checking longreads qualities with Nanopack"
   //validExitStatus 0,1 // To momentainaly fix problem with matplotlib
 

@@ -59,8 +59,22 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
     ```bash
     nextflow run fmalmeida/ngs-preprocess --help
     ```
+
+3. Download required tools
+
+    ```bash
+    # for docker
+    docker pull fmalmeida/ngs-preprocess:v2.3
+
+    # for singularity
+    singularity pull docker://fmalmeida/ngs-preprocess:v2.3
+
+    # for conda
+    wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
+    [mamba|conda] env create -f environment.yml
+    ```
     
-3. Start running your analysis
+4. Start running your analysis
     
     ```bash
     nextflow run fmalmeida/ngs-preprocess -profile <docker/singularity/conda>

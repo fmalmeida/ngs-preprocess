@@ -1,5 +1,5 @@
 process trimgalore {
-    publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
+    publishDir "${params.outdir}/shortreads/${id}/after_trimming", mode: 'copy',
         saveAs: {filename ->
     // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf("_fastqc") > 0) "trim_galore/quality_check/$filename"

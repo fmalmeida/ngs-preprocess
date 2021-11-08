@@ -1,5 +1,5 @@
 process lighter {
-   publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
+   publishDir "${params.outdir}/shortreads/${id}/after_trimming", mode: 'copy',
    saveAs: {filename ->
    // This line saves the files with specific sufixes in specific folders
             if (filename.indexOf(".cor{.fq.gz, .fq}") > 0) "lighter_corrected/$filename"
@@ -21,10 +21,12 @@ process lighter {
    if (params.shortreads_type == 'paired') {
         param = "-r ${reads[1]} -r ${reads[2]}"
         quality = "*_1.cor.fq.gz *_2.cor.fq.gz"
+        id = reads[0]
       }
       else if (params.shortreads_type == 'single') {
         param = "-r ${reads}"
         quality = "*.cor{.fq.gz, .fq}"
+        id = reads.getBaseName()
       }
    """
    # run lighter

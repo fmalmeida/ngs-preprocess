@@ -3,6 +3,7 @@
 .. image:: lOGO_3_transparente.png
   :width: 250
   :align: left
+  :alt: Laboratory logo
 
 ----
 

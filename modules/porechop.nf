@@ -1,5 +1,5 @@
 process porechop {
-  publishDir "${params.outdir}/longreads/porechop_out", mode: 'copy'
+  publishDir "${params.outdir}/longreads/${id}/porechop_out", mode: 'copy'
   tag "Trimming longreads with Porechop"
 
   input:

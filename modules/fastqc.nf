@@ -1,5 +1,5 @@
 process fastqc {
-  publishDir "${params.outdir}/shortreads/before_trimming", mode: 'copy'
+  publishDir "${params.outdir}/shortreads/${id}/before_trimming", mode: 'copy'
   tag "Evaluating short reads with FastQC"
 
     input:

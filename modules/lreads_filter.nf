@@ -1,5 +1,5 @@
 process filter {
-  publishDir "${params.outdir}/longreads/filtered_reads", mode: 'copy'
+  publishDir "${params.outdir}/longreads/${id}/filtered_reads", mode: 'copy'
   tag "filtering longreads with nanofilt"
 
   input:
