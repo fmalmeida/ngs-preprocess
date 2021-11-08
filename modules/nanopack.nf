@@ -13,7 +13,7 @@ process nanopack {
   !(reads =~ /input.*/)
 
   script:
-  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  id = (reads.getBaseName() - "fastq.gz" - ".fastq" - ".subreads")
   """
   # Plotting
   NanoPlot -t ${params.threads} --fastq ${reads} -o ${id}_nanoplot --N50 --title "${id} sample" --plots hex dot kde ;

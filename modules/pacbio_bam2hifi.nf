@@ -14,7 +14,7 @@ process bam2hifi {
   !(subreads =~ /input.*/)
 
   script:
-  id = (subreads.getBaseName() - ".bam")
+  id = (subreads.getBaseName() - ".bam" - ".subreads")
   design = (params.pacbio_barcode_design.toLowerCase() != 'same' && params.pacbio_barcode_design.toLowerCase() != 'different') ? '' : '--' + params.pacbio_barcode_design.toLowerCase()
   if (params.pacbio_barcodes)
   """

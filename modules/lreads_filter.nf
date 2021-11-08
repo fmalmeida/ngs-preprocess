@@ -12,7 +12,7 @@ process filter {
   !(reads =~ /input.*/)
 
   script:
-  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  id = (reads.getBaseName() - "fastq.gz" - ".fastq" - ".subreads")
   quality = (params.lreads_min_quality) ? "-q ${params.lreads_min_quality}" : ''
   length  = (params.lreads_min_length)  ? "-l ${params.lreads_min_length}" : ''
   """
