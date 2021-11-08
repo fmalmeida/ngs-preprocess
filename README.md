@@ -62,7 +62,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
     
 3. Start running your analysis
     
-    ```console
+    ```bash
     nextflow run fmalmeida/ngs-preprocess -profile <docker/singularity/conda>
     ```
 
@@ -83,19 +83,19 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
 
 * conda
 
-    ```console
+    ```bash
     nextflow run fmalmeida/ngs-preprocess -profile conda [options]
     ```
 
 * docker
     
-    ```console
+    ```bash
     nextflow run fmalmeida/ngs-preprocess -profile docker [options]
     ```
 
 * singularity
     
-    ```console
+    ```bash
     nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
     ```
 
@@ -121,7 +121,7 @@ Your configuration file is what will tell to the pipeline the type of data you h
 
 Create a configuration file in your working directory:
 
-```console
+```bash
 nextflow run fmalmeida/ngs-preprocess [ --get_full_config ] [ --get_illumina_config ] [ --get_pacbio_config ] [ --get_ont_config ]
 ```
 
