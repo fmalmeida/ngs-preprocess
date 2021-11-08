@@ -9,15 +9,11 @@ Input
 * path to fastq files containing sequencing reads (Illumina or Nanopore)
 * path to Pacbio .bam or .h5 files containing raw data
 
-.. note::
+.. warning::
+
+  Users must **never** use hard or symbolic links. This will make nextflow fail.
 
   Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
-
-.. note::
-
-   Users must **never** use hard or symbolic links. This will make nextflow fail.
-
-.. warning::
 
   **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each read (or pair) that match this pattern separately.
 
@@ -66,19 +62,15 @@ Max job request
 
    * - ``--parallel_jobs``
      - N
-     - 1
-     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+     - NA
+     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``). If not specified, the pipeline will let nextflow automatically handle it
 
 
 Short reads (Illumina)
 ======================
 
-.. note::
-
-  When using paired end reads it is required that inputs are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
-
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 30 10 10 50
    :header-rows: 1
 
    * - Arguments
@@ -151,7 +143,7 @@ Long reads (Pacbio or Nanopore)
 ===============================
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 30 10 10 50
    :header-rows: 1
 
    * - Arguments
