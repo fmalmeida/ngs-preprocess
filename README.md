@@ -48,10 +48,18 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 
 ## Quickstart
 
-1. Install Nextflow (version 20.01 or higher):
-    + `curl -s https://get.nextflow.io | bash`
+1. Install Nextflow:
+    
+    ```bash
+    curl -s https://get.nextflow.io | bash
+    ```
+    
 2. Give it a try:
-    + `nextflow run fmalmeida/ngs-preprocess --help`
+    
+    ```bash
+    nextflow run fmalmeida/ngs-preprocess --help
+    ```
+    
 3. Start running your analysis
     
     ```console
@@ -91,7 +99,7 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
     nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
     ```
 
-:note: Please use conda as last resource since the packages will not be packed, problems may arise, and nextflow will trigger an installation every time which may consume plenty of time.
+:book: Please use conda as last resource since the packages will not be packed, problems may arise, and nextflow will trigger an installation every time which may consume plenty of time.
 
 ### Usage
 
@@ -101,10 +109,7 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
     + `nextflow run fmalmeida/ngs-preprocess --help`
 * See usage examples in the command line:
     + `nextflow run fmalmeida/ngs-preprocess --examples`
-
-### Command line usage examples
-
-Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
+    + Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
 
 **Remember**: Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be inside double quotes.
 
