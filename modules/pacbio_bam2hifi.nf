@@ -3,11 +3,15 @@ process bam2hifi {
   tag "Computing HIFI reads from pacbio subreads.bam files"
 
   input:
-    file subreads
-    file barcodes
+  file subreads
+  file barcodes
+  
   output:
   file "*.fastq"
   file "*"
+
+  when:
+  (!subreads =~ /input.*/)
 
   script:
   id = (subreads.getBaseName() - ".bam")

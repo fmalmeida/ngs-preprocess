@@ -3,10 +3,10 @@ process h52bam {
   tag "Converting pacbio legacy h5 files to bam"
 
   input:
-    file h5bas
+  file h5bas
 
   output:
-    file("*.subreads.bam") // Get all bam files produced
+  file("*.subreads.bam") // Get all bam files produced
 
   script:
   """
