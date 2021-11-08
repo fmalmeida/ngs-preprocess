@@ -9,7 +9,7 @@ process h52bam {
   file("*.subreads.bam") // Get all bam files produced
 
   when:
-  (!h5bas =~ /input.*/)
+  !(h5bas =~ /input.*/)
 
   script:
   id = file("${h5bas}/*.bas.h5")[0].getBaseName().toString() - ".h5" - ".bas"
