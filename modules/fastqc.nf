@@ -1,28 +1,30 @@
 process fastqc {
-  publishDir "${params.outdir}/shortreads/before_trimming", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
+  publishDir "${params.outdir}/shortreads/${id}/before_trimming", mode: 'copy'
   tag "Evaluating short reads with FastQC"
 
     input:
-      tuple val(id), file(read1), file(read2)
-      file(sreads)
-      val threads
+    tuple val(id), file(read1), file(read2)
+    file(sreads)
 
     output:
-      file "fastqc_${id}/*_fastqc.{zip,html}"
+    file "fastqc_${id}/*_fastqc.{zip,html}"
+
+    when:
+    (!(read1 =~ /input.*/) && !(read2 =~ /input.*/)) || !(sreads =~ /input.*/)
 
     script:
 
-      if (params.shortreads_type == 'paired') {
-        param = "-q ${read1} ${read2}"
-      }
-      else if (params.shortreads_type == 'single') {
-        param = "-q ${sreads}"
-        id = sreads.getBaseName()
-      }
-      
+    if (params.shortreads_type == 'paired') {
+      param = "-q ${read1} ${read2}"
+    } else if (params.shortreads_type == 'single') {
+      param = "-q ${sreads}"
+      id = sreads.getBaseName() - ".fastq.gz" - ".fastq"
+    }      
     """
+    # create directory for results
     mkdir fastqc_${id} ;
-    fastqc -t $threads -o fastqc_${id} $param
+
+    # run fastqc
+    fastqc -t ${params.threads} -o fastqc_${id} $param
     """
 }

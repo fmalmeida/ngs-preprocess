@@ -6,31 +6,41 @@ Installation
 Dependencies
 ============
 
-This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and
-`Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
+This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requires `Docker <https://www.docker.com/>`_, `Singularity <https://sylabs.io/singularity/>`_ or `conda <https://conda.io/>`_ to run. Please read the information about how to proper :ref:`choose between conda, docker and singularity profiles<profiles>`.
 
-1. Installing Docker
+1. Installing Nextflow
 
-   * Read more in their `manual <https://docs.docker.com/>`_
-   * Or give this `in-house script <https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh>`_ a try.
+   .. code-block:: bash
 
-2. Installing Nextflow
+      curl -s https://get.nextflow.io | bash
 
-   ``curl -s https://get.nextflow.io | bash``
+2. Download the pipeline
 
-3. Download the pipeline
+   .. code-block:: bash
 
-   ``./nextflow pull fmalmeida/ngs-preprocess``
+      nextflow pull fmalmeida/ngs-preprocess
 
-4. Test your installation
+3. Test your installation
 
-   ``./nextflow run fmalmeida/ngs-preprocess --help``
+   .. code-block:: bash
 
-5. Download required Docker images
+      nextflow run fmalmeida/ngs-preprocess --help
 
-   ``docker pull fmalmeida/ngs-preprocess``
+4. Download required tools
 
-6. (Optional) Install nf-core
+   .. code-block:: bash
+      
+      # for docker
+      docker pull fmalmeida/ngs-preprocess:v2.3
+
+      # for singularity
+      singularity pull docker://fmalmeida/ngs-preprocess:v2.3
+
+      # for conda
+      wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
+      [mamba|conda] env create -f environment.yml
+
+5. (Optional) Install nf-core
 
    ``pip install nf-core>=1.10``
 

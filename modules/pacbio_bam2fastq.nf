@@ -1,21 +1,24 @@
-process pacbio_bam2fastq {
-  publishDir "${params.outdir}/longreads/pacbio", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
+process bam2fastq {
+  publishDir "${params.outdir}/longreads/${id}", mode: 'copy'
   tag "Extracting FASTQ from pacbio subreads.bam files"
 
   input:
-    file subreads
-    file barcodes
+  file subreads
+  file barcodes
+  
   output:
-    file "*.fastq"
-    file "*"
+  tuple val(id), file("*.fastq"), val('pacbio')
+  file "*"
+  
+  when:
+  !(subreads =~ /input.*/)
 
   script:
-  id = (subreads.getBaseName() - ".bam")
+  id = (subreads.getBaseName() - ".bam" - ".subreads")
   design = (params.pacbio_barcode_design.toLowerCase() != 'same' && params.pacbio_barcode_design.toLowerCase() != 'different') ? '' : '--' + params.pacbio_barcode_design.toLowerCase()
   if (params.pacbio_barcodes)
   """
-  source activate pbtools ;
+  # index bam
   pbindex ${subreads} ;
   # Split bams
   lima ${design} --num-threads ${params.threads} --split-named ${subreads} ${barcodes} demuxed.bam
@@ -23,13 +26,15 @@ process pacbio_bam2fastq {
   # Split fastqs
   for input_demux_bam in \$(ls demuxed*.bam) ; do
     prefix=\${input_demux_bam%%.bam} ;
+    # convert bam
     bam2fastq -o \$prefix -u \$input_demux_bam ;
   done
   """
   else
   """
-  source activate pbtools ;
+  # index bam
   pbindex ${subreads} ;
+  # convert bam
   bam2fastq -o ${id} -u ${subreads}
   """
 }

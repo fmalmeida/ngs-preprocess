@@ -1,0 +1,43 @@
+# You can use this file to create a conda environment for this pipeline:
+#   conda env create -f environment.yml
+name: ngs-preprocess-2.3
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - anaconda
+  - r
+dependencies:
+  ## python pip dependencies
+  - pip
+  - pip:
+    - biopython==1.78
+  
+  ## anaconda packages
+  - anaconda::hdf5
+  
+  ## conda-forge packages
+  - conda-forge::pigz=2.3.4               ## Required for TrimGalore multi-threading
+  - conda-forge::matplotlib=3.1.1
+  - conda-forge::gcc
+
+  ## bioconda packages
+  - bioconda::porechop
+  - bioconda::fastqc
+  - bioconda::cutadapt
+  - bioconda::flash
+  - bioconda::trim-galore
+  - bioconda::samtools
+  - bioconda::lighter
+  - bioconda::bax2bam=0.0.9
+  - bioconda::bam2fastx
+  - bioconda::pbccs
+  - bioconda::lima
+  - bioconda::pbbam>=0.23.0
+  - bioconda::pycoqc
+  - bioconda::pysam
+  - bioconda::filtlong
+  - bioconda::nanoqc
+  - bioconda::nanostat
+  - bioconda::nanoplot
+  - bioconda::nanofilt

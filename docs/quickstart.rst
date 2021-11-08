@@ -38,17 +38,11 @@ Preprocessing the data
 
 Outputs will be at ``preprocessed_reads``.
 
-.. note::
+.. warning::
 
   Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
 
-.. warning::
-
   **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* with unpaired reads the pipeline will process each read separately.
-
-.. note::
-
-  When using paired end reads it is required that inputs are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
 
 .. code-block:: bash
 
@@ -58,9 +52,9 @@ Outputs will be at ``preprocessed_reads``.
     --threads 4 \
     --shortreads "SRR8482585_30X_{1,2}.fastq.gz" \
     --shortreads_type paired \
-    --lighter_execute \
-    --lighter_genomeSize 4m \
-    --flash_execute \
+    --lighter \
+    --lighter_genome_size 4m \
+    --flash \
     --nanopore_fastq "SRX5299443_30X.fastq.gz" \
     --lreads_min_length 1000 \
     --lreads_min_quality 10

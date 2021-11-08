@@ -1,21 +1,23 @@
 process flash {
-  publishDir "${params.outdir}/shortreads/after_trimming", mode: 'copy',
+  publishDir "${params.outdir}/shortreads/${id}/after_trimming", mode: 'copy',
        saveAs: {filename ->
   // This line saves the files with specific sufixes in specific folders
-         if (filename.indexOf(".fastq") > 0) "reads/flash_merged/$filename"
-         else "reads/flash_merged/$filename" }
-  container 'fmalmeida/ngs-preprocess'
+         if (filename.indexOf(".fastq") > 0) "flash_merged/$filename"
+         else "flash_merged/$filename" }
   tag "Executing FLASH read merger"
 
   input:
-    file reads
-    val threads
+  tuple val(id), file(read1), file(read2)
+  
   output:
-    file "flash_merged*"
+  file "flash_merged*"
+
+  when:
+  !(read1 =~ /input.*/) && !(read2 =~ /input.*/)
 
   script:
   """
-  source activate flash ;
-  flash -q -o flash_merged -z -t ${threads} ${reads[1]} ${reads[2]} &> flash.log;
+  # run FLASH
+  flash -q -o flash_merged -z -t ${params.threads} ${read1} ${read2} &> flash.log;
   """
 }

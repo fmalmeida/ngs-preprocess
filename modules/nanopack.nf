@@ -1,30 +1,31 @@
 process nanopack {
-  publishDir "${params.outdir}/longreads/nanopack_out", mode: 'copy'
-  // Loads the necessary Docker image
-  container 'fmalmeida/ngs-preprocess'
+  publishDir "${params.outdir}/longreads/${id}/nanopack_out", mode: 'copy'
   tag "Checking longreads qualities with Nanopack"
   //validExitStatus 0,1 // To momentainaly fix problem with matplotlib
 
   input:
-    file reads
-    val threads
+  tuple val(id), file(reads), val(type)
+  
   output:
-    file "${id}*"
+  file "${custom_id}*"
+
+  when:
+  !(reads =~ /input.*/)
 
   script:
-  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  if (params.nanopore_is_barcoded && type == 'nanopore') {
+    custom_id = reads.getBaseName() - ".fastq.gz" - ".fastq"
+  } else {
+    custom_id = id
+  }
   """
-  source activate nanopack;
   # Plotting
-  #NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot --N50 --title "${id} sample" --plots hex dot pauvre kde ;
-
-  # nanoplot is currently having problems with pauvre ... let's not do it
-  NanoPlot -t $threads --fastq ${reads} -o ${id}_nanoplot  --N50 --title "${id} sample" --plots hex dot kde ;
+  NanoPlot -t ${params.threads} --fastq ${reads} -o ${custom_id}_nanoplot --N50 --title "${custom_id} sample" --plots hex dot kde ;
 
   # Checking Quality
-  nanoQC -o ${id}_nanoQC ${reads} ;
+  nanoQC -o ${custom_id}_nanoQC ${reads} ;
 
   # Generate Statistics Summary
-  NanoStat --fastq ${reads} -n ${id}.txt --outdir ${id}_stats ;
+  NanoStat --fastq ${reads} -t ${params.threads} -n ${custom_id}.txt --outdir ${custom_id}_stats ;
   """
 }

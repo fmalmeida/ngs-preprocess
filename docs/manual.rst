@@ -9,15 +9,11 @@ Input
 * path to fastq files containing sequencing reads (Illumina or Nanopore)
 * path to Pacbio .bam or .h5 files containing raw data
 
-.. note::
+.. warning::
+
+  Users must **never** use hard or symbolic links. This will make nextflow fail.
 
   Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
-
-.. note::
-
-   Users must **never** use hard or symbolic links. This will make nextflow fail.
-
-.. warning::
 
   **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each read (or pair) that match this pattern separately.
 
@@ -66,19 +62,15 @@ Max job request
 
    * - ``--parallel_jobs``
      - N
-     - 1
-     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+     - NA
+     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``). If not specified, the pipeline will let nextflow automatically handle it
 
 
 Short reads (Illumina)
 ======================
 
-.. note::
-
-  When using paired end reads it is required that inputs are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
-
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 30 10 10 50
    :header-rows: 1
 
    * - Arguments
@@ -121,7 +113,7 @@ Short reads (Illumina)
      - 20
      - Phred quality threshold for trimming.
 
-   * - ``--lighter_execute``
+   * - ``--lighter``
      - N
      - False
      - Tells whether to run or not Lighter correction tool
@@ -131,8 +123,8 @@ Short reads (Illumina)
      - 21
      - Lighter k-mer to use in correction step.
 
-   * - ``--lighter_genomeSize``
-     - Y (If ``--lighter_execute``)
+   * - ``--lighter_genome_size``
+     - Y (If ``--lighter``)
      - NA
      - Approximate genome size
 
@@ -141,7 +133,7 @@ Short reads (Illumina)
      - NA
      - Lighter sample rate alpha parameter. If empty, Lighter will automatically calculate its value.
 
-   * - ``--flash_execute``
+   * - ``--flash``
      - N
      - False
      - If set, FLASH will be executed to merge paired end reads
@@ -151,7 +143,7 @@ Long reads (Pacbio or Nanopore)
 ===============================
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 30 10 10 50
    :header-rows: 1
 
    * - Arguments
@@ -182,14 +174,14 @@ Long reads (Pacbio or Nanopore)
    * - ``--nanopore_sequencing_summary``
      - N
      - NA
-     - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC
+     - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC. pycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc. Preferentially, using the same basename as the fastq.
 
-   * - ``--pacbio_bamPath``
+   * - ``--pacbio_bam``
      - N
      - NA
      - Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
 
-   * - ``--pacbio_h5Path``
+   * - ``--pacbio_h5``
      - N
      - NA
      - Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory
@@ -197,7 +189,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--pacbio_barcodes``
      - N
      - False
-     - Path to xml/fasta file containing barcode information. It will split barcodes into single files.
+     - Path to xml/fasta file containing barcode information. It will split barcodes into single files. Will be used for all pacbio inputs, h5 or bam.
 
    * - ``--pacbio_barcode_design``
      - N
@@ -207,7 +199,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--pacbio_get_hifi``
      - N
      - False
-     - Whether or not to try to compute CCS reads
+     - Whether or not to try to compute CCS reads. Will be used for all pacbio inputs, h5 or bam.
 
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration

@@ -1,17 +1,20 @@
 process pycoQC {
-  publishDir "${params.outdir}/longreads/pycoQC_quality_check", mode: 'copy'
-  container 'fmalmeida/ngs-preprocess'
+  publishDir "${params.outdir}/longreads/pycoQC/${id}", mode: 'copy'
   tag "Checking sequencing statistics with pycoQC"
 
   input:
-    file summary
+  file summary
+  
   output:
-    file "pycoQC_report.html"
+  file "pycoQC_report.html"
+
+  when:
+  !(summary =~ /input.*/)
 
   script:
-    """
-    source activate pycoQC ;
-    pycoQC --summary_file ${summary} --html_outfile pycoQC_report.html \
-    --filter_calibration --filter_duplicated --min_pass_qual 8
-    """
+  id = summary.getBaseName()
+  """
+  # run pycoQC
+  pycoQC --summary_file ${summary} --html_outfile pycoQC_report.html --filter_calibration --filter_duplicated --min_pass_qual 8
+  """
 }

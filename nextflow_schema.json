@@ -31,7 +31,8 @@
                     "enum": [
                         "paired",
                         "single"
-                    ]
+                    ],
+                    "fa_icon": "fas fa-question-circle"
                 },
                 "nanopore_fastq": {
                     "type": "string",
@@ -39,13 +40,13 @@
                     "fa_icon": "fas fa-file",
                     "help_text": "Path to your nanopore reads. It can be gzipped or not."
                 },
-                "pacbio_bamPath": {
+                "pacbio_bam": {
                     "type": "string",
                     "description": "Input pacbio subreads (.bam)",
                     "fa_icon": "fas fa-file",
                     "help_text": "Path to pacbio subreads in bam format. This applies to the majority of pacbio sequencers and chemistries."
                 },
-                "pacbio_h5Path": {
+                "pacbio_h5": {
                     "type": "string",
                     "description": "Folder with pacbio reads (.h5)",
                     "fa_icon": "fas fa-folder",
@@ -71,9 +72,9 @@
                 },
                 "parallel_jobs": {
                     "type": "integer",
-                    "default": 1,
                     "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
-                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory."
+                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory.",
+                    "fa_icon": "fas fa-network-wired"
                 }
             }
         },
@@ -116,13 +117,20 @@
                 },
                 "pacbio_barcode_design": {
                     "type": "string",
-                    "description": "Pacbio barcode design (same, different, any)",
-                    "help_text": "For demultiplexing you can choose how to associate the barcodes: same, different or any type of combination.\n\nBy default, only reads with 'same' barcodes in both ends are demultiplexed."
+                    "description": "Pacbio barcode design",
+                    "help_text": "For demultiplexing you can choose how to associate the barcodes: same, different or any type of combination. By default, only reads with 'same' barcodes in both ends are demultiplexed.",
+                    "fa_icon": "fas fa-question-circle",
+                    "enum": [
+                        "same",
+                        "different",
+                        "any"
+                    ]
                 },
                 "pacbio_get_hifi": {
                     "type": "boolean",
                     "description": "Try to obtain hifi reads?",
-                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error."
+                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error.",
+                    "fa_icon": "fas fa-question-circle"
                 }
             }
         },
@@ -162,7 +170,7 @@
                     "help_text": "Tells to trim_galore the base quality threshold to use when trimming.",
                     "fa_icon": "fas fa-filter"
                 },
-                "lighter_execute": {
+                "lighter": {
                     "type": "boolean",
                     "description": "Correct reads with lighter?",
                     "help_text": "Run short reads correction step with lighter.",
@@ -174,7 +182,7 @@
                     "fa_icon": "fas fa-arrows-alt-h",
                     "help_text": "Sets the k-mer to be used by lighter when correcting the reads"
                 },
-                "lighter_genomeSize": {
+                "lighter_genome_size": {
                     "type": "string",
                     "fa_icon": "fas fa-arrows-alt-h",
                     "description": "Tells lighter the expected genome size",
@@ -183,9 +191,10 @@
                 "lighter_alpha": {
                     "type": "integer",
                     "description": "Ligther alpha value",
-                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it"
+                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it",
+                    "fa_icon": "fas fa-question"
                 },
-                "flash_execute": {
+                "flash": {
                     "type": "boolean",
                     "description": "Merge read pairs?",
                     "help_text": "If used, the pipeline will use FLASH to merge paired reads.",

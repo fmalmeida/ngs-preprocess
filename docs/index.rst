@@ -3,6 +3,7 @@
 .. image:: lOGO_3_transparente.png
   :width: 250
   :align: left
+  :alt: Laboratory logo
 
 ----
 
@@ -71,6 +72,7 @@ It wraps up the following tools:
    :hidden:
 
    installation
+   profiles
    quickstart
    manual
    config
