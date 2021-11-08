@@ -125,7 +125,7 @@ workflow {
    */
   sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : Channel.value('')
   nanopore_fastq = (params.nanopore_fastq) ? Channel.fromPath(params.nanopore_fastq) : Channel.value('')
-  if (params.nanopore_fastq) {
+  if (params.nanopore_fastq || params.nanopore_sequencing_summary) {
     NANOPORE(nanopore_fastq, sequencing_summary)
   }
 
