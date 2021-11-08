@@ -3,9 +3,13 @@ process pycoQC {
   tag "Checking sequencing statistics with pycoQC"
 
   input:
-    file summary
+  file summary
+  
   output:
-    file "pycoQC_report.html"
+  file "pycoQC_report.html"
+
+  when:
+  (!summary =~ /input.*/)
 
   script:
   id = summary.getBaseName()

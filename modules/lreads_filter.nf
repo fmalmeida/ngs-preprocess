@@ -3,9 +3,13 @@ process filter {
   tag "filtering longreads with nanofilt"
 
   input:
-    file reads
+  file reads
+  
   output:
-    file "${id}*"
+  file "${id}*"
+
+  when:
+  (!reads =~ /input.*/)
 
   script:
   id = (reads.getBaseName() - "fastq.gz" - ".fastq")

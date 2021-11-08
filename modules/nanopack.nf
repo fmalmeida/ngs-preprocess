@@ -4,9 +4,13 @@ process nanopack {
   //validExitStatus 0,1 // To momentainaly fix problem with matplotlib
 
   input:
-    file reads
+  file reads
+  
   output:
-    file "${id}*"
+  file "${id}*"
+
+  when:
+  (!reads =~ /input.*/)
 
   script:
   id = (reads.getBaseName() - "fastq.gz" - ".fastq")

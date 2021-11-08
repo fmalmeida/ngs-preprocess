@@ -3,10 +3,14 @@ process porechop {
   tag "Trimming longreads with Porechop"
 
   input:
-    file reads
+  file reads
+  
   output:
-    file "${id}_trimmed.fastq" optional true
-    file "porechop_barcodes/*.fastq" optional true
+  file "${id}_trimmed.fastq" optional true
+  file "porechop_barcodes/*.fastq" optional true
+
+  when:
+  (!reads =~ /input.*/)
 
   script:
     id = (reads.getBaseName() - "fastq.gz" - ".fastq")

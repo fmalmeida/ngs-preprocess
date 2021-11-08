@@ -7,9 +7,13 @@ process flash {
   tag "Executing FLASH read merger"
 
   input:
-    file reads
+  file reads
+  
   output:
-    file "flash_merged*"
+  file "flash_merged*"
+
+  when:
+  (!reads[1] =~ /input.*/) && (!reads[2] =~ /input.*/)
 
   script:
   id = reads[0]
