@@ -10,14 +10,13 @@ process fastqc {
     file "fastqc_${id}/*_fastqc.{zip,html}"
 
     when:
-    !(read1 =~ /input.*/) || !(sreads =~ /input.*/)
+    (!(read1 =~ /input.*/) && !(read2 =~ /input.*/)) || !(sreads =~ /input.*/)
 
     script:
 
     if (params.shortreads_type == 'paired') {
       param = "-q ${read1} ${read2}"
-    }
-    else if (params.shortreads_type == 'single') {
+    } else if (params.shortreads_type == 'single') {
       param = "-q ${sreads}"
       id = sreads.getBaseName()
     }      

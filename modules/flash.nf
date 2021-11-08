@@ -7,18 +7,17 @@ process flash {
   tag "Executing FLASH read merger"
 
   input:
-  file reads
+  tuple val(id), file(read1), file(read2)
   
   output:
   file "flash_merged*"
 
   when:
-  !(reads[1] =~ /input.*/) && !(reads[2] =~ /input.*/)
+  !(read1 =~ /input.*/) && !(read2 =~ /input.*/)
 
   script:
-  id = reads[0]
   """
   # run FLASH
-  flash -q -o flash_merged -z -t ${params.threads} ${reads[1]} ${reads[2]} &> flash.log;
+  flash -q -o flash_merged -z -t ${params.threads} ${read1} ${read2} &> flash.log;
   """
 }

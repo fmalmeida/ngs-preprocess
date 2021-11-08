@@ -12,25 +12,25 @@ workflow ILLUMINA {
     preads
     sreads
   main:
+
+    // run fastqc
     fastqc(preads, sreads)
+
+    // trim reads
     trimgalore(preads, sreads)
 
-    // Paired
-    if (params.shortreads_type == 'paired') {
-      if (params.lighter && params.flash) {
-        lighter(trimgalore.out[0])
-        flash(lighter.out[0])
-      } else if (params.lighter && !params.flash) {
-        lighter(trimgalore.out[0])
-      } else if (!params.lighter && params.flash) {
-        flash(trimgalore.out[0])
-      }
-    }
+    // // get trimmed reads
+    // paired_reads   = (params.shortreads_type == 'paired') ? trimgalore.out[0] : Channel.value(['', '', ''])
+    // unpaired_reads = (params.shortreads_type == 'single') ? trimgalore.out[1] : Channel.value('')
 
-    // Single
-    if (params.shortreads_type == 'single') {
-      if (params.lighter) {
-        lighter(trimgalore.out[1].flatten())
-      }
-    }
+    // // run lighter
+    // if (params.lighter) {
+    //   lighter(paired_reads, unpaired_reads)
+    // }
+
+    // // run flash
+    // flash_input = (params.lighter) ? lighter.out[0] : paired_reads
+    // if (params.flash) {
+    //   flash(flash_input)
+    // }
 }

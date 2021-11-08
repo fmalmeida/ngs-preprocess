@@ -120,7 +120,7 @@ workflow {
   /*
    * User has illumina reads
    */
-  paired_reads = (params.shortreads && params.shortreads_type == 'paired') ? Channel.fromFilePairs(params.shortreads, flat: true, size: 2) : Channel.value(['', '', ''])
+  paired_reads = (params.shortreads && params.shortreads_type == 'paired') ? Channel.fromFilePairs(params.shortreads, size: 2) : Channel.value(['', '', ''])
   unpaired_reads = (params.shortreads && params.shortreads_type == 'single') ? Channel.fromPath(params.shortreads) : Channel.value('')
   if (params.shortreads && (params.shortreads_type == 'paired' || params.shortreads_type == 'single')) {
     ILLUMINA(paired_reads, unpaired_reads)

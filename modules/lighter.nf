@@ -7,28 +7,29 @@ process lighter {
   tag "Executing Ligther (read correction) step"
 
   input:
-  file reads
+  tuple val(pair_id), file(read1), file(read2)
+  tuple val(unpaired_id), (sreads)
 
   output:
-  tuple val('lighter'), file("*_1.cor.fq.gz"), file("*_2.cor.fq.gz") optional true
-  file "*.cor.fq.gz" optional true
+  tuple val(id), file("*_1.cor.fq.gz"), file("*_2.cor.fq.gz") optional true
+  tuple val(id), file("*.cor.fq.gz") optional true
   file 'fastqc_after_correction'
 
   when:
-  (!(reads[1] =~ /input.*/) && !(reads[2] =~ /input.*/)) || !(reads =~ /input.*/)
+  (!(read1 =~ /input.*/) && !(read2 =~ /input.*/)) || !(sreads =~ /input.*/)
 
   script:
   // Check if alpha is given
   alpha_param = (params.lighter_alpha) ? "-k ${params.lighter_kmer} ${params.lighter_genome_size} ${params.lighter_alpha}" : "-K ${params.lighter_kmer} ${params.lighter_genome_size}"
   // Check reads library
   if (params.shortreads_type == 'paired') {
-      param = "-r ${reads[1]} -r ${reads[2]}"
+      param = "-r ${read1} -r ${read2}"
       quality = "*_1.cor.fq.gz *_2.cor.fq.gz"
-      id = reads[0]
+      id = pair_id
   } else if (params.shortreads_type == 'single') {
-      param = "-r ${reads}"
+      param = "-r ${sreads}"
       quality = "*.cor{.fq.gz, .fq}"
-      id = reads.getBaseName()
+      id = unpaired_id
   }
   """
   # run lighter
