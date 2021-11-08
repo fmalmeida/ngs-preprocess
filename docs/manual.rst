@@ -174,7 +174,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--nanopore_sequencing_summary``
      - N
      - NA
-     - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC
+     - Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC. pycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc. Preferentially, using the same basename as the fastq.
 
    * - ``--pacbio_bam``
      - N
@@ -189,7 +189,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--pacbio_barcodes``
      - N
      - False
-     - Path to xml/fasta file containing barcode information. It will split barcodes into single files.
+     - Path to xml/fasta file containing barcode information. It will split barcodes into single files. Will be used for all pacbio inputs, h5 or bam.
 
    * - ``--pacbio_barcode_design``
      - N
@@ -199,7 +199,7 @@ Long reads (Pacbio or Nanopore)
    * - ``--pacbio_get_hifi``
      - N
      - False
-     - Whether or not to try to compute CCS reads
+     - Whether or not to try to compute CCS reads. Will be used for all pacbio inputs, h5 or bam.
 
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
