@@ -8,7 +8,7 @@ process lighter {
 
   input:
   tuple val(pair_id), file(read1), file(read2)
-  tuple val(unpaired_id), (sreads)
+  tuple val(unpaired_id), file(sreads)
 
   output:
   tuple val(id), file("*_1.cor.fq.gz"), file("*_2.cor.fq.gz") optional true

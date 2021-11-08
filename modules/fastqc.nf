@@ -18,7 +18,7 @@ process fastqc {
       param = "-q ${read1} ${read2}"
     } else if (params.shortreads_type == 'single') {
       param = "-q ${sreads}"
-      id = sreads.getBaseName()
+      id = sreads.getBaseName() - ".fastq.gz" - ".fastq"
     }      
     """
     # create directory for results

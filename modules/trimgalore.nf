@@ -15,7 +15,7 @@ process trimgalore {
 
   output:
   tuple val(id), file("${id}_1.fq.gz"), file("${id}_2.fq.gz") optional true
-  tuple val(id) file("*.fq.gz") optional true
+  tuple val(id), file("*.fq.gz") optional true
   file "*trimming_report.txt"
   file "*_fastqc.{zip,html}"
 
@@ -35,7 +35,7 @@ process trimgalore {
     rename = "mv *_val_1.fq.gz ${id}_1.fq.gz ; mv *_val_2.fq.gz ${id}_2.fq.gz"
   } else if (params.shortreads_type == 'single') {
     param = "$c_r1 $tpc_r1 ${sreads}"
-    id = sreads.getBaseName()
+    id = sreads.getBaseName() - ".fastq.gz" - ".fastq"
     rename = ''
   }
   """
