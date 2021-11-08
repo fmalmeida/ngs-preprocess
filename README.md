@@ -132,7 +132,7 @@ Your configuration file is what will tell to the pipeline the type of data you h
 Create a configuration file in your working directory:
 
 ```bash
-nextflow run fmalmeida/ngs-preprocess [ --get_full_config ] [ --get_illumina_config ] [ --get_pacbio_config ] [ --get_ont_config ]
+nextflow run fmalmeida/ngs-preprocess [ --get_config ]
 ```
 
 ### Interactive graphical configuration and execution

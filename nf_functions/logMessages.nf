@@ -9,39 +9,6 @@ def configMessage() {
   """.stripIndent()
 }
 
-def illuminaMessage() {
-  log.info """
-
-  illumina_data.config file saved in working directory
-  After configuration, run:
-  nextflow run fmalmeida/ngs-preprocess -c ./illumina_data.config
-  Nice code
-
-  """.stripIndent()
-}
-
-def ontMessage() {
-  log.info """
-
-  ont_data.config file saved in working directory
-  After configuration, run:
-  nextflow run fmalmeida/ngs-preprocess -c ./ont_data.config
-  Nice code
-
-  """.stripIndent()
-}
-
-def pacbioMessage() {
-  log.info """
-
-  pacbio_data.config file saved in working directory
-  After configuration, run:
-  nextflow run fmalmeida/ngs-preprocess -c ./pacbio_data.config
-  Nice code
-
-  """.stripIndent()
-}
-
 /*
  * Define log message
  */

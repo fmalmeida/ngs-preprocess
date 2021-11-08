@@ -31,32 +31,10 @@ if (params.examples){
 /*
  * Download configuration files if requested
  */
-params.get_full_config = false
-params.get_illumina_config = false
-params.get_ont_config = false
-params.get_pacbio_config = false
-
-if (params.get_full_config) {
+params.get_config = false
+if (params.get_config) {
   new File("ngs-preprocess.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/nextflow.config").getText())
   configMessage()
-  exit 0
-}
-
-if (params.get_illumina_config) {
-  new File("illumina_data.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/illumina_data.config").getText())
-  illuminaMessage()
-  exit 0
-}
-
-if (params.get_ont_config) {
-  new File("ont_data.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/ont_data.config").getText())
-  ontMessage()
-  exit 0
-}
-
-if (params.get_pacbio_config) {
-  new File("pacbio_data.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/configuration_example/pacbio_data.config").getText())
-  pacbioMessage()
   exit 0
 }
 

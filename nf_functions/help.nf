@@ -15,7 +15,7 @@ def helpMessage() {
    parameterization easier and more readable.
 
    Creating a configuration file:
-   nextflow run fmalmeida/ngs-preprocess [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]
+   nextflow run fmalmeida/ngs-preprocess [--get_config]
 
    Show command line examples:
    nextflow run fmalmeida/ngs-preprocess --examples
