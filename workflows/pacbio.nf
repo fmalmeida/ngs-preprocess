@@ -19,7 +19,7 @@ workflow PACBIO {
     h5_bams = Channel.empty()
     if (params.pacbio_h5) {
       h52bam(h5bas)
-      h5_bams = h52bam.out[0]
+      h5_bams = h52bam.out
     }
 
     // has subreads in bam

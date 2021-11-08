@@ -9,7 +9,7 @@ process h52bam {
   file("*.subreads.bam") // Get all bam files produced
 
   script:
-  id = file("${h5bas}/*.bas.h5")[0].getBaseName() - ".bas.h5"
+  id = file("${h5bas}/*.bas.h5")[0].getBaseName().toString() - ".bas.h5"
   """  
   # Produce bam
   bax2bam ${h5bas}/*.bas.h5 --subread --allowUnrecognizedChemistryTriple --pulsefeatures=DeletionQV,DeletionTag,InsertionQV,IPD,SubstitutionQV,PulseWidth,SubstitutionTag;
