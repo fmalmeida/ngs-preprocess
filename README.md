@@ -80,7 +80,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
     nextflow run fmalmeida/ngs-preprocess -profile <docker/singularity/conda>
     ```
 
-:fire: Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/ngs-preprocess/tree/master#selecting-between-conda-docker-and-singularity) profiles, since the tools will be made available differently depending on the profile desired.
+:fire: Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/ngs-preprocess/tree/master#selecting-between-profiles) profiles, since the tools will be made available differently depending on the profile desired.
 
 ## Documentation
 
