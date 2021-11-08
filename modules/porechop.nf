@@ -6,8 +6,8 @@ process porechop {
   file reads
   
   output:
-  tuple val(id), file("${id}_trimmed.fastq") optional true
-  tuple val(id), file("porechop_barcodes/*.fastq") optional true
+  tuple val(id), file("${id}_trimmed.fastq"), val('nanopore') optional true
+  tuple val(id), file("porechop_barcodes/*.fastq"), val('nanopore') optional true
 
   when:
   !(reads =~ /input.*/)

@@ -18,8 +18,8 @@ workflow NANOPORE {
     if (params.nanopore_fastq){
       porechop(reads)
       // barcoded reads
-      barcoded = (params.nanopore_is_barcoded) ? porechop.out[1] : Channel.value('')
-      not_barcoded = !(params.nanopore_is_barcoded) ? porechop.out[0] : Channel.value('')
+      barcoded = (params.nanopore_is_barcoded) ? porechop.out[1].transpose() : Channel.value(['', '', ''])
+      not_barcoded = !(params.nanopore_is_barcoded) ? porechop.out[0] : Channel.value(['', '', ''])
       nanopack(not_barcoded.mix(barcoded))
       if (params.lreads_min_length || params.lreads_min_quality) {
         filter(not_barcoded.mix(barcoded))
