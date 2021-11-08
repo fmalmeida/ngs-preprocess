@@ -9,7 +9,7 @@ process pycoQC {
   file "pycoQC_report.html"
 
   when:
-  (!summary =~ /input.*/)
+  !(summary =~ /input.*/)
 
   script:
   id = summary.getBaseName()

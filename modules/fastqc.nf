@@ -10,7 +10,7 @@ process fastqc {
     file "fastqc_${id}/*_fastqc.{zip,html}"
 
     when:
-    (!read1 =~ /input.*/) || (!sreads =~ /input.*/)
+    !(read1 =~ /input.*/) || !(sreads =~ /input.*/)
 
     script:
 

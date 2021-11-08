@@ -13,7 +13,7 @@ process flash {
   file "flash_merged*"
 
   when:
-  (!reads[1] =~ /input.*/) && (!reads[2] =~ /input.*/)
+  !(reads[1] =~ /input.*/) && !(reads[2] =~ /input.*/)
 
   script:
   id = reads[0]

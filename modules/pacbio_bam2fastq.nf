@@ -11,7 +11,7 @@ process bam2fastq {
   file "*"
   
   when:
-  (!subreads =~ /input.*/)
+  !(subreads =~ /input.*/)
 
   script:
   id = (subreads.getBaseName() - ".bam")

@@ -10,7 +10,7 @@ process porechop {
   file "porechop_barcodes/*.fastq" optional true
 
   when:
-  (!reads =~ /input.*/)
+  !(reads =~ /input.*/)
 
   script:
     id = (reads.getBaseName() - "fastq.gz" - ".fastq")

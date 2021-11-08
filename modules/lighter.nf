@@ -15,7 +15,7 @@ process lighter {
   file 'fastqc_after_correction'
 
   when:
-  ((!reads[1] =~ /input.*/) && (!reads[2] =~ /input.*/)) || (!reads =~ /input.*/)
+  (!(reads[1] =~ /input.*/) && !(reads[2] =~ /input.*/)) || !(reads =~ /input.*/)
 
   script:
   // Check if alpha is given

@@ -10,7 +10,7 @@ process nanopack {
   file "${id}*"
 
   when:
-  (!reads =~ /input.*/)
+  !(reads =~ /input.*/)
 
   script:
   id = (reads.getBaseName() - "fastq.gz" - ".fastq")
