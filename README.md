@@ -103,15 +103,7 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
 
 ### Usage
 
-<a href="https://ngs-preprocess.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
-
-* Complete command line explanation of parameters:
-    + `nextflow run fmalmeida/ngs-preprocess --help`
-* See usage examples in the command line:
-    + `nextflow run fmalmeida/ngs-preprocess --examples`
-    + Command line executions are exemplified [in the manual](https://ngs-preprocess.readthedocs.io/en/latest/examples.html).
-
-**Remember**: Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be inside double quotes.
+For understading pipeline usage and configuration, users must read the <a href="https://ngs-preprocess.readthedocs.io/en/latest/index.html"><strong>complete online documentation »</strong></a>
 
 ### Using the configuration file
 
