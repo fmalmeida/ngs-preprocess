@@ -13,11 +13,13 @@ workflow NANOPORE {
     fast5
   main:
     if (params.nanopore_sequencing_summary) {
-        pycoQC(fast5)
+      pycoQC(fast5)
     }
-    porechop(reads)
-    nanopack(porechop.out[0].flatten())
-    if (params.lreads_min_length || params.lreads_min_quality) {
-      filter(porechop.out[0].flatten())
+    if (params.nanopore_fastq){
+      porechop(reads)
+      nanopack(porechop.out[0].flatten())
+      if (params.lreads_min_length || params.lreads_min_quality) {
+        filter(porechop.out[0].flatten())
+      }
     }
 }
