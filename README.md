@@ -71,7 +71,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 
     # for conda
     wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
-    [mamba|conda] env create -f environment.yml
+    mamba env create -f environment.yml
     ```
     
 4. Start running your analysis
