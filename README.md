@@ -62,17 +62,34 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 
 3. Download required tools
 
-    ```bash
-    # for docker
-    docker pull fmalmeida/ngs-preprocess:v2.3
+    * for docker
 
-    # for singularity
-    singularity pull docker://fmalmeida/ngs-preprocess:v2.3
+        ```bash
+        # for docker
+        docker pull fmalmeida/ngs-preprocess:v2.3
+        ```
 
-    # for conda
-    wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
-    mamba env create -f environment.yml
-    ```
+    * for singularity
+
+        ```bash
+        # for singularity
+        # remember to properly set NXF_SINGULARITY_LIBRARYDIR
+        # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
+        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
+        export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
+        singularity pull \
+            --dir $NXF_SINGULARITY_LIBRARYDIR \
+            fmalmeida-ngs-preprocess-v2.3.img docker://fmalmeida/ngs-preprocess:v2.3
+        ```
+    
+    * for conda
+    
+        ```bash
+        # for conda
+        # it is better to create envs with mamba for faster solving
+        wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
+        conda env create -f environment.yml   # advice: use mamba
+        ```
     
 4. Start running your analysis
     
