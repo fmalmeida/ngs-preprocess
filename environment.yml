@@ -39,5 +39,5 @@ dependencies:
   - bioconda::filtlong
   - bioconda::nanoqc
   - bioconda::nanostat
-  - bioconda::nanoplot
+  - bioconda::nanoplot>=1.38.1
   - bioconda::nanofilt
