@@ -1,11 +1,11 @@
 /*
  * Include modules
  */
-include { bam2fastq } from '../modules/pacbio_bam2fastq.nf'
-include { bam2hifi } from '../modules/pacbio_bam2hifi.nf'
-include { h52bam } from '../modules/pacbio_h52bam.nf'
-include { NANOPACK } from '../modules/nanopack.nf'
-include { FILTER } from '../modules/lreads_filter.nf'
+include { BAM2FASTQ } from '../modules/pacbio_bam2fastq.nf'
+include { BAM2HIFI  } from '../modules/pacbio_bam2hifi.nf'
+include { H52BAM    } from '../modules/pacbio_h52bam.nf'
+include { NANOPACK  } from '../modules/nanopack.nf'
+include { FILTER    } from '../modules/lreads_filter.nf'
 
 // def workflow
 workflow PACBIO {
@@ -18,18 +18,18 @@ workflow PACBIO {
     // has H5 data
     h5_bams = Channel.empty()
     if (params.pacbio_h5) {
-      h52bam(h5bas)
-      h5_bams = h52bam.out
+      H52BAM(h5bas)
+      h5_bams = H52BAM.out
     }
 
     // has subreads in bam
     // User wants to get hifi?
     reads = Channel.empty()
     if (params.pacbio_get_hifi) {
-      bam2hifi(subreads.mix(h5_bams), barcodes)
-      reads = bam2hifi.out[0]
+      BAM2HIFI(subreads.mix(h5_bams), barcodes)
+      reads = BAM2HIFI.out[0]
     } else {
-      bam2fastq(subreads.mix(h5_bams), barcodes)
+      BAM2FASTQ(subreads.mix(h5_bams), barcodes)
       reads = bam2fastq.out[0]
     }
 
@@ -37,8 +37,6 @@ workflow PACBIO {
     NANOPACK(reads)
 
     // filter reads
-    if (params.lreads_min_length || params.lreads_min_quality) {
-      FILTER(reads)
-    }
+    FILTER(reads)
 
 }
