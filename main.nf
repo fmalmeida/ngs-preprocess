@@ -55,8 +55,8 @@ params.fastp_additional_parameters = ''
 /*
  * Parameters for longreads filtering
  */
-params.lreads_min_quality = false
-params.lreads_min_length  = false
+params.lreads_min_quality = 5
+params.lreads_min_length  = 500
 
 /*
  * Parameters for nanopore longreads

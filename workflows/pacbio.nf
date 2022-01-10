@@ -4,8 +4,8 @@
 include { bam2fastq } from '../modules/pacbio_bam2fastq.nf'
 include { bam2hifi } from '../modules/pacbio_bam2hifi.nf'
 include { h52bam } from '../modules/pacbio_h52bam.nf'
-include { nanopack } from '../modules/nanopack.nf'
-include { filter } from '../modules/lreads_filter.nf'
+include { NANOPACK } from '../modules/nanopack.nf'
+include { FILTER } from '../modules/lreads_filter.nf'
 
 // def workflow
 workflow PACBIO {
@@ -34,11 +34,11 @@ workflow PACBIO {
     }
 
     // QC on fastq
-    nanopack(reads)
+    NANOPACK(reads)
 
     // filter reads
     if (params.lreads_min_length || params.lreads_min_quality) {
-      filter(reads)
+      FILTER(reads)
     }
 
 }
