@@ -61,18 +61,18 @@ params.lreads_min_length  = 500
 /*
  * Parameters for nanopore longreads
  */
-params.nanopore_fastq = ''
-params.nanopore_is_barcoded = false
+params.nanopore_fastq              = ''
+params.nanopore_is_barcoded        = false
 params.nanopore_sequencing_summary = ''
 
 /*
  * Parameters for pacbio longreads
  */
-params.pacbio_bam = ''
-params.pacbio_h5 = ''
-params.pacbio_barcodes = ''
+params.pacbio_bam            = ''
+params.pacbio_h5             = ''
+params.pacbio_barcodes       = ''
 params.pacbio_barcode_design = 'same'
-params.pacbio_get_hifi = false
+params.pacbio_get_hifi       = false
 
 /*
  * Define log message
