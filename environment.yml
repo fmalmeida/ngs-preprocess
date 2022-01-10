@@ -1,6 +1,6 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: ngs-preprocess-2.3
+name: ngs-preprocess-2.4
 channels:
   - conda-forge
   - bioconda
@@ -23,12 +23,8 @@ dependencies:
 
   ## bioconda packages
   - bioconda::porechop
-  - bioconda::fastqc
-  - bioconda::cutadapt
-  - bioconda::flash
-  - bioconda::trim-galore
+  - bioconda::fastp
   - bioconda::samtools
-  - bioconda::lighter
   - bioconda::bax2bam=0.0.9
   - bioconda::bam2fastx
   - bioconda::pbccs
@@ -36,7 +32,6 @@ dependencies:
   - bioconda::pbbam>=0.23.0
   - bioconda::pycoqc
   - bioconda::pysam
-  - bioconda::filtlong
   - bioconda::nanoqc
   - bioconda::nanostat
   - bioconda::nanoplot>=1.38.1
