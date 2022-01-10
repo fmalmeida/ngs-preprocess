@@ -30,7 +30,7 @@ workflow PACBIO {
       reads = BAM2HIFI.out[0]
     } else {
       BAM2FASTQ(subreads.mix(h5_bams), barcodes)
-      reads = bam2fastq.out[0]
+      reads = BAM2FASTQ.out[0]
     }
 
     // QC on fastq
