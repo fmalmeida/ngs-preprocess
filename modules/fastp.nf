@@ -25,19 +25,19 @@ process FASTP {
           reads_param = "--in1 ${read1} --in2 ${read2} --out1 ${id}_R1.preprocessed.fq.gz --out2 ${id}_R2.preprocessed.fq.gz --detect_adapter_for_pe"
       }
   } else if (params.shortreads_type == 'single') {
-      id = sreads.getBaseName() - ".fastq.gz" - ".fastq"
+      id = sreads.getBaseName() - ".fastq.gz" - ".fastq" - ".fq.gz" - ".fq"
       reads_param = "-i ${sreads} -o ${id}.preprocessed.fq.gz"
   }
   correction_param = (params.fastp_correct_pairs) ? "--correction" : ""
   """
   # run fastp
   fastp \\
+      ${params.fastp_additional_parameters} \\
       --thread ${params.threads} \\
       --average_qual ${params.fastp_average_quality} \\
       --json ${id}_fastp.json \\
       --html ${id}_fastp.html \\
       ${reads_param} \\
-      ${correction_param} \\
-      ${params.fastp_additional_parameters}
+      ${correction_param}
   """
 }
