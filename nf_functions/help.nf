@@ -15,9 +15,6 @@ def helpMessage() {
    Creating a configuration file:
    nextflow run fmalmeida/ngs-preprocess [--get_config]
 
-   Show command line examples:
-   nextflow run fmalmeida/ngs-preprocess --examples
-
    Execution Reports:
    nextflow run fmalmeida/ngs-preprocess [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 

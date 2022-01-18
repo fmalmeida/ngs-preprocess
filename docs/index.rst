@@ -23,21 +23,9 @@ It wraps up the following tools:
      - Analysis step
      - Source
 
-   * - TrimGalore
-     - Trimming and quality control of Illumina reads
-     - https://github.com/FelixKrueger/TrimGalore
-
-   * - Lighter
-     - Illumina reads error correction
-     - https://github.com/mourisl/Lighter
-
-   * - FLASH
-     - Illumina paired end read merger
-     - https://ccb.jhu.edu/software/FLASH/
-
-   * - FastQC
-     - Illumina reads QC
-     - https://github.com/s-andrews/FastQC
+   * - Fastp
+     -  tool designed to provide fast all-in-one preprocessing for FastQ files
+     - https://github.com/OpenGene/fastp
 
    * - Porechop
      - ONT reads trimming and demultiplexing

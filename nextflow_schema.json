@@ -146,7 +146,8 @@
                 "fastp_average_quality": {
                     "type": "string",
                     "default": "20",
-                    "help_text": "Fastp will calculate the average quality of reads and filter out those not passing the threshold. If you want to filter low quality bases from the ends, please read the fastp manual and add the proper parameters to the pipeline with --fastp_additional_parameters."
+                    "help_text": "Fastp will calculate the average quality of reads and filter out those not passing the threshold. If you want to filter low quality bases from the ends, please read the fastp manual and add the proper parameters to the pipeline with --fastp_additional_parameters.",
+                    "description": ""
                 },
                 "fastp_merge_pairs": {
                     "type": "string",
@@ -160,7 +161,8 @@
                 },
                 "fastp_additional_parameters": {
                     "type": "string",
-                    "help_text": "Pass any additional parameter that you want to fastp. See https://github.com/OpenGene/fastp."
+                    "help_text": "Pass any additional parameter that you want to fastp. See https://github.com/OpenGene/fastp.",
+                    "description": ""
                 }
             }
         }

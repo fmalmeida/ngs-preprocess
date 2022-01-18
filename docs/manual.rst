@@ -88,55 +88,25 @@ Short reads (Illumina)
      - NA
      - (single | paired). Tells whether input is unpaired or paired end.
 
-   * - ``--clip_r1``
-     - N
-     - 0
-     - Number of bases to always remove from 5' of read pair 1 or from unpaired read.
-
-   * - ``--clip_r2``
-     - N
-     - 0
-     - Number of bases to always remove from 5' of read pair 2.
-
-   * - ``--three_prime_clip_r1``
-     - N
-     - 0
-     - Number of bases to always remove from 3' of read pair 1 or from unpaired read
-
-   * - ``--three_prime_clip_r2``
-     - N
-     - 0
-     - Number of bases to always remove from 3' of read pair 2.
-
-   * - ``--quality_trim``
+   * - ``--fastp_average_quality``
      - N
      - 20
-     - Phred quality threshold for trimming.
+     - Fastp will filter out reads with mean quality less than this.
 
-   * - ``--lighter``
+   * - ``--fastp_correct_pairs``
      - N
      - False
-     - Tells whether to run or not Lighter correction tool
+     - If set, tells Fastp to try to correct paired end reads. Only works for paired end reads.
 
-   * - ``--lighter_kmer``
-     - N
-     - 21
-     - Lighter k-mer to use in correction step.
-
-   * - ``--lighter_genome_size``
-     - Y (If ``--lighter``)
-     - NA
-     - Approximate genome size
-
-   * - ``--lighter_alpha``
-     - N
-     - NA
-     - Lighter sample rate alpha parameter. If empty, Lighter will automatically calculate its value.
-
-   * - ``--flash``
+   * - ``--fastp_merge_pairs``
      - N
      - False
-     - If set, FLASH will be executed to merge paired end reads
+     - If set, tells Fastp to try to merge read pairs.
+
+   * - ``--fastp_additional_parameters``
+     - N
+     - False
+     - Pass on any additional parameter to Fastp. The tool's parameters are described in their `manual <https://github.com/OpenGene/fastp>`_
 
 
 Long reads (Pacbio or Nanopore)
@@ -153,12 +123,12 @@ Long reads (Pacbio or Nanopore)
 
    * - ``--lreads_min_length``
      - N
-     - NA
+     - 500
      - Length min. threshold for filtering long reads (ONT or Pacbio).
 
    * - ``--lreads_min_quality``
      - N
-     - NA
+     - 5
      - Quality min. threshold for filtering long reads (ONT or Pacbio).
 
    * - ``--nanopore_fastq``

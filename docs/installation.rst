@@ -31,7 +31,7 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
    .. code-block:: bash
       
       # for docker
-      docker pull fmalmeida/ngs-preprocess:v2.3
+      docker pull fmalmeida/ngs-preprocess:v2.4
 
       # for singularity
       # remember to properly set NXF_SINGULARITY_LIBRARYDIR
@@ -40,7 +40,7 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
       export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
       singularity pull \
           --dir $NXF_SINGULARITY_LIBRARYDIR \
-          fmalmeida-ngs-preprocess-v2.3.img docker://fmalmeida/ngs-preprocess:v2.3
+          fmalmeida-ngs-preprocess-v2.4.img docker://fmalmeida/ngs-preprocess:v2.4
 
       # for conda
       wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
