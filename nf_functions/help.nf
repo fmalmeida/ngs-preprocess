@@ -8,11 +8,9 @@ def helpMessage() {
    nextflow run fmalmeida/ngs-preprocess [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
    Comments:
-   This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
-   cause the command to be huge.
+   This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would cause the command to be huge.
 
-   Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make
-   parameterization easier and more readable.
+   Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make parameterization easier and more readable.
 
    Creating a configuration file:
    nextflow run fmalmeida/ngs-preprocess [--get_config]
@@ -24,7 +22,7 @@ def helpMessage() {
    nextflow run fmalmeida/ngs-preprocess [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
    OBS: These reports can also be enabled through the configuration file.
-   OBS 2: Make sure parameters set are double quoted
+   OBS 2: Make sure parameter values are double quoted
 
    OPTIONS:
 
@@ -34,9 +32,6 @@ def helpMessage() {
 
     --threads <int>                                Number of threads to use
 
-    --parallel_jobs <int>                          Number of jobs to run in parallel. Each job can consume up
-                                                   to N threads (--threads). Default: 1.
-
 
             # Parameters for short reads preprocessing
 
@@ -44,34 +39,21 @@ def helpMessage() {
 
     --shortreads_type <string>                     Possibilities: single | paired. Tells wheter input is single or paired end.
 
-    --clip_r1 <int>                                Number of bases to always remove from 5' of read pair 1 or from unpaired read. [Default: 0]
+    --fastp_average_quality <int>                  Fastp will filter out reads with mean quality less than this. [Default: 20]
 
-    --clip_r2 <int>                                Number of bases to always remove from 5' of read pair 2. [Default: 0]
+    --fastp_merge_pairs                            Tells Fastp to try to merge read pairs.
 
-    --three_prime_clip_r1 <int>                    Number of bases to always remove from 3' of read pair 1 or from unpaired read. [Default: 0]
+    --fastp_correct_pairs                          Tells Fastp to try to correct paired end reads.
 
-    --three_prime_clip_r2 <int>                    Number of bases to always remove from 3' of read pair 2. [Default: 0]
-
-    --quality_trim <int>                           Phred quality threshold for trimming. [Default: 20]
-
-    --lighter                                      Tells wheter to run or not Lighter correction tool
-
-    --lighter_kmer <int>                           Lighter k-mer to use in correction step. [Default: 21]
-
-    --lighter_genome_size <int>                     Approximate genome size
-
-    --lighter_alpha <float>                        Lighter sample rate alpha parameter. Rule of thumb: (7/C) where C is coverage.
-                                                   If not set, Lighter will automatically calculate the best value
-
-    --flash                                        If set, FLASH will be executed to merge paired end reads
+    --fastp_additional_parameters <string>         Pass on any additional parameter to Fastp.
 
 
             # Parameters for long reads filtering
             # Works with both nanopore and pacbio
 
-    --lreads_min_length <int>                      If set, the pipeline will filter the longreads by this minimun length.
+    --lreads_min_length <int>                      If set, the pipeline will filter the longreads by this minimun length. [Default: 500]
 
-    --lreads_min_quality <int>                     If set, the pipeline will filter the longreads by this minimun quality.
+    --lreads_min_quality <int>                     If set, the pipeline will filter the longreads by this minimun quality. [Default: 5]
 
 
             # Parameters for preprocessing NANOPORE long reads
