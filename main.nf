@@ -9,7 +9,6 @@ nextflow.enable.dsl=2
  * Include functions
  */
 include { helpMessage } from './nf_functions/help.nf'
-include { exampleMessage } from './nf_functions/examples.nf'
 include { configMessage; logMessage } from './nf_functions/logMessages.nf'
 
 /*
