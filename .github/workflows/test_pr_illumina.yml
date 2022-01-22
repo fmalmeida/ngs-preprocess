@@ -38,7 +38,7 @@ jobs:
 
       - name: Run tests for illumina
         run: |
-          ./nextflow run main.nf \
+          nextflow run main.nf \
             --threads 3 \
             --outdir illumina_paired \
             --shortreads "https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_{1,2}.fastq.gz" \
