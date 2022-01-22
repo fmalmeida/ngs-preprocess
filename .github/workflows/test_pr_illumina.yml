@@ -32,7 +32,7 @@ jobs:
       
       - name: Create docker image from PR
         run: |
-          docker build -t fmalmeida/ngs-preprocess:${GITHUB_HEAD_REF}
+          docker build -t fmalmeida/ngs-preprocess:${GITHUB_HEAD_REF} .
 
       - name: Run tests for illumina
         run: |
