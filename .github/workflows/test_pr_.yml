@@ -60,11 +60,12 @@ jobs:
       
       - name: Run tests for pacbio
         run: |
-          wget https://downloads.pacbcloud.com/public/dataset/HiFiViral/Jan_2022/m64187e_211217_130958.hifi_reads.bam
+          wget https://downloads.pacbcloud.com/public/dataset/MicrobialMultiplexing_48plex/48-plex_bam/lima.bc1040--bc1040.bam.gz
+          gzip -d lima.bc1040--bc1040.bam.gz
           nextflow run main.nf \
             --threads 3 \
             --outdir TEST_DIR \
-            --pacbio_bam "m64187e_211217_130958.hifi_reads.bam" \
+            --pacbio_bam "lima.bc1040--bc1040.bam" \
             --pacbio_get_hifi
           rm -r work .nextflow*
       
