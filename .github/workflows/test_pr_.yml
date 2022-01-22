@@ -42,8 +42,33 @@ jobs:
           wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
           nextflow run main.nf \
             --threads 3 \
-            --outdir illumina_paired \
+            --outdir TEST_DIR \
             --shortreads "ecoli_illumina_15X_{1,2}.fastq.gz" \
             --shortreads_type "paired" \
             --fastp_merge_pairs \
             --fastp_correct_pairs
+          rm -r work .nextflow*
+      
+      - name: Run tests for nanopore
+        run: |
+          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
+          nextflow run main.nf \
+            --threads 3 \
+            --outdir TEST_DIR \
+            --nanopore_fastq "ecoli_ont_15X.fastq.gz"
+          rm -r work .nextflow*
+      
+      - name: Run tests for pacbio
+        run: |
+          wget https://downloads.pacbcloud.com/public/dataset/HiFiViral/Jan_2022/m64187e_211217_130958.hifi_reads.bam
+          nextflow run main.nf \
+            --threads 3 \
+            --outdir TEST_DIR \
+            --pacbio_bam "m64187e_211217_130958.hifi_reads.bam" \
+            --pacbio_get_hifi
+          rm -r work .nextflow*
+      
+      - name: View results
+        run: |
+          sudo apt-get install -y tree
+          tree TEST_DIR
