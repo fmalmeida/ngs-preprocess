@@ -1,0 +1,45 @@
+# This workflow set's up an automated execution for testing the code when a new PR is created
+# It uses the head branch name to trigger the execution of the new module or subworkflow ...
+#
+# For example, if I just created a module for roary, I should name the new branch as roary
+# then, this workflow will run: nextflow run fmalmeida/bacannot-compare --roary (the head branch name) [blah blah blah]
+
+name: Testing new module/workflow from PR
+on:
+  pull_request:
+    branches: master
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  run_nextflow:
+    name: Run pipeline for the upcoming PR
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USER }}
+      DOCKERHUB_PASS: ${{ secrets.DOCKER_PASSWORD }}
+    
+    steps:
+      
+      - name: Check out pipeline code
+        uses: actions/checkout@v2
+      
+      - name: Install Nextflow
+        env:
+          CAPSULE_LOG: none
+        run: |
+          wget -qO- get.nextflow.io | bash
+          sudo mv nextflow /usr/local/bin/
+      
+      - name: Create docker image from PR
+        run: |
+          docker build -t fmalmeida/ngs-preprocess:${GITHUB_HEAD_REF} .
+
+      - name: Run tests for illumina
+        run: |
+          ./nextflow run main.nf \
+            --threads 3 \
+            --outdir illumina_paired \
+            --shortreads "https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_{1,2}.fastq.gz" \
+            --shortreads_type "paired" \
+            --fastp_merge_pairs \
+            --fastp_correct_pairs
