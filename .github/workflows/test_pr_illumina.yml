@@ -38,10 +38,12 @@ jobs:
 
       - name: Run tests for illumina
         run: |
+          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_1.fastq.gz
+          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
           nextflow run main.nf \
             --threads 3 \
             --outdir illumina_paired \
-            --shortreads "https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_{1,2}.fastq.gz" \
+            --shortreads "ecoli_illumina_15X_{1,2}.fastq.gz" \
             --shortreads_type "paired" \
             --fastp_merge_pairs \
             --fastp_correct_pairs
