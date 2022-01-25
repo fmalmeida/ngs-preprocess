@@ -37,6 +37,6 @@ process NANOPACK {
       --fastq ${reads} \\
       -t ${params.threads} \\
       -n ${custom_id}.txt \\
-      --output ${custom_id}_stats ;
+      --outdir ${custom_id}_stats ;
   """
 }
