@@ -16,10 +16,10 @@ This command will select all the read pairs that match the pattern "path-to/SRR*
 
       ./nextflow run fmalmeida/ngs-preprocess \
         --threads 3 \
-        --outdir illumina_paired \
+        --output illumina_paired \
         --shortreads "path-to/SRR*_{1,2}.fastq.gz" \
         --shortreads_type "paired" \
-        --flash
+        --fastp_merge_pairs
 
 .. note::
 
@@ -31,7 +31,7 @@ This command will select all the read pairs that match the pattern "path-to/SRR*
 
 .. note::
 
-  ``--flash`` triggers paired end reads merge with FLASH.
+  ``--fastp_merge_pairs`` triggers the Fastp module to merge read pairs.
 
 Illumina single end reads.
 """"""""""""""""""""""""""
@@ -42,14 +42,14 @@ This command will select all the reads that match the pattern "path-to/SRR*.fast
 
       ./nextflow run fmalmeida/ngs-preprocess \
         --threads 3 \
-        --outdir illumina_single \
+        --output illumina_single \
         --shortreads "path-to/SRR*.fastq.gz" \
         --shortreads_type "single" \
-        --clip_r1 5 --three_prime_clip_r1 5
+        --fastp_additional_parameters " --trim_front1 5 --trim_tail1 5 "
 
 .. note::
 
-  Multiple files at once, using fixed number of bases to be trimmed (``--clip_r1`` and ``--three_prime_clip_r1``).
+  In this example, we pass on an additional parameter (``--trim_front1 5 --trim_tail1 5``) to Fastp so it trims the reads using a fixed number of bases from the head and tail of reads.
   
 .. note::
   
@@ -64,13 +64,13 @@ This command will select all the reads that match the pattern "path-to/SRR*.fast
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
-    --outdir ONT \
+    --output ONT \
     --nanopore_fastq "path-to/SRR*.fastq.gz" \
     --lreads_min_length 1000
 
 .. note::
 
-  The parameter ``--lreads_min_length`` applies a min. read length threshold to filter the reads.
+  The parameter ``--lreads_min_length`` applies a minimum read length threshold to filter the reads.
 
 Pacbio raw (subreads.bam) reads
 """""""""""""""""""""""""""""""
@@ -81,7 +81,7 @@ This command will select all the reads that match the pattern "path-to/m140905_*
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --threads 3 \
-    --outdir pacbio_subreads \
+    --output pacbio_subreads \
     --pacbio_bam "path-to/m140905_*.subreads.bam" \
     --pacbio_get_hifi \
     -with-report
@@ -105,7 +105,7 @@ Pacbio raw (legacy .bas.h5 to subreads.bam) reads
 
   ./nextflow run fmalmeida/ngs-preprocess \
     --pacbio_h5 E01_1/Analysis_Results/ \
-    --outdir E01_1/Analysis_Results/preprocessed \
+    --output E01_1/Analysis_Results/preprocessed \
     --threads 3
 
 .. note::
@@ -121,7 +121,7 @@ Running with a nf-core interactive graphical interface
 
 .. code-block:: bash
 
-      ./nf-core launch fmalmeida/ngs-preprocess
+  ./nf-core launch fmalmeida/ngs-preprocess
 
 
 Running with a configuration file
@@ -129,4 +129,4 @@ Running with a configuration file
 
 .. code-block:: bash
 
-      ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
+  ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config

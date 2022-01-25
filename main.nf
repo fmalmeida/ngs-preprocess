@@ -9,14 +9,11 @@ nextflow.enable.dsl=2
  * Include functions
  */
 include { helpMessage } from './nf_functions/help.nf'
-include { exampleMessage } from './nf_functions/examples.nf'
-include { paramsCheck } from './nf_functions/paramsCheck.nf'
 include { configMessage; logMessage } from './nf_functions/logMessages.nf'
 
 /*
  * Check parameters
  */
-paramsCheck()
 params.help = false
 if (params.help){
   helpMessage()
@@ -41,46 +38,40 @@ if (params.get_config) {
 /*
  * Load general parameters and establish defaults
  */
-params.outdir = 'output'
+params.output  = 'output'
 params.threads = 2
 
 /*
  * Parameters for short reads
  */
-params.shortreads = ''
-params.shortreads_type = 'paired' //paired or single
-params.clip_r1 = 0
-params.clip_r2 = 0
-params.three_prime_clip_r1 = 0
-params.three_prime_clip_r2 = 0
-params.quality_trim = 20
-params.lighter = false
-params.lighter_kmer = 21
-params.lighter_genome_size = false
-params.lighter_alpha = false
-params.flash = false
+params.shortreads                  = ''
+params.shortreads_type             = 'paired' // paired or single
+params.fastp_average_quality       = 20
+params.fastp_merge_pairs           = false
+params.fastp_correct_pairs         = false
+params.fastp_additional_parameters = ''
 
 /*
  * Parameters for longreads filtering
  */
-params.lreads_min_quality = false
-params.lreads_min_length  = false
+params.lreads_min_quality = 5
+params.lreads_min_length  = 500
 
 /*
  * Parameters for nanopore longreads
  */
-params.nanopore_fastq = ''
-params.nanopore_is_barcoded = false
+params.nanopore_fastq              = ''
+params.nanopore_is_barcoded        = false
 params.nanopore_sequencing_summary = ''
 
 /*
  * Parameters for pacbio longreads
  */
-params.pacbio_bam = ''
-params.pacbio_h5 = ''
-params.pacbio_barcodes = ''
+params.pacbio_bam            = ''
+params.pacbio_h5             = ''
+params.pacbio_barcodes       = ''
 params.pacbio_barcode_design = 'same'
-params.pacbio_get_hifi = false
+params.pacbio_get_hifi       = false
 
 /*
  * Define log message

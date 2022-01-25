@@ -38,7 +38,7 @@ It wraps up the following software:
 
 | Step | tools |
 | :--- | :---- |
-| Illumina pre-processing | [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [FLASH](https://ccb.jhu.edu/software/FLASH/), [Lighter](https://github.com/mourisl/Lighter) |
+| Illumina pre-processing | [Fastp](https://github.com/OpenGene/fastp) |
 | Nanopore pre-processing | [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/tleonardi/pycoQC), [NanoPack](https://github.com/wdecoster/nanopack) |
 | Pacbio pre-processing | [bam2fastx](https://github.com/PacificBiosciences/bam2fastx), [bax2bam](https://github.com/PacificBiosciences/bax2bam), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) |
 
@@ -66,7 +66,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
 
         ```bash
         # for docker
-        docker pull fmalmeida/ngs-preprocess:v2.3
+        docker pull fmalmeida/ngs-preprocess:v2.4
         ```
 
     * for singularity
@@ -79,7 +79,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
         export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
         singularity pull \
             --dir $NXF_SINGULARITY_LIBRARYDIR \
-            fmalmeida-ngs-preprocess-v2.3.img docker://fmalmeida/ngs-preprocess:v2.3
+            fmalmeida-ngs-preprocess-v2.4.img docker://fmalmeida/ngs-preprocess:v2.4
         ```
     
     * for conda
@@ -190,4 +190,4 @@ It will result in the following:
 
 To cite this tool please refer to our Zenodo tag or directly via the github url.
 
-Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/), [TrimGalore](https://github.com/FelixKrueger/TrimGalore), [FLASH](https://ccb.jhu.edu/software/FLASH/), [Lighter](https://github.com/mourisl/Lighter), [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) and [NanoPack](https://github.com/wdecoster/nanopack).
+Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Fastp](https://github.com/OpenGene/fastp), [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) and [NanoPack](https://github.com/wdecoster/nanopack).

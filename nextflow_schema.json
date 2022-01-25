@@ -11,12 +11,11 @@
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data",
             "properties": {
-                "outdir": {
+                "output": {
                     "type": "string",
-                    "description": "Output directory",
-                    "default": "./results",
-                    "fa_icon": "fas fa-folder-open",
-                    "help_text": "All the results of the pipeline will be stored under that directory."
+                    "default": "output",
+                    "help_text": "Where to place results?",
+                    "fa_icon": "fas fa-folder"
                 },
                 "shortreads": {
                     "type": "string",
@@ -54,7 +53,7 @@
                 }
             },
             "required": [
-                "outdir"
+                "output"
             ]
         },
         "computational_options": {
@@ -73,7 +72,7 @@
                 "parallel_jobs": {
                     "type": "integer",
                     "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
-                    "help_text": "This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory.",
+                    "help_text": "Requires -profile local. This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory.\n\nIf blank, nextflow will automatically handle it.",
                     "fa_icon": "fas fa-network-wired"
                 }
             }
@@ -89,13 +88,15 @@
                     "type": "integer",
                     "description": "Min. length for long reads",
                     "help_text": "It uses nanofilt to filter nanopore and pacbio long reads by a min. length threshold.",
-                    "fa_icon": "fas fa-ruler-horizontal"
+                    "fa_icon": "fas fa-ruler-horizontal",
+                    "default": 500
                 },
                 "lreads_min_quality": {
                     "type": "integer",
                     "description": "Min. quality for long reads",
                     "help_text": "It uses nanofilt to filter nanopore and pacbio long reads by a min. quality threshold.",
-                    "fa_icon": "fas fa-filter"
+                    "fa_icon": "fas fa-filter",
+                    "default": 5
                 },
                 "nanopore_is_barcoded": {
                     "type": "boolean",
@@ -106,7 +107,7 @@
                 "nanopore_sequencing_summary": {
                     "type": "string",
                     "description": "Path to nanopore sequencing summary",
-                    "help_text": "Optional. Path to nanopore sequencing summary. If given, the pipeline will trigger pycoQC to calculate nanopore long reads statistics.",
+                    "help_text": "Optional. Path to nanopore sequencing summary. If given, the pipeline will trigger pycoQC to calculate nanopore long reads statistics.\n\npycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc.",
                     "fa_icon": "fas fa-file"
                 },
                 "pacbio_barcodes": {
@@ -124,12 +125,13 @@
                         "same",
                         "different",
                         "any"
-                    ]
+                    ],
+                    "default": "same"
                 },
                 "pacbio_get_hifi": {
                     "type": "boolean",
                     "description": "Try to obtain hifi reads?",
-                    "help_text": "This paramter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistries and sequencers are compatible. If not compatible the pipeline will throw an error.",
+                    "help_text": "This parameter will trigger pacbio ccs software to produce high fidelity reads. Not all chemistry and sequencers are compatible. If not compatible the pipeline will throw an error.",
                     "fa_icon": "fas fa-question-circle"
                 }
             }
@@ -139,69 +141,30 @@
             "type": "object",
             "description": "Additional / Optional parameters",
             "default": "",
+            "fa_icon": "fas fa-file-import",
             "properties": {
-                "clip_r1": {
-                    "type": "integer",
-                    "description": "Clip n bases from 5' end of read pair 1 (or unpaired)",
-                    "help_text": "Tells trim_galore the amount of bases to trim from the 5' end of unpaired or read pair 1.",
-                    "fa_icon": "fas fa-cut"
-                },
-                "clip_r2": {
-                    "type": "integer",
-                    "help_text": "Tells trim_galore the amount of bases to trim from the 5' end of read pair 2.",
-                    "description": "Clip n bases from 5' end of read pair 2",
-                    "fa_icon": "fas fa-cut"
-                },
-                "three_prime_clip_r1": {
-                    "type": "integer",
-                    "help_text": "Tells trim_galore the amount of bases to trim from the 3' end of unpaired or read pair 1.",
-                    "description": "Clip n bases from 3' end of read pair 1 (or unpaired)",
-                    "fa_icon": "fas fa-cut"
-                },
-                "three_prime_clip_r2": {
-                    "type": "integer",
-                    "description": "Clip n bases from 3' end of read pair 2",
-                    "help_text": "Tells trim_galore the amount of bases to trim from the 3' end of read pair 2.",
-                    "fa_icon": "fas fa-cut"
-                },
-                "quality_trim": {
-                    "type": "integer",
-                    "description": "Base quality threshold for trim_galore",
-                    "help_text": "Tells to trim_galore the base quality threshold to use when trimming.",
-                    "fa_icon": "fas fa-filter"
-                },
-                "lighter": {
-                    "type": "boolean",
-                    "description": "Correct reads with lighter?",
-                    "help_text": "Run short reads correction step with lighter.",
-                    "fa_icon": "fas fa-check-double"
-                },
-                "lighter_kmer": {
-                    "type": "integer",
-                    "description": "Tells lighter the k-mer to use",
-                    "fa_icon": "fas fa-arrows-alt-h",
-                    "help_text": "Sets the k-mer to be used by lighter when correcting the reads"
-                },
-                "lighter_genome_size": {
+                "fastp_average_quality": {
                     "type": "string",
-                    "fa_icon": "fas fa-arrows-alt-h",
-                    "description": "Tells lighter the expected genome size",
-                    "help_text": "Lighter requires an expected genome size in order to correct the reads"
+                    "default": "20",
+                    "help_text": "Fastp will calculate the average quality of reads and filter out those not passing the threshold. If you want to filter low quality bases from the ends, please read the fastp manual and add the proper parameters to the pipeline with --fastp_additional_parameters.",
+                    "description": ""
                 },
-                "lighter_alpha": {
-                    "type": "integer",
-                    "description": "Ligther alpha value",
-                    "help_text": "Alpha is the sampling rate and decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.\n\nIf blank, lighter will try to automatically calculate it",
-                    "fa_icon": "fas fa-question"
+                "fastp_merge_pairs": {
+                    "type": "string",
+                    "default": "False",
+                    "help_text": "Fastp will try to merge read pairs. It works only with paired end reads."
                 },
-                "flash": {
-                    "type": "boolean",
-                    "description": "Merge read pairs?",
-                    "help_text": "If used, the pipeline will use FLASH to merge paired reads.",
-                    "fa_icon": "fab fa-confluence"
+                "fastp_correct_pairs": {
+                    "type": "string",
+                    "default": "False",
+                    "help_text": "Fastp will perform an overlap-based correction step in paired end reads to fix some low quality bases."
+                },
+                "fastp_additional_parameters": {
+                    "type": "string",
+                    "help_text": "Pass any additional parameter that you want to fastp. See https://github.com/OpenGene/fastp.",
+                    "description": ""
                 }
-            },
-            "fa_icon": "fas fa-file-import"
+            }
         }
     },
     "allOf": [

@@ -1,25 +1,39 @@
-process porechop {
-  publishDir "${params.outdir}/longreads/${id}/porechop_out", mode: 'copy'
-  tag "Trimming longreads with Porechop"
+process PORECHOP {
+  publishDir "${params.output}/preprocessing_outputs/nanopore/porechop", mode: 'copy'
+  tag "${id}"
 
   input:
   file reads
   
   output:
-  tuple val(id), file("${id}_trimmed.fastq"), val('nanopore') optional true
-  tuple val(id), file("porechop_barcodes/*.fastq"), val('nanopore') optional true
+  tuple val(id), path("${id}.trimmed.fq.gz"), val('nanopore')             optional true
+  tuple val(id), path("${id}_porechop_barcodes/*.fq.gz"), val('nanopore') optional true
 
   when:
   !(reads =~ /input.*/)
 
   script:
-  id = (reads.getBaseName() - "fastq.gz" - ".fastq")
+  id = (reads.getBaseName() - ".fastq.gz" - ".fastq" - ".fq.gz" - ".fq")
   if (params.nanopore_is_barcoded)
   """
-  porechop -i ${reads} -t ${params.threads} -b porechop_barcodes --barcode_threshold 85
+  # run porechop
+  porechop -i ${reads} -t ${params.threads} -b ${id}_porechop_barcodes --barcode_threshold 85
+
+  # fix barcode extensions and gzip outputs
+  cd ${id}_porechop_barcodes && \\
+      for i in *.fastq ; do mv \$i \${i%%.fastq}.fq ; done && \\
+      for i in *.fq ; do gzip $i ; done
   """
   else
   """
-  porechop -i ${reads} -t ${params.threads} --format fastq -o ${id}_trimmed.fastq ;
+  # run porechop
+  porechop \\
+      -i ${reads} \\
+      -t ${params.threads} \\
+      --format fastq \\
+      -o ${id}.trimmed.fq
+
+  # gzip output
+  gzip ${id}.trimmed.fq
   """
 }

@@ -1,6 +1,6 @@
-process filter {
-  publishDir "${params.outdir}/longreads/${id}/filtered_reads", mode: 'copy'
-  tag "filtering longreads with nanofilt"
+process FILTER {
+  publishDir "${params.output}/final_output/${type}", mode: 'copy'
+  tag "${id}"
 
   input:
   tuple val(id), file(reads), val(type)
@@ -13,14 +13,22 @@ process filter {
 
   script:
   if (params.nanopore_is_barcoded && type == 'nanopore') {
-    custom_id = reads.getBaseName() - ".fastq.gz" - ".fastq"
+    custom_id = reads.getBaseName() - ".fastq.gz" - ".fastq" - ".fq.gz" - ".fq"
   } else {
     custom_id = id
   }
   quality = (params.lreads_min_quality) ? "-q ${params.lreads_min_quality}" : ''
   length  = (params.lreads_min_length)  ? "-l ${params.lreads_min_length}" : ''
+
+  if (params.lreads_min_length || params.lreads_min_quality)
   """
-  # Filtering
-  gunzip -f -c $reads | NanoFilt ${quality} ${length} | gzip > ${custom_id}_filtered.fastq.gz ;
+  # filtering
+  gunzip -f -c $reads | NanoFilt ${quality} ${length} | gzip > ${custom_id}.filtered.fq.gz ;
+  """
+
+  else
+  """
+  # save information that reads are not filtered
+  cp $reads ${custom_id}.unfiltered.fq.gz
   """
 }

@@ -17,7 +17,7 @@ def logMessage() {
   log.info "fmalmeida/ngs-preprocess pipeline"
   log.info "================================="
   def summary = [:]
-  summary['Output dir']   = params.outdir
+  summary['Output dir']   = params.output
   if(workflow.revision) summary['Pipeline Release'] = workflow.revision
   summary['Current home']   = "$HOME"
   //summary['Current user']   = "$USER"

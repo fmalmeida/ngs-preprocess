@@ -1,12 +1,12 @@
-process pycoQC {
-  publishDir "${params.outdir}/longreads/pycoQC/${id}", mode: 'copy'
-  tag "Checking sequencing statistics with pycoQC"
+process PYCOQC {
+  publishDir "${params.output}/preprocessing_outputs/nanopore/QC", mode: 'copy'
+  tag "${id}"
 
   input:
   file summary
   
   output:
-  file "pycoQC_report.html"
+  path "${id}_pycoQC.html"
 
   when:
   !(summary =~ /input.*/)
@@ -15,6 +15,11 @@ process pycoQC {
   id = summary.getBaseName()
   """
   # run pycoQC
-  pycoQC --summary_file ${summary} --html_outfile pycoQC_report.html --filter_calibration --filter_duplicated --min_pass_qual 8
+  pycoQC \\
+      --summary_file ${summary} \\
+      --html_outfile ${id}_pycoQC.html \\
+      --filter_calibration \\
+      --filter_duplicated \\
+      --min_pass_qual 8
   """
 }

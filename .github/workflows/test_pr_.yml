@@ -64,7 +64,7 @@ jobs:
           gzip -d lima.bc1040--bc1040.bam.gz
           nextflow run main.nf \
             --threads 3 \
-            --outdir TEST_DIR \
+            --output TEST_DIR \
             --pacbio_bam "lima.bc1040--bc1040.bam" \
             --pacbio_get_hifi
           rm -r work .nextflow*
