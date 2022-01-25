@@ -2,6 +2,46 @@
 
 The tracking for changes started in v2.2
 
+## v2.4
+
+This version addresses the changes discussed in [issue #7](https://github.com/fmalmeida/ngs-preprocess/issues/7). It has three main changes:
+
+1. The directory of outputs have been reorganized and the output files extension have been standardized in order to make it easier and simpler to use this pipeline as the first step of many analyses. It must look like this now:
+
+```console
+{OUTPUT}
+├── final_output  # the final preprocessed reads of any tech (organized in folders)
+│   ├── illumina  # final preprocessed illumina reads
+│   │   ├── SRR8482585_30X.merged.fq.gz
+│   │   ├── SRR8482585_30X_R1.unmerged.fq.gz
+│   │   └── SRR8482585_30X_R2.unmerged.fq.gz
+│   ├── nanopore  # final preprocessed nanopore reads
+│   │   └── kp_30X.filtered.fq.gz
+│   └── pacbio    # final preprocessed pacbio reads
+│       └── lima.bc1018--bc1018.filtered.fq.gz
+└── preprocessing_outputs   # here will be saved (per tech) the files (QC, Logs, Stats) generated during preprocessing
+    ├── illumina
+    │   ├── SRR8482585_30X_fastp.html
+    │   └── SRR8482585_30X_fastp.json
+    ├── nanopore
+    │   ├── QC
+    │   │   ├── kp_30X_nanoQC
+    │   │   ├── kp_30X_nanoplot
+    │   │   └── kp_30X_stats
+    │   └── porechop
+    │       └── kp_30X.trimmed.fq.gz
+    └── pacbio
+        ├── QC
+        │   ├── lima.bc1018--bc1018_nanoQC
+        │   ├── lima.bc1018--bc1018_nanoplot
+        │   └── lima.bc1018--bc1018_stats
+        └── bam2fastq
+            ├── lima.bc1018--bc1018.bam.pbi
+            └── lima.bc1018--bc1018.fq.gz
+```
+2. Secondly, the pipelines tools/dependencies for preprocessing Illumina reads have changed. Now, instead of using flash, trim_galore, fastqc and lighter, the pipeline will use only [fastp](https://github.com/OpenGene/fastp) which performs all the steps that were done by these tools, but much faster since it is written in C++.
+3. The parameter `--outdir` is now `--output` for better readability
+
 ## v2.3
 
 This version is related to issue https://github.com/fmalmeida/ngs-preprocess/issues/5. It re-configured the pipeline to be more likely to nf-core pipelines, enabling users to run it using docker, conda or singularity. More explanation on how to run with different profiles is given at: https://github.com/fmalmeida/ngs-preprocess/tree/master#selecting-between-profiles

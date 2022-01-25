@@ -25,7 +25,7 @@ def helpMessage() {
 
             # General Parameters -- Mandatory
 
-    --outdir <string>                              Output directory name
+    --output <string>                              Output directory name
 
     --threads <int>                                Number of threads to use
 

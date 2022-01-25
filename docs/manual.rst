@@ -37,7 +37,7 @@ Output directory
      - Default value
      - Description
 
-   * - ``--outdir``
+   * - ``--output``
      - Y
      - output
      - Name of directory to store output values
