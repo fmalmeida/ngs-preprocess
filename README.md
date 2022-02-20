@@ -130,7 +130,7 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
     nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
     ```
 
-:book: Please use conda as last resource since the packages will not be "frozen and pre-installed", problems may arise, and nextflow will trigger an installation every time which may consume plenty of time.
+:book: Please use conda as last resource since the packages will not be "frozen and pre-installed", problems may arise.
 
 ### Usage
 
