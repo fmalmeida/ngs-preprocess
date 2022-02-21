@@ -10,5 +10,5 @@ Using a config file your code is a lot more cleaner and concise: ``nextflow run 
 Default configuration:
 """"""""""""""""""""""
 
-.. literalinclude:: ../nextflow.config
+.. literalinclude:: ../conf/defaults.config
    :language: groovy
