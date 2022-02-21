@@ -13,31 +13,19 @@ nextflow.enable.dsl=2
 WorkflowMain.initialise(workflow, params, log)
 
 /*
- * Download configuration files if requested
- */
-if (params.get_config) {
-  new File("ngs-preprocess.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/conf/defaults.config").getText())
-  log.info """
-
-  ngs-preprocess.config file saved in working directory
-  After configuration, run:
-  nextflow run fmalmeida/ngs-preprocess -c ./ngs-preprocess.config
-  Nice code
-
-  """.stripIndent()
-  exit 0
-}
-
-/*
- * Load workflows
- */
+========================================================================================
+    LOAD WORKFLOWS
+========================================================================================
+*/
 include { NANOPORE } from './workflows/nanopore.nf'
 include { PACBIO   } from './workflows/pacbio.nf'
 include { ILLUMINA } from './workflows/illumina.nf'
 
 /*
- * Define main workflow
- */
+========================================================================================
+    DEFINE MAIN WORKFLOW
+========================================================================================
+*/
 workflow {
   /*
    * User has nanopore longreads
