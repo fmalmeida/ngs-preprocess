@@ -4,7 +4,7 @@
 # For example, if I just created a module for roary, I should name the new branch as roary
 # then, this workflow will run: nextflow run fmalmeida/bacannot-compare --roary (the head branch name) [blah blah blah]
 
-name: Testing new module/workflow from PR
+name: Testing pacbio / docker from PR
 on:
   pull_request:
     branches: master
@@ -30,33 +30,10 @@ jobs:
           wget -qO- get.nextflow.io | bash
           sudo mv nextflow /usr/local/bin/
       
-      - name: Create docker image from PR
+      - name: Clean environment
         run: |
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
-          docker build -t fmalmeida/ngs-preprocess:${GITHUB_HEAD_REF} .
-
-      - name: Run tests for illumina
-        run: |
-          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_1.fastq.gz
-          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
-          nextflow run main.nf \
-            --threads 3 \
-            --outdir TEST_DIR \
-            --shortreads "ecoli_illumina_15X_{1,2}.fastq.gz" \
-            --shortreads_type "paired" \
-            --fastp_merge_pairs \
-            --fastp_correct_pairs
-          rm -r work .nextflow*
-      
-      - name: Run tests for nanopore
-        run: |
-          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
-          nextflow run main.nf \
-            --threads 3 \
-            --outdir TEST_DIR \
-            --nanopore_fastq "ecoli_ont_15X.fastq.gz"
-          rm -r work .nextflow*
       
       - name: Run tests for pacbio
         run: |
