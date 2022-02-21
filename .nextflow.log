@@ -1,0 +1,13 @@
+fev-21 13:34:56.274 [main] DEBUG nextflow.cli.Launcher - $> nextflow run ../main.nf --help
+fev-21 13:34:56.364 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 21.10.3
+fev-21 13:34:56.394 [main] DEBUG nextflow.scm.AssetManager - Listing projects in folder: /home/falmeida/.nextflow/assets
+fev-21 13:34:56.420 [main] DEBUG nextflow.cli.Launcher - Operation aborted
+nextflow.exception.AbortOperationException: Can't find git repository config file -- Repository may be corrupted: /home/falmeida/.nextflow/assets/nextflow-io/..
+	at nextflow.scm.AssetManager.guessHubProviderFromGitConfig(AssetManager.groovy:1088)
+	at nextflow.scm.AssetManager.validateProjectDir(AssetManager.groovy:205)
+	at nextflow.scm.AssetManager.build(AssetManager.groovy:136)
+	at nextflow.scm.AssetManager.<init>(AssetManager.groovy:109)
+	at nextflow.cli.CmdRun.getScriptFile(CmdRun.groovy:366)
+	at nextflow.cli.CmdRun.run(CmdRun.groovy:264)
+	at nextflow.cli.Launcher.run(Launcher.groovy:480)
+	at nextflow.cli.Launcher.main(Launcher.groovy:639)
