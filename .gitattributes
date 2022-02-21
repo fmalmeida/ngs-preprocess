@@ -1,0 +1,4 @@
+*.config linguist-language=nextflow
+modules/local/** linguist-generated
+workflows/** linguist-generated
+lib/* linguist-vendored
