@@ -202,7 +202,7 @@ It will result in the following:
 
 To cite this tool please refer to our [Zenodo tag](https://doi.org/10.5281/zenodo.3451405).
 
-This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
+This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [GPLv3](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE).
 
 > The nf-core framework for community-curated bioinformatics pipelines.
 >
