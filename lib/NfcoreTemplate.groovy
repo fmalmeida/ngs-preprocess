@@ -14,7 +14,7 @@ class NfcoreTemplate {
             // Check params.awsqueue and params.awsregion have been set if running on AWSBatch
             assert (params.awsqueue && params.awsregion) : "Specify correct --awsqueue and --awsregion parameters on AWSBatch!"
             // Check outdir paths to be S3 buckets if running on AWSBatch
-            assert params.outdir.startsWith('s3:')       : "Outdir not on S3 - specify S3 Bucket to run on AWSBatch!"
+            assert params.output.startsWith('s3:')       : "Outdir not on S3 - specify S3 Bucket to run on AWSBatch!"
         }
     }
 
@@ -112,7 +112,7 @@ class NfcoreTemplate {
         }
 
         // Write summary e-mail HTML to a file
-        def output_d = new File("${params.outdir}/pipeline_info/")
+        def output_d = new File("${params.output}/pipeline_info/")
         if (!output_d.exists()) {
             output_d.mkdirs()
         }
