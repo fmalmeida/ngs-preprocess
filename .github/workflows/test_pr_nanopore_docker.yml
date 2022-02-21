@@ -40,7 +40,7 @@ jobs:
           wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
           nextflow run main.nf \
             -profile docker \
-            --max_cpus 3 \
+            --max_cpus 2 \
             --outdir TEST_DIR \
             --nanopore_fastq "ecoli_ont_15X.fastq.gz"
           rm -r work .nextflow*
