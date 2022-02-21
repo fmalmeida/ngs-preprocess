@@ -7,6 +7,7 @@ The tracking for changes started in v2.2
 This version addresses the changes discussed in [issue #10](https://github.com/fmalmeida/ngs-preprocess/issues/10). It has three main changes:
 
 1. Added standard NF allocation resource rules as it is done by nf-core community
+    * It also uses templates of CLI help and logging messages from nf-core community.
 2. Re-organized config files to keep structure cleaner
 3. Changed the standar profile which will not load docker by default anymore. As it is the common practice for NF pipelines, user must explicitily select between docker/conda/singularity profiles.
 
