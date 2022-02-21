@@ -6,39 +6,27 @@ nextflow.enable.dsl=2
  */
 
 /*
- * Include functions
- */
-include { helpMessage } from './nf_functions/help.nf'
-include { configMessage; logMessage } from './nf_functions/logMessages.nf'
-
-/*
- * Check parameters
- */
-params.help = false
-if (params.help){
-  helpMessage()
-  exit 0
-}
-params.examples = false
-if (params.examples){
-  exampleMessage()
-  exit 0
-}
+========================================================================================
+    VALIDATE & PRINT PARAMETER SUMMARY
+========================================================================================
+*/
+WorkflowMain.initialise(workflow, params, log)
 
 /*
  * Download configuration files if requested
  */
-params.get_config = false
 if (params.get_config) {
   new File("ngs-preprocess.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/conf/defaults.config").getText())
-  configMessage()
+  log.info """
+
+  ngs-preprocess.config file saved in working directory
+  After configuration, run:
+  nextflow run fmalmeida/ngs-preprocess -c ./ngs-preprocess.config
+  Nice code
+
+  """.stripIndent()
   exit 0
 }
-
-/*
- * Define log message
- */
-logMessage()
 
 /*
  * Load workflows

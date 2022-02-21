@@ -46,7 +46,7 @@ jobs:
           nextflow run main.nf \
             -profile singularity \
             --max_cpus 2 \
-            --outdir TEST_DIR \
+            --output TEST_DIR \
             --nanopore_fastq "ecoli_ont_15X.fastq.gz"
           rm -r work .nextflow*
       

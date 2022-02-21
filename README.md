@@ -200,6 +200,23 @@ It will result in the following:
 
 # Citation
 
-To cite this tool please refer to our Zenodo tag or directly via the github url.
+To cite this tool please refer to our [Zenodo tag](https://doi.org/10.5281/zenodo.3451405).
 
-Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Fastp](https://github.com/OpenGene/fastp), [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/a-slide/pycoQC), [bax2bam](https://github.com/PacificBiosciences/bax2bam), [bam2fastq](https://github.com/PacificBiosciences/bam2fastx), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) and [NanoPack](https://github.com/wdecoster/nanopack).
+This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE).
+
+> The nf-core framework for community-curated bioinformatics pipelines.
+>
+> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
+>
+> Nat Biotechnol. 2020 Feb 13. doi: 10.1038/s41587-020-0439-x.
+
+In addition, users are encouraged to cite the programs used in this pipeline whenever they are used. Links to resources of tools and data used in this pipeline are as follows:
+
+* [Fastp](https://github.com/OpenGene/fastp)
+* [Porechop](https://github.com/rrwick/Porechop)
+* [pycoQC](https://github.com/a-slide/pycoQC)
+* [bax2bam](https://github.com/PacificBiosciences/bax2bam)
+* [bam2fastq](https://github.com/PacificBiosciences/bam2fastx)
+* [lima](https://github.com/PacificBiosciences/barcoding)
+* [pacbio ccs](https://ccs.how/)
+* [NanoPack](https://github.com/wdecoster/nanopack).

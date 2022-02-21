@@ -42,7 +42,7 @@ jobs:
           nextflow run main.nf \
             -profile docker \
             --max_cpus 2 \
-            --outdir TEST_DIR \
+            --output TEST_DIR \
             --shortreads "ecoli_illumina_15X_{1,2}.fastq.gz" \
             --shortreads_type "paired" \
             --fastp_merge_pairs \
