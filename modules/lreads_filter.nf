@@ -1,6 +1,7 @@
 process FILTER {
   publishDir "${params.output}/final_output/${type}", mode: 'copy'
   tag "${id}"
+  label 'process_low'
 
   input:
   tuple val(id), file(reads), val(type)

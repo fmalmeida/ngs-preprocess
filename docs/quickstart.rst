@@ -48,8 +48,9 @@ Outputs will be at ``preprocessed_reads``.
 
   # Running for both Illumina and nanopore data
   nextflow run fmalmeida/ngs-preprocess \
+    -profile docker \
     --output preprocessed_reads \
-    --threads 4 \
+    --max_cpus 4 \
     --shortreads "SRR8482585_30X_{1,2}.fastq.gz" \
     --shortreads_type "paired" \
     --fastp_correct_pairs \

@@ -30,48 +30,10 @@ if (params.examples){
  */
 params.get_config = false
 if (params.get_config) {
-  new File("ngs-preprocess.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/nextflow.config").getText())
+  new File("ngs-preprocess.config").write(new URL ("https://github.com/fmalmeida/ngs-preprocess/raw/master/conf/defaults.config").getText())
   configMessage()
   exit 0
 }
-
-/*
- * Load general parameters and establish defaults
- */
-params.output  = 'output'
-params.threads = 2
-
-/*
- * Parameters for short reads
- */
-params.shortreads                  = ''
-params.shortreads_type             = 'paired' // paired or single
-params.fastp_average_quality       = 20
-params.fastp_merge_pairs           = false
-params.fastp_correct_pairs         = false
-params.fastp_additional_parameters = ''
-
-/*
- * Parameters for longreads filtering
- */
-params.lreads_min_quality = 5
-params.lreads_min_length  = 500
-
-/*
- * Parameters for nanopore longreads
- */
-params.nanopore_fastq              = ''
-params.nanopore_is_barcoded        = false
-params.nanopore_sequencing_summary = ''
-
-/*
- * Parameters for pacbio longreads
- */
-params.pacbio_bam            = ''
-params.pacbio_h5             = ''
-params.pacbio_barcodes       = ''
-params.pacbio_barcode_design = 'same'
-params.pacbio_get_hifi       = false
 
 /*
  * Define log message

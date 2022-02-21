@@ -1,6 +1,7 @@
 process NANOPACK {
   publishDir "${params.output}/preprocessing_outputs/${type}/QC", mode: 'copy'
   tag "${id}"
+  label 'process_medium'
 
   input:
   tuple val(id), file(reads), val(type)
@@ -20,7 +21,7 @@ process NANOPACK {
   """
   # Plotting
   NanoPlot \\
-      -t ${params.threads} \\
+      -t ${task.cpus} \\
       --fastq ${reads} \\
       -o ${custom_id}_nanoplot \\
       --N50 \\
@@ -35,7 +36,7 @@ process NANOPACK {
   # Generate Statistics Summary
   NanoStat \\
       --fastq ${reads} \\
-      -t ${params.threads} \\
+      -t ${task.cpus} \\
       -n ${custom_id}.txt \\
       --outdir ${custom_id}_stats ;
   """

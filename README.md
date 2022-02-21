@@ -67,6 +67,9 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
         ```bash
         # for docker
         docker pull fmalmeida/ngs-preprocess:v2.4
+
+        # run
+        nextflow run fmalmeida/ngs-preprocess -profile docker [options]
         ```
 
     * for singularity
@@ -80,6 +83,9 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
         singularity pull \
             --dir $NXF_SINGULARITY_LIBRARYDIR \
             fmalmeida-ngs-preprocess-v2.4.img docker://fmalmeida/ngs-preprocess:v2.4
+        
+        # run
+        nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
         ```
     
     * for conda
@@ -89,6 +95,10 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
         # it is better to create envs with mamba for faster solving
         wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
         conda env create -f environment.yml   # advice: use mamba
+
+        # must be executed from the base environment
+        # This tells nextflow to load the available ngs-preprocess environment when required
+        nextflow run fmalmeida/ngs-preprocess -profile conda [options]
         ```
     
 4. Start running your analysis
@@ -110,11 +120,13 @@ Nextflow profiles are a set of "sensible defaults" for the resource requirements
 
 The pipeline have "standard profiles" set to run the workflows with either conda, docker or singularity using the [local executor](https://www.nextflow.io/docs/latest/executor.html), which is nextflow's default and basically runs the pipeline processes in the computer where Nextflow is launched. If you need to run the pipeline using another executor such as sge, lsf, slurm, etc. you can take a look at [nextflow's manual page](https://www.nextflow.io/docs/latest/executor.html) to proper configure one in a new custom profile set in your personal copy of [ngs-preprocess config file](https://github.com/fmalmeida/ngs-preprocess/blob/master/nextflow.config) and take advantage that nextflow allows multiple profiles to be used at once, e.g. `-profile conda,sge`.
 
-By default, if no profile is chosen, the pipeline will "load the docker profile". Available pre-set profiles for this pipeline are: docker, conda, singularity, you can choose between them as follows:
+By default, if no profile is chosen, the pipeline will try to load tools from the local machine $PATH. Available pre-set profiles for this pipeline are: `docker/conda/singularity`, you can choose between them as follows:
 
 * conda
 
     ```bash
+    # must be executed from the base environment
+    # This tells nextflow to load the available ngs-preprocess environment when required
     nextflow run fmalmeida/ngs-preprocess -profile conda [options]
     ```
 
@@ -136,7 +148,7 @@ By default, if no profile is chosen, the pipeline will "load the docker profile"
 
 For understading pipeline usage and configuration, users must read the <a href="https://ngs-preprocess.readthedocs.io/en/latest/index.html"><strong>complete online documentation »</strong></a>
 
-### Using the configuration file
+### Using a configuration file
 
 All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing:
 

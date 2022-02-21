@@ -1,6 +1,7 @@
 process PORECHOP {
   publishDir "${params.output}/preprocessing_outputs/nanopore/porechop", mode: 'copy'
   tag "${id}"
+  label 'process_medium'
 
   input:
   file reads
@@ -17,7 +18,7 @@ process PORECHOP {
   if (params.nanopore_is_barcoded)
   """
   # run porechop
-  porechop -i ${reads} -t ${params.threads} -b ${id}_porechop_barcodes --barcode_threshold 85
+  porechop -i ${reads} -t ${task.cpus} -b ${id}_porechop_barcodes --barcode_threshold 85
 
   # fix barcode extensions and gzip outputs
   cd ${id}_porechop_barcodes && \\
@@ -29,7 +30,7 @@ process PORECHOP {
   # run porechop
   porechop \\
       -i ${reads} \\
-      -t ${params.threads} \\
+      -t ${task.cpus} \\
       --format fastq \\
       -o ${id}.trimmed.fq
 
