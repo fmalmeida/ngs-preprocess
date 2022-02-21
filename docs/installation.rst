@@ -32,6 +32,7 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
       
       # for docker
       docker pull fmalmeida/ngs-preprocess:v2.4
+      nextflow run fmalmeida/ngs-preprocess -profile docker [options]
 
       # for singularity
       # remember to properly set NXF_SINGULARITY_LIBRARYDIR
@@ -41,10 +42,12 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
       singularity pull \
           --dir $NXF_SINGULARITY_LIBRARYDIR \
           fmalmeida-ngs-preprocess-v2.4.img docker://fmalmeida/ngs-preprocess:v2.4
+      nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
 
       # for conda
       wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
       conda env create -f environment.yml # advice: use mamba
+      nextflow run fmalmeida/ngs-preprocess -profile conda [options]
 
 5. (Optional) Install nf-core
 

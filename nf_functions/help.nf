@@ -23,11 +23,15 @@ def helpMessage() {
 
    OPTIONS:
 
-            # General Parameters -- Mandatory
+            # General Parameters
 
-    --output <string>                              Output directory name
-
-    --threads <int>                                Number of threads to use
+    --output <string>                              Output directory name. Default: 'output'
+    
+    --max_cpus <int>                               Max number of threads to use in parallel. Default: 4
+    
+    --max_memory <string>                          Max amount of memory to use. E.g. '6.GB'. Default: 6.GB
+    
+    --max_time <string>                            Max time for a process to run. E.g. '40.h'. Default: 40.h
 
 
             # Parameters for short reads preprocessing

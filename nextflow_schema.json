@@ -60,20 +60,23 @@
             "title": "Computational options",
             "type": "object",
             "fa_icon": "fab fa-acquisitions-incorporated",
-            "description": "Set the top limit for requested resources for any single job.",
+            "description": "Set the top limit of resources for pipeline",
             "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
             "properties": {
-                "threads": {
+                "max_cpus": {
                     "type": "integer",
-                    "description": "Amount of threads to use",
-                    "fa_icon": "fas fa-microchip",
-                    "help_text": "Set the max number of threads to allocate for each process. "
+                    "default": 4,
+                    "description": "Max amount of threads to use"
                 },
-                "parallel_jobs": {
-                    "type": "integer",
-                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
-                    "help_text": "Requires -profile local. This must be set with caution, paying attention to the --threads parameter and the number of cores in your system, otherwise you can endup without enough memory.\n\nIf blank, nextflow will automatically handle it.",
-                    "fa_icon": "fas fa-network-wired"
+                "max_memory": {
+                    "type": "string",
+                    "default": "6.GB",
+                    "description": "Max amount of memory to use"
+                },
+                "max_time": {
+                    "type": "string",
+                    "default": "40.h",
+                    "description": "Max amount of time for a job"
                 }
             }
         },
@@ -146,23 +149,19 @@
                 "fastp_average_quality": {
                     "type": "string",
                     "default": "20",
-                    "help_text": "Fastp will calculate the average quality of reads and filter out those not passing the threshold. If you want to filter low quality bases from the ends, please read the fastp manual and add the proper parameters to the pipeline with --fastp_additional_parameters.",
-                    "description": ""
+                    "help_text": "Fastp will calculate the average quality of reads and filter out those not passing the threshold. If you want to filter low quality bases from the ends, please read the fastp manual and add the proper parameters to the pipeline with --fastp_additional_parameters."
                 },
                 "fastp_merge_pairs": {
-                    "type": "string",
-                    "default": "False",
+                    "type": "boolean",
                     "help_text": "Fastp will try to merge read pairs. It works only with paired end reads."
                 },
                 "fastp_correct_pairs": {
-                    "type": "string",
-                    "default": "False",
+                    "type": "boolean",
                     "help_text": "Fastp will perform an overlap-based correction step in paired end reads to fix some low quality bases."
                 },
                 "fastp_additional_parameters": {
                     "type": "string",
-                    "help_text": "Pass any additional parameter that you want to fastp. See https://github.com/OpenGene/fastp.",
-                    "description": ""
+                    "help_text": "Pass any additional parameter that you want to fastp. See https://github.com/OpenGene/fastp."
                 }
             }
         }
