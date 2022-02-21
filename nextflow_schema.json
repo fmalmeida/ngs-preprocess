@@ -5,6 +5,32 @@
     "description": "",
     "type": "object",
     "definitions": {
+        "pipeline_help": {
+            "title": "Pipeline help",
+            "type": "object",
+            "description": "parameters to facilitate pipeline usage",
+            "default": "",
+            "properties": {
+                "help": {
+                    "type": "boolean",
+                    "description": "Show pipeline help message"
+                },
+                "show_hidden_params": {
+                    "type": "boolean",
+                    "description": "Show hidden parameters"
+                },
+                "get_config": {
+                    "type": "boolean",
+                    "description": "Download template config for parameters"
+                },
+                "validate_params": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Validate parameters used",
+                    "hidden": true
+                }
+            }
+        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -167,6 +193,9 @@
         }
     },
     "allOf": [
+        {
+            "$ref": "#/definitions/pipeline_help"
+        },
         {
             "$ref": "#/definitions/input_output_options"
         },
