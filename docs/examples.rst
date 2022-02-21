@@ -15,7 +15,7 @@ This command will select all the read pairs that match the pattern "path-to/SRR*
 .. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
-        --threads 3 \
+        --max_cpus 3 \
         --output illumina_paired \
         --shortreads "path-to/SRR*_{1,2}.fastq.gz" \
         --shortreads_type "paired" \
@@ -41,7 +41,7 @@ This command will select all the reads that match the pattern "path-to/SRR*.fast
 .. code-block:: bash
 
       ./nextflow run fmalmeida/ngs-preprocess \
-        --threads 3 \
+        --max_cpus 3 \
         --output illumina_single \
         --shortreads "path-to/SRR*.fastq.gz" \
         --shortreads_type "single" \
@@ -63,7 +63,7 @@ This command will select all the reads that match the pattern "path-to/SRR*.fast
 .. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
-    --threads 3 \
+    --max_cpus 3 \
     --output ONT \
     --nanopore_fastq "path-to/SRR*.fastq.gz" \
     --lreads_min_length 1000
@@ -80,7 +80,7 @@ This command will select all the reads that match the pattern "path-to/m140905_*
 .. code-block:: bash
 
   ./nextflow run fmalmeida/ngs-preprocess \
-    --threads 3 \
+    --max_cpus 3 \
     --output pacbio_subreads \
     --pacbio_bam "path-to/m140905_*.subreads.bam" \
     --pacbio_get_hifi \
@@ -106,7 +106,7 @@ Pacbio raw (legacy .bas.h5 to subreads.bam) reads
   ./nextflow run fmalmeida/ngs-preprocess \
     --pacbio_h5 E01_1/Analysis_Results/ \
     --output E01_1/Analysis_Results/preprocessed \
-    --threads 3
+    --max_cpus 3
 
 .. note::
 

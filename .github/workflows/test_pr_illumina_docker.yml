@@ -41,7 +41,7 @@ jobs:
           wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
           nextflow run main.nf \
             -profile docker \
-            --threads 3 \
+            --max_cpus 3 \
             --outdir TEST_DIR \
             --shortreads "ecoli_illumina_15X_{1,2}.fastq.gz" \
             --shortreads_type "paired" \

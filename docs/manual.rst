@@ -55,15 +55,20 @@ Max job request
      - Default value
      - Description
 
-   * - ``--threads``
+   * - ``--max_cpus``
      - N
-     - 2
-     - Number of threads to use
-
-   * - ``--parallel_jobs``
+     - 4
+     - Max number of threads to use in parallel
+   
+   * - ``--max_memory``
      - N
-     - NA
-     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``). If not specified, the pipeline will let nextflow automatically handle it
+     - 6.GB
+     - Max amount of memory to be used by pipeline
+   
+   * - ``--max_time``
+     - N
+     - 40.h
+     - Max time for a job to run
 
 
 Short reads (Illumina)

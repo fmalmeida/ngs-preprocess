@@ -40,7 +40,7 @@ jobs:
           wget https://downloads.pacbcloud.com/public/dataset/MicrobialMultiplexing_48plex/48-plex_bam/lima.bc1040--bc1040.bam.gz
           gzip -d lima.bc1040--bc1040.bam.gz
           nextflow run main.nf \
-            --threads 3 \
+            --max_cpus 3 \
             --output TEST_DIR \
             --pacbio_bam "lima.bc1040--bc1040.bam" \
             --pacbio_get_hifi
