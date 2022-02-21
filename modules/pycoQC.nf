@@ -1,6 +1,7 @@
 process PYCOQC {
   publishDir "${params.output}/preprocessing_outputs/nanopore/QC", mode: 'copy'
   tag "${id}"
+  label 'process_low'
 
   input:
   file summary

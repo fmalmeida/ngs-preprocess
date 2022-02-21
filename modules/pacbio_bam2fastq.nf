@@ -1,6 +1,7 @@
 process BAM2FASTQ {
   publishDir "${params.output}/preprocessing_outputs/pacbio/bam2fastq", mode: 'copy'
   tag "${id}"
+  label 'process_medium'
 
   input:
   file subreads
@@ -26,7 +27,7 @@ process BAM2FASTQ {
 
   # split bams
   lima ${design} \\
-      --num-threads ${params.threads} \\
+      --num-threads ${task.cpus} \\
       --split-named ${subreads} \\
       ${barcodes} ${id}_demuxed.bam
 

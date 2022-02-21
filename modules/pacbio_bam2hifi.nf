@@ -1,6 +1,7 @@
 process BAM2HIFI {
   publishDir "${params.output}/preprocessing_outputs/pacbio/bam2hifi", mode: 'copy'
   tag "${id}"
+  label 'process_medium'
 
   input:
   file subreads
@@ -26,14 +27,14 @@ process BAM2HIFI {
 
   # compute ccs
   ccs \\
-      --num-threads ${params.threads} \\
+      --num-threads ${task.cpus} \\
       ${subreads} \\
       ${id}.ccs.bam
 
   # split bams
   lima \\
       ${design} \\
-      --num-threads ${params.threads} \\
+      --num-threads ${task.cpus} \\
       --split-named \\
       ${id}.ccs.bam \\
       ${barcodes} \\
@@ -54,7 +55,7 @@ process BAM2HIFI {
   pbindex ${subreads} ;
 
   # compute ccs
-  ccs --num-threads ${params.threads} ${subreads} ${id}.ccs.bam ;
+  ccs --num-threads ${task.cpus} ${subreads} ${id}.ccs.bam ;
 
   # convert to fastq
   bam2fastq -o ${id}.ccs -u ${id}.ccs.bam

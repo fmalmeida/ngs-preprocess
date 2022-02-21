@@ -6,6 +6,7 @@ process FASTP {
     else "$filename"
   }
   tag "${id}"
+  label 'process_low'
   
   input:
   tuple val(id), file(read1), file(read2)
@@ -33,7 +34,7 @@ process FASTP {
   # run fastp
   fastp \\
       ${params.fastp_additional_parameters} \\
-      --thread ${params.threads} \\
+      --thread ${task.cpus} \\
       --average_qual ${params.fastp_average_quality} \\
       --json ${id}_fastp.json \\
       --html ${id}_fastp.html \\

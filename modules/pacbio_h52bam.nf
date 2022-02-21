@@ -1,6 +1,7 @@
 process H52BAM {
   publishDir "${params.output}/preprocessing_outputs/pacbio/h52bam", mode: 'copy'
   tag "${id}"
+  label 'process_medium'
 
   input:
   file h5bas
