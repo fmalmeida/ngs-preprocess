@@ -30,10 +30,11 @@ process FASTP {
       reads_param = "-i ${sreads} -o ${id}.preprocessed.fq.gz"
   }
   correction_param = (params.fastp_correct_pairs) ? "--correction" : ""
+  additional_param = (params.fastp_additional_parameters) ? "${params.fastp_additional_parameters}" : ""
   """
   # run fastp
   fastp \\
-      ${params.fastp_additional_parameters} \\
+      $additional_param \\
       --thread ${task.cpus} \\
       --average_qual ${params.fastp_average_quality} \\
       --json ${id}_fastp.json \\
