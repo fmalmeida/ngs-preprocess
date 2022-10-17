@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.2
 
+## v2.4.2 -- [2022-Oct-17]
+
+Cleanup change. Short reads output are are now written as "preprocessed_reads/short_reads" instead of "preprocessed/illumina" as sometimes other technology may be used.
+
+> Nothing has changed in terms of how tools are called and used, thus the docker image still the same. In fact, patch/fix releases (x.x.x) will always use the docker from breaking/features release (x.x)
+
 ## v2.4.1 -- [2022-Feb-21]
 
 This version addresses the changes discussed in [issue #10](https://github.com/fmalmeida/ngs-preprocess/issues/10). It has three main changes:
