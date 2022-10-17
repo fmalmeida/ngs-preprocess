@@ -1,6 +1,6 @@
 process FASTP {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
-    if (filename.endsWith(".fq.gz")) "final_output/illumina/$filename"
+    if (filename.endsWith(".fq.gz")) "final_output/short_reads/$filename"
     else if (filename.endsWith(".json")) "preprocessing_outputs/short_reads/$filename"
     else if (filename.endsWith(".html")) "preprocessing_outputs/short_reads/$filename"
     else "$filename"
