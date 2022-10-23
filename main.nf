@@ -14,12 +14,13 @@ WorkflowMain.initialise(workflow, params, log)
 
 /*
 ========================================================================================
-    LOAD WORKFLOWS
+    LOAD WORKFLOWS / MODULES
 ========================================================================================
 */
-include { NANOPORE } from './workflows/nanopore.nf'
-include { PACBIO   } from './workflows/pacbio.nf'
-include { ILLUMINA } from './workflows/illumina.nf'
+include { SRA_FETCH } from './workflows/sra_fetch'
+include { NANOPORE  } from './workflows/nanopore'
+include { PACBIO    } from './workflows/pacbio'
+include { ILLUMINA  } from './workflows/illumina'
 
 /*
 ========================================================================================
@@ -27,11 +28,21 @@ include { ILLUMINA } from './workflows/illumina.nf'
 ========================================================================================
 */
 workflow {
+
+  /*
+   * User gives a list of SRA IDs
+   */
+  if (params.sra_ids) {
+    SRA_FETCH( file(params.sra_ids) )
+  }
+
+
+
   /*
    * User has nanopore longreads
    */
-  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : Channel.value('')
-  nanopore_fastq = (params.nanopore_fastq) ? Channel.fromPath(params.nanopore_fastq) : Channel.value('')
+  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : []
+  nanopore_fastq = (params.nanopore_fastq) ? Channel.fromPath(params.nanopore_fastq) : []
   if (params.nanopore_fastq || params.nanopore_sequencing_summary) {
     NANOPORE(nanopore_fastq, sequencing_summary)
   }

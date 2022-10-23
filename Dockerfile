@@ -8,7 +8,10 @@ COPY environment.yml /
 RUN mamba env create --quiet -f /environment.yml && mamba clean -a
 
 # Add conda installation dir to PATH (instead of doing 'conda activate')
-ENV PATH /opt/conda/envs/ngs-preprocess-2.4/bin:$PATH
+ENV PATH /opt/conda/envs/ngs-preprocess-2.5/bin:$PATH
 
 # Dump the details of the installed packages to a file for posterity
-RUN conda env export --name ngs-preprocess-2.4 > ngs-preprocess-2.4.yml
+RUN conda env export --name ngs-preprocess-2.5 > ngs-preprocess-2.5.yml
+
+# cp config
+RUN cp -R /root/.ncbi / && chmod -R 777 /root/.ncbi /.ncbi

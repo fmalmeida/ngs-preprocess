@@ -12,10 +12,10 @@ workflow NANOPORE {
     reads
     fast5
   main:
-    if (params.nanopore_sequencing_summary) {
+    if (fast5) {
       PYCOQC(fast5)
     }
-    if (params.nanopore_fastq){
+    if (reads){
       PORECHOP(reads)
       // barcoded reads
       barcoded = (params.nanopore_is_barcoded) ? PORECHOP.out[1].transpose() : Channel.value(['', '', ''])

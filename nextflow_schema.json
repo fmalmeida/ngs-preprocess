@@ -17,6 +17,11 @@
                     "help_text": "Where to place results?",
                     "fa_icon": "fas fa-folder"
                 },
+                "sra_ids": {
+                    "type": "string",
+                    "default": null,
+                    "fa_icon": "fas fa-file"
+                },
                 "shortreads": {
                     "type": "string",
                     "description": "Input short reads",
