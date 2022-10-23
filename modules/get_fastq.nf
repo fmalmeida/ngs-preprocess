@@ -1,7 +1,7 @@
 process GET_FASTQ {
   publishDir "${params.output}/SRA_FETCH/PREFETCH", mode: 'copy'
   tag "$sra_ids"
-  label 'process_medium'
+  label 'process_low'
   
   input:
   val(sra_ids)
