@@ -6,11 +6,11 @@ include { FASTP } from '../modules/fastp.nf'
 // def workflow
 workflow ILLUMINA {
   take:
-    preads
-    sreads
+    shortreads
+  
   main:
 
     // run fastqc
-    FASTP(preads, sreads)
+    FASTP( shortreads )
 
 }

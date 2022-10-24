@@ -31,9 +31,12 @@ workflow SRA_FETCH {
       
       fastqs_ch = file( "${runInfo.fastq_dir}/${regex}" )
 
-      [ runInfo.Run, runInfo.LibraryLayout.toLowerCase(), fastqs_ch ]
+      [ runInfo.Run, runInfo.Platform.toLowerCase(), runInfo.LibraryLayout.toLowerCase(), fastqs_ch ]
 
     }
-    .view()
+    .set{ fastqs_ch }
+
+    emit:
+    fastqs = fastqs_ch
 
 }

@@ -36,8 +36,6 @@ workflow {
     SRA_FETCH( file(params.sra_ids) )
   }
 
-
-
   /*
    * User has nanopore longreads
    */
@@ -60,11 +58,50 @@ workflow {
   /*
    * User has illumina reads
    */
-  paired_reads = (params.shortreads && params.shortreads_type == 'paired') ? Channel.fromFilePairs(params.shortreads, flat: true, size: 2) : Channel.value(['', '', ''])
-  unpaired_reads = (params.shortreads && params.shortreads_type == 'single') ? Channel.fromPath(params.shortreads) : Channel.value('')
-  if (params.shortreads && (params.shortreads_type == 'paired' || params.shortreads_type == 'single')) {
-    ILLUMINA(paired_reads, unpaired_reads)
+  shortreads_ch = Channel.empty()
+  if (params.shortreads && params.shortreads_type == 'paired') {
+    shortreads_ch = 
+    shortreads_ch.mix( 
+      Channel.fromFilePairs( params.shortreads )
+      .map{
+        def meta = [:]
+        meta.id  = it[0]
+        meta.shortreads_type = 'paired'
+
+        [ meta, it[1] ]
+      }
+    )
   }
+  if (params.shortreads && params.shortreads_type == 'single') {
+    shortreads_ch = 
+    shortreads_ch.mix( 
+      Channel.fromPath( params.shortreads )
+      .map{
+        def meta = [:]
+        meta.id  = it.getBaseName() - ".fastq.gz" - ".fastq" - ".fq.gz" - ".fq"
+        meta.shortreads_type = 'single'
+
+        [ meta, it ]
+      }
+    )
+  }
+  if (params.sra_ids) {
+    shortreads_ch = 
+    shortreads_ch.mix( 
+      SRA_FETCH.out.fastqs
+      .filter{ it[1] =~ /illumina/ }
+      .map{ 
+        def meta = [:]
+        meta.id = it[0]
+        meta.shortreads_type = it[2]
+
+        [ meta, it[3] ]
+      }
+    )
+  }
+
+  ILLUMINA( shortreads_ch )
+
 }
 
 workflow.onComplete {
