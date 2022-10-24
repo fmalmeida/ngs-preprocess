@@ -1,6 +1,6 @@
 process GET_FASTQ {
   publishDir "${params.output}/SRA_FETCH/FASTQ", mode: 'copy'
-  tag "$sra_ids"
+  tag "${sra_ids.replaceAll(~/\s/,'')}"
   label 'process_low'
   
   input:
