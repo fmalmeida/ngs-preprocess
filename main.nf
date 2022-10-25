@@ -39,11 +39,36 @@ workflow {
   /*
    * User has nanopore longreads
    */
-  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : []
-  nanopore_fastq = (params.nanopore_fastq) ? Channel.fromPath(params.nanopore_fastq) : []
-  if (params.nanopore_fastq || params.nanopore_sequencing_summary) {
-    NANOPORE(nanopore_fastq, sequencing_summary)
+  sequencing_summary = (params.nanopore_sequencing_summary) ? Channel.fromPath(params.nanopore_sequencing_summary) : Channel.empty()
+  if (params.nanopore_fastq) {
+    nanopore_fastq =
+    Channel.fromPath(params.nanopore_fastq)
+    .map{ 
+      def meta = [:]
+      meta.id = it.getBaseName() - ".fastq.gz" - ".fastq" - ".fq.gz" - ".fq"
+      meta.longreads_type = 'nanopore'
+
+      [ meta, it ]
+    }
+  } else {
+    nanopore_fastq = Channel.empty()
   }
+  if (params.sra_ids) {
+    nanopore_fastq = 
+    nanopore_fastq.mix( 
+      SRA_FETCH.out.fastqs
+      .filter{ it[1] =~ /nanopore/ }
+      .map{
+        def meta = [:]
+        meta.id = it[0]
+        meta.longreads_type = 'nanopore'
+
+        [ meta, it[3] ]
+      }
+    )
+  }
+
+  NANOPORE( nanopore_fastq.ifEmpty([]), sequencing_summary.ifEmpty([]) )
 
   /*
    * User has pacbio subreads
