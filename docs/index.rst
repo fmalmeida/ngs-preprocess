@@ -23,7 +23,7 @@ It wraps up the following tools:
     - Analysis step
     - Source
     
-  * - sra-tools and entrez-direct
+  * - sra-tools & entrez-direct
     - Interaction with SRA database for fetching fastqs and metadata
     - https://anaconda.org/bioconda/entrez-direct ; https://github.com/ncbi/sra-tools
 
