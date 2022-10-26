@@ -36,7 +36,7 @@ workflow PACBIO {
 
       [ meta, it ]
     }
-    .view()
+
     if (params.pacbio_get_hifi) {
       BAM2HIFI(parsed_subreads, barcodes)
       reads = reads.mix( BAM2HIFI.out.reads )
