@@ -33,5 +33,5 @@ By default, if no profile is chosen, the pipeline will try to load tools from th
     nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
 
 .. note::
-   
-   Please use conda as last resource since the packages will not be "frozen and pre-installed", problems may arise, and nextflow will trigger an installation every time which may consume plenty of time.
+    
+    Please use conda as last resource since the packages will not be "frozen and pre-installed", problems may arise, and nextflow will trigger an installation every time which may consume plenty of time.
