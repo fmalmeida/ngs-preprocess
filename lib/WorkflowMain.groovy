@@ -59,7 +59,7 @@ class WorkflowMain {
 
             ngs-preprocess.config file saved in working directory
             After configuration, run:
-              nextflow run fmalmeida/ngs-preprocess -c ./ngs-preprocess.config
+                nextflow run fmalmeida/ngs-preprocess -c ./ngs-preprocess.config
             Nice code
 
             """.stripIndent()

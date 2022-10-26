@@ -13,25 +13,38 @@ workflow PACBIO {
     h5bas
     subreads
     barcodes
+    sra_reads
+
   main:
 
     // has H5 data
     h5_bams = Channel.empty()
     if (params.pacbio_h5) {
       H52BAM(h5bas)
-      h5_bams = H52BAM.out
+      h5_bams = H52BAM.out.subreads
     }
 
     // has subreads in bam
     // User wants to get hifi?
     reads = Channel.empty()
-    if (params.pacbio_get_hifi) {
-      BAM2HIFI(subreads.mix(h5_bams), barcodes)
-      reads = BAM2HIFI.out[0]
-    } else {
-      BAM2FASTQ(subreads.mix(h5_bams), barcodes)
-      reads = BAM2FASTQ.out[0]
+    parsed_subreads = 
+    subreads.mix(h5_bams).filter{ it != '' }
+    .map{
+      def meta    = [:]
+      meta.id     = it.getBaseName() - ".bam" - ".subreads"
+      meta.design = (params.pacbio_barcode_design.toLowerCase() != 'same' && params.pacbio_barcode_design.toLowerCase() != 'different') ? '' : '--' + params.pacbio_barcode_design.toLowerCase()
+
+      [ meta, it ]
     }
+    .view()
+    if (params.pacbio_get_hifi) {
+      BAM2HIFI(parsed_subreads, barcodes)
+      reads = reads.mix( BAM2HIFI.out.reads )
+    } else {
+      BAM2FASTQ(parsed_subreads, barcodes)
+      reads = reads.mix( BAM2FASTQ.out.reads )
+    }
+    reads = reads.mix(sra_reads)
 
     // QC on fastq
     NANOPACK(reads)
