@@ -47,7 +47,7 @@ def sra_lreads_filter(in_channel, technology) {
 //
 // SRA
 //
-sra_ids_ch = (params.sra_ids) ? file(params.sra_ids) : Channel.value('') // if .empty(), workflow does not start
+sra_ids_ch = (params.sra_ids) ? Channel.value( file(params.sra_ids).readLines() ) : Channel.empty() // if .empty(), workflow does not start
 
 //
 // PACBIO DATA
@@ -125,7 +125,7 @@ workflow {
   /*
    * User gives a list of SRA IDs
    */
-  SRA_FETCH( sra_ids_ch )
+  SRA_FETCH( sra_ids_ch.flatten() )
 
   /*
    * User has nanopore longreads

@@ -8,11 +8,11 @@ include { GET_METADATA } from '../modules/get_metadata'
 workflow SRA_FETCH {
   take:
     sra_ids
+  
   main:
 
     // get fastqs
-    ids_ch = Channel.value( sra_ids.readLines() )
-    GET_FASTQ( ids_ch.flatten() )
+    GET_FASTQ( sra_ids )
 
     // get sample metadata
     headers = "Run,LibraryName,LibraryStrategy,LibrarySelection,LibraryLayout,SRAStudy,BioProject,Sample,SampleName,Platform"
