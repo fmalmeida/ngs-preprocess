@@ -74,7 +74,7 @@ Max job request
 SRA Interaction
 ===============
 
-As of version v2.5, users can also select data directly from SRA. One just need to provide a txt file containing SRA run ids, one per line, e.g. [Example](https://github.com/fmalmeida/test_datasets/blob/main/sra_ids.txt).
+As of version v2.5, users can also select data directly from SRA. One just need to provide a txt file containing SRA run ids, one per line, e.g. `Example <https://github.com/fmalmeida/test_datasets/blob/main/sra_ids.txt>`_.
 
 .. note::
 
