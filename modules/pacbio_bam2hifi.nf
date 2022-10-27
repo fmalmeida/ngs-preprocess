@@ -5,7 +5,7 @@ process BAM2HIFI {
 
   input:
   tuple val(meta), path(subreads)
-  path barcodes
+  file barcodes
   
   output:
   tuple val(meta), path("*.fq.gz"), emit: reads

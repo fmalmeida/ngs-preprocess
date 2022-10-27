@@ -5,7 +5,7 @@ process BAM2FASTQ {
 
   input:
   tuple val(meta), path(subreads)
-  path barcodes
+  file barcodes
   
   output:
   tuple val(meta), path("*.fq.gz"), emit: reads
