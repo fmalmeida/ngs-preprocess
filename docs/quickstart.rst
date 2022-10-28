@@ -70,7 +70,7 @@ As for version v2.5, users can also used a pre-configured test profile which wil
 
 .. code-block:: bash
 
-  # Running for both Illumina and nanopore data
+  # Running for both short and long reads data
   nextflow run fmalmeida/ngs-preprocess -profile docker,test
 
 Afterwards
