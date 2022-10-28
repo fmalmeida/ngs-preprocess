@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.2
 
+## v2.5 -- [TBD]
+
+Add possibility for users to automatically fetch fastq files from SRA NCBI database. For that, users just need to use the `--sra_ids` parameter, passing a file with a list of SRA RunIDs, one per line.
+
+> More tools have been added so the versioning and docker image have now changed to v2.5.
+
 ## v2.4.2 -- [2022-Oct-17]
 
 Cleanup change. Short reads output are are now written as "preprocessed_reads/short_reads" instead of "preprocessed/illumina" as sometimes other technology may be used.
