@@ -7,9 +7,7 @@ process NANOPACK {
     tuple val(meta), path(reads)
     
     output:
-    path "NanoPlot"
-    path "NanoQC"
-    path "NanoStats"
+    path "Nano*"
 
     script:
     """

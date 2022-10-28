@@ -19,7 +19,6 @@
                 },
                 "sra_ids": {
                     "type": "string",
-                    "default": null,
                     "fa_icon": "fas fa-file"
                 },
                 "shortreads": {
