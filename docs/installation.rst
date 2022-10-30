@@ -31,7 +31,7 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
    .. code-block:: bash
       
       # for docker
-      docker pull fmalmeida/ngs-preprocess:v2.4
+      docker pull fmalmeida/ngs-preprocess:v2.5
       nextflow run fmalmeida/ngs-preprocess -profile docker [options]
 
       # for singularity
@@ -40,8 +40,8 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
       export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
       export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
       singularity pull \
-          --dir $NXF_SINGULARITY_LIBRARYDIR \
-          fmalmeida-ngs-preprocess-v2.4.img docker://fmalmeida/ngs-preprocess:v2.4
+            --dir $NXF_SINGULARITY_LIBRARYDIR \
+            fmalmeida-ngs-preprocess-v2.5.img docker://fmalmeida/ngs-preprocess:v2.5
       nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
 
       # for conda
@@ -55,4 +55,4 @@ This pipeline `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ requi
 
 .. note::
 
-  Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).
+   Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).

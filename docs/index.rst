@@ -16,55 +16,59 @@ and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-u
 It wraps up the following tools:
 
 .. list-table::
-   :widths: 10 60 40
-   :header-rows: 1
+  :widths: 10 60 40
+  :header-rows: 1
 
-   * - Software
-     - Analysis step
-     - Source
+  * - Software
+    - Analysis step
+    - Source
+    
+  * - sra-tools & entrez-direct
+    - Interaction with SRA database for fetching fastqs and metadata
+    - https://anaconda.org/bioconda/entrez-direct ; https://github.com/ncbi/sra-tools
 
-   * - Fastp
-     -  tool designed to provide fast all-in-one preprocessing for FastQ files
-     - https://github.com/OpenGene/fastp
+  * - Fastp
+    -  tool designed to provide fast all-in-one preprocessing for FastQ files
+    - https://github.com/OpenGene/fastp
 
-   * - Porechop
-     - ONT reads trimming and demultiplexing
-     - https://github.com/rrwick/Porechop
+  * - Porechop
+    - ONT reads trimming and demultiplexing
+    - https://github.com/rrwick/Porechop
 
-   * - pycoQC
-     - ONT reads QC
-     - https://github.com/tleonardi/pycoQC
+  * - pycoQC
+    - ONT reads QC
+    - https://github.com/tleonardi/pycoQC
 
-   * - NanoPack
-     - Long reads QC and filter
-     - https://github.com/wdecoster/nanopack
+  * - NanoPack
+    - Long reads QC and filter
+    - https://github.com/wdecoster/nanopack
 
-   * - bax2bam
-     - Convert PacBio bax files to bam
-     - https://github.com/PacificBiosciences/bax2bam
+  * - bax2bam
+    - Convert PacBio bax files to bam
+    - https://github.com/PacificBiosciences/bax2bam
 
-   * - bam2fastx
-     - Extract reads from PacBio bam files
-     - https://github.com/PacificBiosciences/bam2fastx
+  * - bam2fastx
+    - Extract reads from PacBio bam files
+    - https://github.com/PacificBiosciences/bam2fastx
 
-   * - lima
-     - PacBio reads demultiplexing
-     - https://github.com/PacificBiosciences/barcoding
+  * - lima
+    - PacBio reads demultiplexing
+    - https://github.com/PacificBiosciences/barcoding
 
-   * - pacbio ccs
-     - Generate PacBio Highly Accurate Single-Molecule Consensus Reads
-     - https://ccs.how/
+  * - pacbio ccs
+    - Generate PacBio Highly Accurate Single-Molecule Consensus Reads
+    - https://ccs.how/
 
 
 .. toctree::
-   :hidden:
+  :hidden:
 
-   installation
-   profiles
-   quickstart
-   manual
-   config
-   examples
+  installation
+  profiles
+  quickstart
+  manual
+  config
+  examples
 
 Support Contact
 ***************

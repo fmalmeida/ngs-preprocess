@@ -1,6 +1,6 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: ngs-preprocess-2.4
+name: ngs-preprocess-2.5
 channels:
   - conda-forge
   - bioconda
@@ -36,3 +36,6 @@ dependencies:
   - bioconda::nanostat
   - bioconda::nanoplot>=1.38.1
   - bioconda::nanofilt
+  - bioconda::sra-tools
+  - bioconda::entrez-direct
+  - bioconda::csvtk

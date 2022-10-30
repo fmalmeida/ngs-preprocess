@@ -17,6 +17,10 @@
                     "help_text": "Where to place results?",
                     "fa_icon": "fas fa-folder"
                 },
+                "sra_ids": {
+                    "type": "string",
+                    "fa_icon": "fas fa-file"
+                },
                 "shortreads": {
                     "type": "string",
                     "description": "Input short reads",
@@ -185,7 +189,6 @@
                 "tracedir": {
                     "type": "string",
                     "description": "Directory to keep pipeline Nextflow logs and reports.",
-                    "default": "${params.output}/pipeline_info",
                     "fa_icon": "fas fa-cogs",
                     "hidden": true
                 },

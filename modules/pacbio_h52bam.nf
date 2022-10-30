@@ -7,8 +7,8 @@ process H52BAM {
   file h5bas
 
   output:
-  path("*/*.subreads.bam") // Get all bam files produced
-  path("*")
+  path "*/*.subreads.bam", emit: subreads
+  path "*", emit: all
 
   when:
   !(h5bas =~ /input.*/)

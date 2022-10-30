@@ -63,6 +63,16 @@ Outputs will be at ``preprocessed_reads``.
 
   These parameters can be used via configuration file. See :ref:`config`.
 
+Using test profile
+==================
+
+As for version v2.5, users can also used a pre-configured test profile which will automatically load a list of SRA run ids for download.
+
+.. code-block:: bash
+
+  # Running for both short and long reads data
+  nextflow run fmalmeida/ngs-preprocess -profile docker,test
+
 Afterwards
 ==========
 
