@@ -2,7 +2,7 @@
 
 The tracking for changes started in v2.2
 
-## v2.5 -- [TBD]
+## v2.5 -- [2022-Oct-30]
 
 Add possibility for users to automatically fetch fastq files from SRA NCBI database. For that, users just need to use the `--sra_ids` parameter, passing a file with a list of SRA RunIDs, one per line.
 
