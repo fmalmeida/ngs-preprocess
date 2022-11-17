@@ -8,7 +8,7 @@ process GET_METADATA {
   val(headers)
 
   output:
- path "*.csv", emit: sra_metadata
+  path "*.csv", emit: sra_metadata
 
   script:
   id = "${sra_run.baseName}" - "_data"
