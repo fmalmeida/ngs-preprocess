@@ -14,6 +14,12 @@ process GET_FASTQ {
   script:
   def sra_ids = "${sra_ids.replaceAll(~/\s/,'')}"
   """
-  fastq-dump --gzip --split-3 --outdir ./${sra_ids}_data $sra_ids
+  fasterq-dump \\
+    --include-technical \\
+    --split-files \\
+    --threads $task.cpus \\
+    --outdir ./${sra_ids}_data \\
+    --progress \\
+    $sra_ids
   """
 }
