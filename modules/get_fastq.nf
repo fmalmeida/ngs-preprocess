@@ -9,6 +9,8 @@ process GET_FASTQ {
   output:
   path "*_data", emit: sra_fastq
 
+  when: sra_ids
+
   script:
   def sra_ids = "${sra_ids.replaceAll(~/\s/,'')}"
   """
