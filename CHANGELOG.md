@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.2
 
+## v2.6 -- [2023-Apr-16]
+
+Small bug fixes on SRA_FETCH download modules. Updated pipeline to understand Illumina / BGIseq sequences for short reads. Updated Docker image with named versions of tools whenever possible.
+
+> More tools have been added so the versioning and docker image have now changed to v2.6.
+
 ## v2.5 -- [2022-Oct-30]
 
 Add possibility for users to automatically fetch fastq files from SRA NCBI database. For that, users just need to use the `--sra_ids` parameter, passing a file with a list of SRA RunIDs, one per line.

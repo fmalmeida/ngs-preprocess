@@ -33,6 +33,7 @@ workflow PACBIO {
       def meta    = [:]
       meta.id     = it.getBaseName() - ".bam" - ".subreads"
       meta.design = (params.pacbio_barcode_design.toLowerCase() != 'same' && params.pacbio_barcode_design.toLowerCase() != 'different') ? '' : '--' + params.pacbio_barcode_design.toLowerCase()
+      meta.longreads_type = 'pacbio'
 
       [ meta, it ]
     }

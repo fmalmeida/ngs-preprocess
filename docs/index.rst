@@ -45,11 +45,11 @@ It wraps up the following tools:
 
   * - bax2bam
     - Convert PacBio bax files to bam
-    - https://github.com/PacificBiosciences/bax2bam
+    - https://anaconda.org/bioconda/bax2bam
 
   * - bam2fastx
     - Extract reads from PacBio bam files
-    - https://github.com/PacificBiosciences/bam2fastx
+    - https://github.com/PacificBiosciences/pbtk#bam2fastx
 
   * - lima
     - PacBio reads demultiplexing
