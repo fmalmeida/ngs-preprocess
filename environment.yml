@@ -1,6 +1,6 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: ngs-preprocess-2.5
+name: ngs-preprocess-2.6
 channels:
   - conda-forge
   - bioconda
@@ -22,20 +22,23 @@ dependencies:
   - conda-forge::gcc
 
   ## bioconda packages
-  - bioconda::porechop
-  - bioconda::fastp
+  - bioconda::porechop=0.2.4
+  - bioconda::fastp=0.23.2
   - bioconda::samtools
   - bioconda::bax2bam=0.0.9
-  - bioconda::bam2fastx
-  - bioconda::pbccs
-  - bioconda::lima
+  - bioconda::pbtk=3.1.0
+  - bioconda::pbccs=6.4.0
+  - bioconda::lima=2.7.1
   - bioconda::pbbam>=0.23.0
-  - bioconda::pycoqc
+  - bioconda::pycoqc=2.5.0.3
   - bioconda::pysam
-  - bioconda::nanoqc
+  - bioconda::nanoqc=0.9.4
   - bioconda::nanostat
-  - bioconda::nanoplot>=1.38.1
-  - bioconda::nanofilt
-  - bioconda::sra-tools
-  - bioconda::entrez-direct
+  - bioconda::nanoplot=1.41.0
+  - bioconda::nanofilt=2.8.0
+  - bioconda::sra-tools=3.0.3
+  - bioconda::entrez-direct=16.2
   - bioconda::csvtk
+
+  ## other
+  - plotly::plotly
