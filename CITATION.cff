@@ -17,6 +17,5 @@ journal: "F1000Research"
 volume: 12
 year: 2023
 number: 1205
-repository-code: "https://github.com/fmalmeida/ngs-preprocess"
 type: "article"
 
