@@ -1,21 +1,22 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-authors:
-- family-names: "Almeida"
-  given-names: "Felipe Marques de"
-  orcid: "https://orcid.org/0000-0002-6855-3379"
-- family-names: "Campos"
-  given-names: "Tatiana Amabile de"
-  orcid: "https://orcid.org/0000-0002-0582-2324"
-- family-names: "Pappas Jr"
-  given-names: "Georgios Joannis"
-  orcid: "https://orcid.org/0000-0002-1100-976X"
-title: "Scalable and versatile container-based pipelines for de novo genome assembly and bacterial annotation."
-doi: 10.12688/f1000research.139488.1
-date-released: 2023-09-25
-journal: "F1000Research"
-volume: 12
-year: 2023
-number: 1205
-type: "article"
+preferred-citation:
+  authors:
+  - family-names: "Almeida"
+    given-names: "Felipe Marques de"
+    orcid: "https://orcid.org/0000-0002-6855-3379"
+  - family-names: "Campos"
+    given-names: "Tatiana Amabile de"
+    orcid: "https://orcid.org/0000-0002-0582-2324"
+  - family-names: "Pappas Jr"
+    given-names: "Georgios Joannis"
+    orcid: "https://orcid.org/0000-0002-1100-976X"
+  title: "Scalable and versatile container-based pipelines for de novo genome assembly and bacterial annotation."
+  doi: 10.12688/f1000research.139488.1
+  date-released: 2023-09-25
+  journal: "F1000Research"
+  volume: 12
+  year: 2023
+  number: 1205
+  type: "article"
 
