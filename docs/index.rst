@@ -70,6 +70,17 @@ It wraps up the following tools:
   config
   examples
 
+Citation
+********
+
+In order to cite this pipeline, please refer to:
+
+.. code-block:: bash
+
+      Almeida FMd, Campos TAd and Pappas Jr GJ. Scalable and versatile container-based pipelines for de novo genome assembly and bacterial annotation. [version 1; peer review: awaiting peer review]. F1000Research 2023, 12:1205 (https://doi.org/10.12688/f1000research.139488.1)
+
+Additionally, archived versions of the pipeline are also found in `Zenodo <https://doi.org/10.5281/zenodo.3451405>`_.
+
 Support Contact
 ***************
 

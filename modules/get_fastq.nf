@@ -20,6 +20,18 @@ process GET_FASTQ {
     --threads $task.cpus \\
     --outdir ./${sra_ids}_data \\
     --progress \\
-    $sra_ids
+    $sra_ids &> fasterq-dump.err || true
+  
+  # is pacbio?
+  if [ \$(grep -ic "is PACBIO, please use fastq-dump instead" fasterq-dump.err) -eq 1 ]
+  then
+      fastq-dump \\
+        --split-files \\
+        --outdir ./${sra_ids}_data \\
+        $sra_ids
+  else
+    echo "fasterq-dump error was:"
+    cat fasterq-dump.err
+  fi
   """
 }
