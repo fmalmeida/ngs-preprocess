@@ -5,6 +5,7 @@ The tracking for changes started in v2.2
 ## v2.6.1 -- [2023-Oct-26]
 
 * [[#21](https://github.com/fmalmeida/ngs-preprocess/issues/21)] - Added/updated citation information
+* Small fix on pacbio download from sra
 
 > Nothing has changed in terms of how tools are called and used, thus the docker image still the same. In fact, patch/fix releases (x.x.x) will always use the docker from breaking/features release (x.x)
 
