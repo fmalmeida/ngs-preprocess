@@ -75,7 +75,7 @@ Citation
 
 In order to cite this pipeline, please refer to:
 
-.. code-block:: none
+.. code-block:: console
   :class: wrap
 
       Almeida FMd, Campos TAd and Pappas Jr GJ. Scalable and versatile container-based pipelines for de novo genome assembly and bacterial annotation. [version 1; peer review: awaiting peer review]. F1000Research 2023, 12:1205 (https://doi.org/10.12688/f1000research.139488.1)
