@@ -58,7 +58,7 @@ As of version v2.5, users can also select data directly from SRA. One just need 
 
 ## Long reads input
 
-| <div style="width:160px">Parameter</div> | Required | Default | Description |
+| <div style="width:220px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
 | `--lreads_min_length` | :material-close: | 500 | Length min. threshold for filtering long reads (ONT or Pacbio) |
 | `--lreads_min_quality` | :material-close: | 5 | Quality min. threshold for filtering long reads (ONT or Pacbio) |
