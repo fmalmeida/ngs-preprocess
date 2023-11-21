@@ -67,7 +67,6 @@ Bacannot will use [R Markdown](https://rmarkdown.rstudio.com/) to produce automa
     * Including plasmids, prophages, ICEs and genomic islands.
 * Report of user's custom db annotations.
     * The quickstart does not produce an example, however, the report is similar to the ICEberg section in the MGE example report.
-    * See [custom-db reference page](custom-db.md#)
 * [Report of antiSMASH annotation](https://docs.antismash.secondarymetabolites.org/understanding_output/)
     * The annotation report is provided by the antiSMASH tool
 
