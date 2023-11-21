@@ -1,105 +1,62 @@
 # Quickstart
 
-For a rapid and simple quickstart that enables to understand most of the available features we will use as input the _Escherichia coli_ reference genome.
+As an use case, we will use 30X of one of the *Escherichia coli* sequencing data (Biosample: [SAMN10819847](https://www.ncbi.nlm.nih.gov/biosample/10819847))
+that is available from a recent study that compared the use of different long read technologies in hybrid assembly of 137 bacterial genomes [[1](https://doi.org/10.1099/mgen.0.000294)].
 
-## Required inputs
+## Get the data
 
-To run the pipeline, we basically need a samplesheet describing the genomes to be samples to be analysed (`--input`) and the path to the directory containing the databases used by bacannot (`--bacannot_db`).
+We have made this subsampled dataset available in [Figshare](https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585).
 
-## Downloading/Generating the inputs
-
-### Input genome and samplesheet
-
-First we need to download the genome:
 
 ```bash
-# Download the ecoli ref genome
-wget -O ecoli_ref.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/008/865/GCF_000008865.2_ASM886v2/GCF_000008865.2_ASM886v2_genomic.fna.gz
-gzip -d ecoli_ref.fna.gz
+# Download data from figshare
+wget -O reads.zip https://ndownloader.figshare.com/articles/14036585/versions/4
+
+# Unzip
+unzip reads.zip
 ```
 
-After downloading it, we must create a samplesheet for the input data as described in the [samplesheet manual page](samplesheet.md#). A proper formated file for this data would look like that:
+Now we have the necessary data to perform the quickstart.
 
-```yaml
-samplesheet: # this header is required
-  - id: ecoli
-    assembly: ecoli_ref.fna
-    resfinder: Escherichia coli
-```
+!!! note "Where my outputs go?"
 
-!!! tip
+    The pipeline will always use the fastq file name as prefix for sub-folders and output files. For instance, if users use a fastq file named SRR7128258.fastq the output files and directories will have the string "SRR7128258" in it.
 
-    Download this file and save it as `bacannot_samplesheet.yaml` to help on later reference to it
+## Preprocessing the data
 
-### Bacannot databases
+Outputs will be at `preprocessed_reads`.
 
-Bacannot databases are not inside the docker images anymore to avoid huge images and problems with connections and limit rates with dockerhub.
+!!! warning "Watch your REGEX"
 
-#### Pre-formatted
+    Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
 
-Users can directly download pre-formatted databases from Zenodo: https://doi.org/10.5281/zenodo.7615811
-
-Useful for standardization and also overcoming known issues that may arise when formatting databases with `singularity` profile.
-
-A module to download the latest pre-formatted database has also been made available:
+    **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* with unpaired reads the pipeline will process each read separately.
 
 ```bash
-# Download pipeline pre-built databases
-nextflow run fmalmeida/bacannot --get_zenodo_db --output ./ -profile <docker/singularity>
+# Running for both illumina and nanopore data
+nextflow run fmalmeida/ngs-preprocess \
+    -profile docker \
+    --output preprocessed_reads \
+    --max_cpus 4 \
+    --shortreads "SRR8482585_30X_{1,2}.fastq.gz" \
+    --shortreads_type "paired" \
+    --fastp_correct_pairs \
+    --fastp_merge_pairs \
+    --nanopore_fastq "SRX5299443_30X.fastq.gz" \
+    --lreads_min_length 1000 \
+    --lreads_min_quality 10
 ```
 
-#### I want to generate a new formatted database
+## Using test profile
 
-```{bash .annotate hl_lines="5"}
-# Download pipeline databases
-nextflow run fmalmeida/bacannot \
-    --get_dbs \
-    --output bacannot_dbs \
-    -profile docker
-```
 
-!!! important "About profiles"
-    
-    Users **must** select one of the available profiles: docker or singularity. Conda may come in future. Please read more about how to [proper select NF profiles](profiles.md#)
-
-## Run the pipeline
-
-In this step we will get a major overview of the main pipeline's steps. To run it, we will use the databases (`bacannot_dbs`) downloaded in the previous step.
+As for version v2.5, users can also used a pre-configured test profile which will automatically load a list of SRA run ids for download.
 
 ```bash
-# Run the pipeline using the Escherichia coli resfinder database
-nextflow run fmalmeida/bacannot \
-    --input bacannot_samplesheet.yaml \
-    --output _ANNOTATION \
-    --bacannot_db ./bacannot_dbs \
-    --max_cpus 10 \
-    -profile docker
+# Running for both short and long reads data
+nextflow run fmalmeida/ngs-preprocess -profile docker,test
 ```
 
-!!! note "About resfinder"
+## Afterwards
 
-    The resfinder species could also be selected via the command line with `--resfinder_species`. Please, read more about it at [manual](manual.md#) and [samplesheet](samplesheet.md#) reference pages.
-
-### Outputs
-
-A glimpse over the main outputs produced by bacannot is given at [outputs](outputs.md#) section.
-
-### Testing more workflows
-
-Moreover, we have also made available a few example datasets in the pipeline so users can test all capabilities at once, from assembling raw reads to annotating genomes. To test it users must run:
-
-```bash
-# Run the pipeline using the provided (bigger) test dataset
-nextflow run fmalmeida/bacannot -profile docker,test --bacannot_db ./bacannot_dbs --max_cpus 10
-
-# Or run the quick test
-nextflow run fmalmeida/bacannot -profile docker,quicktest --bacannot_db ./bacannot_dbs ---max_cpus 10
-```
-
-!!! info ""
-
-    Unfortunately, due to file sizes, we could not provide fast5 files for users to check on the methylation step.
-
-### Annotation with bakta
-
-User can also perform the core generic annotation with bakta instead of prokka. Please read [the manual](manual.md#bakta-annotation).
+Now you can used these datasets to, for example, assemble and annotate a genome. For this, check out the [MpGAP](https://mpgap.readthedocs.io/en/latest/index.html) and [Bacannot](https://bacannot.readthedocs.io/en/latest/index.html) pipelines that we've developed for such tasks.
