@@ -2,7 +2,7 @@
 
 ```bash
 # Get help in the command line
-nextflow run fmalmeida/bacannot --help
+nextflow run fmalmeida/ngs-preprocess --help
 ```
 
 !!! tip
@@ -11,142 +11,70 @@ nextflow run fmalmeida/bacannot --help
 
 ## Input description
 
-### Required
+* path to fastq files containing sequencing reads
+* path to Pacbio .bam or .h5 files containing raw data
+* path containing list of SRA IDs
 
-To execute the annotation pipeline users **must** provide genomic data as either raw reads or assembled genomes as input. When raw reads are used, Unicycler and Flye assemblers are used to create, respectively, shortreads-only and hybrid assemblies, or longreads-only assemblies for the annotation process. Which means, the minimum required input files are:
+!!! warning "Watch your input"
 
-* An assembled genome in FASTA format, **or**;
-* Raw sequencing reads.
+    Users must **never** use hard or symbolic links. This will make nextflow fail.
 
-### Optional
+    Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
 
-The pipeline accepts as input two other input files types that are used to perform additional annotation processes, they are:
+    **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each read (or pair) that match this pattern separately.
 
-* path to a directory of FAST5
-    * Then used together with nanopore reads it will call DNA methylation with Nanopolish.
-* path to custom databases as described in [custom-db reference page](custom-db.md#)
-    * These custom databases will be used to perform additional annotation processes using BLAST. Please check the both the explanation [about the parameters](manual.md#custom-nucl-databases) and about its [configuration](custom-db.md#).
-
-## Input/output options
+## Output options
 
 | <div style="width:180px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--input`  | :material-check: | NA       | Input samplesheet describing all the samples to be analysed |
-| `--enable_deduplication` | :material-close: | false | Run deduplication command on input reads before assembly. Only useful for samples where reads are given instead of a genome fasta. |
-| `--output` | :material-check: | results  |  Name of directory to store output values. A sub-directory for each genome will be created inside this main directory. |
-| `--bacannot_db` | :material-check: | NA | Path for root directory containing required bacannot databases |
+| `--output`  | :material-check: | NA       | Directory to store output files |
 
-!!! note "About the samplesheet"
-    
-    Please read the [samplesheet manual page](samplesheet.md#) to better understand its format.
-
-## Database download options
+## Max job request
 
 | <div style="width:120px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--get_dbs`  | :material-close: | false  | Instead of running the analysis workflow, it will try to download required databases and save them in `--output` |
-| `--force_update` | :material-close: | false | Instead of only downloading missing databases, download everything again and overwrite. |
-| `--get_zenodo_db` | :material-close: | false | Download pre-built databases stored in zenodo. [See quickstart](quickstart.md#).
+| `--max_cpus`  | :material-close: | 4  | Max number of threads a job can use across attempts |
+| `--max_memory` | :material-close: | 6.GB | Max amount of memory a job can use across attempts |
+| `--max_time` | :material-close: | 40.h | Max amount of time a job can take to run
 
-!!! tip ""
-    
-    The quickstart shows a common usage of these parameters.
+## SRA IDs as input
 
-## Prokka annotation
+As of version v2.5, users can also select data directly from SRA. One just need to provide a txt file containing SRA run ids, one per line, e.g. [Example](https://github.com/fmalmeida/test_datasets/blob/main/sra_ids.txt).
 
 | <div style="width:160px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--prokka_kingdom`      | :material-close: | Bacteria | Prokka annotation mode. Possibilities: Archaea|Bacteria |
-| `--prokka_genetic_code` | :material-close: | 11 | Genetic Translation code. Must be set if a different kingdom is customized. |
-| `--prokka_use_rnammer`  | :material-close: | false | Tells Prokka whether to use rnammer instead of barrnap |
-| `--prokka_use_pgap`     | :material-close: | false | Include comprehensive PGAP hmm database in prokka annotation instead of TIGRFAM. Although comprehensive it increases runtime |
+| `--sra_ids`      | :material-close: | NA | Path to txt file containing list of SRA run IDs |
 
-!!! info "About prokka annotation"
+## Short reads input
 
-    In order to increase the accuracy of prokka annotation, this pipeline includes an additional HMM database to prokka's defaults. It can be either TIGRFAM (smaller but curated) or PGAP (bigger comprehensive NCBI database that contains TIGRFAM).
+| <div style="width:220px">Parameter</div> | Required | Default | Description |
+| :--------------------------------------- | :------- | :------ | :---------- |
+| `--shortreads` | :material-check: | NA | String Pattern to find short reads. Example: "SRR6307304_{1,2}.fastq" |
+| `--shortreads_type` | :material-check: | NA | (single \| paired). Tells whether input is unpaired or paired end |
+| `--fastp_average_quality` | :material-close: | 20 | Fastp will filter out reads with mean quality less than this |
+| `--fastp_correct_pairs` | :material-close: | false | If set, tells Fastp to try to correct paired end reads. Only works for paired end reads |
+| `--fastp_merge_pairs` | :material-close: | false | If set, tells Fastp to try to merge read pairs |
+| `--fastp_additional_parameters` | :material-close: | false | Pass on any additional parameter to Fastp. The tool's parameters are described in their [manual](https://github.com/OpenGene/fastp) |
 
-## Bakta annotation
-
-!!! info "Using Bakta"
-
-    If desired, users can use [`bakta`](https://github.com/oschwengers/bakta) instead of `prokka` to perform the core generic annotation of their prokaryotic genomes. For that, users must simply [download and store bakta database](https://github.com/oschwengers/bakta#database-download) in their machine, and pass its path to `bacannot` with the `--bakta_db` parameter.
-
-    We opted for having it like this because bakta database is quite big.
+## Long reads input
 
 | <div style="width:160px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--bakta_db`      | :material-close: | NA | Path to bakta database. If given, bacannot will use bakta instead of prokka. |
+| `--lreads_min_length` | :material-close: | 500 | Length min. threshold for filtering long reads (ONT or Pacbio) |
+| `--lreads_min_quality` | :material-close: | 5 | Quality min. threshold for filtering long reads (ONT or Pacbio) |
+| `--nanopore_fastq` | :material-check: | NA | Sets path to nanopore fastq files. Pre-processes basecalled long reads |
+| `--nanopore_is_barcoded` | :material-close: | false | Tells whether your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file |
+| `--nanopore_sequencing_summary` | :material-close: | NA | Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC. pycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc. Preferentially, using the same basename as the fastq |
+| `--pacbio_bam` | :material-close: | NA | Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory |
+| `--pacbio_h5` | :material-close: | NA | Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory |
+| `--pacbio_barcodes` | :material-close: | NA | Path to xml/fasta file containing barcode information. It will split barcodes into single files. Will be used for all pacbio inputs, h5 or bam |
+| `--pacbio_barcode_design` | :material-close: | same | Select the combination of barcodes for demultiplexing. Options: same, different, any |
+| `--pacbio_get_hifi` | :material-close: | false | Whether or not to try to compute CCS reads. Will be used for all pacbio inputs, h5 or bam |
 
-## Resfinder annotation
+All this parameters are configurable through a configuration file. We encourage users to use the configuration
+file since it will keep your execution cleaner and more readable. See a [config](config.md#) example.
 
-The use of this parameter sets a default value for input samples. If a sample has a different value given inside the samplesheet, the pipeline will use, for that sample, the value found inside the [samplesheet](samplesheet.md#).
 
-| <div style="width:160px">Parameter</div> | Required | Default | Description |
-| :--------------------------------------- | :------- | :------ | :---------- |
-| `--resfinder_species` | :material-close: | NA | Resfinder species panel. It activates the resfinder annotation process using the given species panel. Check the available species at [their main page](https://cge.cbs.dtu.dk/services/ResFinder/) and in [their repository page](https://bitbucket.org/genomicepidemiology/resfinder/src/master/#usage). If your species is not available in Resfinder panels, you may use it with the "Other" panel (`--resfinder_species "Other"`). |
+## Examples
 
-## On/Off processes
-
-| <div style="width:180px">Parameter</div> | Required | Default | Description |
-| :--------------------------------------- | :------- | :------ | :---------- |
-| `--skip_virulence_search` | :material-close: | false | Tells whether not to run virulence factors annotation. It skips both vfdb and victors annotation |
-| `--skip_plasmid_search` | :material-close: | false | Tells whether not to run plasmid detection/typing modules |
-| `--skip_resistance_search` | :material-close: | false | Tells whether not to run resistance genes annotation modules |
-| `--skip_iceberg_search` | :material-close: | false | Tells whether not to run mobile genetic elements annotation with ICEberg |
-| `--skip_prophage_search` | :material-close: | false | Tells whether not to run prophage annotation modules |
-| `--skip_kofamscan` | :material-close: | false | Tells whether not to run KEGG orthology (KO) annotation with KofamScan |
-| `--skip_antismash` | :material-close: | false | Tells whether or not to run antiSMASH (secondary metabolite) annotation. AntiSMASH is executed using only its core annotation modules in order to keep it fast. |
-
-## Custom databases
-
-Users can give fasta files (nucl or prot) properly formatted or a text file containing a list of NCBI protein IDs (one per line). Please check the [custom db manual](custom-db.md#) for more information. Sequences are searched against the genome, with `blastn` for nucl sequences and `tblastn` for prot sequences.
-
-| <div style="width:180px">Parameter</div> | Required | Default | Description |
-| :--------------------------------------- | :------- | :------ | :---------- |
-| `--custom_db` | :material-close: | NA | Custom gene nucleotide/protein databases to be used for additional annotations. N files are accepted separated by commas. E.g. `--custom_db db1.fasta,db2.fasta,db3.fasta`. |
-| `--ncbi_proteins` | :material-close: | NA | Path to file with NCBI protein IDs. The pipeline will download, format and use them for additional annotation. |
-
-## Annotation thresholds
-
-| <div style="width:200px">Parameter</div> | Required | Default | Description |
-| :--------------------------------------- | :------- | :------ | :---------- |
-| `--blast_virulence_minid` | :material-close: | 90 | Identity (%) threshold to be used when annotating virulence factors from VFDB and Victors |
-| `--blast_virulence_mincov` | :material-close: | 90 | Coverage (%) threshold to be used when annotating virulence factors from VFDB and Victors |
-| `--blast_resistance_minid` | :material-close: | 90 | Identity (%) threshold to be used when annotating AMR genes with CARD-RGI, Resfinder, ARGminer and AMRFinderPlus. |
-| `--blast_resistance_mincov` | :material-close: | 90 | Coverage (%) threshold to be used when annotating AMR genes with Resfinder, ARGminer and AMRFinderPlus. CARD-RGI is not affected. |
-| `--plasmids_minid` | :material-close: | 90 | Identity (%) threshold to be used when detecting plasmids with Plasmidfinder |
-| `--plasmids_mincov` | :material-close: | 60 | Coverage (%) threshold to be used when detecting plasmids with Plasmidfinder |
-| `--blast_MGEs_minid` | :material-close: | 85 | Coverage (%) threshold to be used when annotating AMR genes with Resfinder, ARGminer and AMRFinderPlus. CARD-RGI is not affected. |
-| `--blast_MGEs_mincov` | :material-close: | 85 | Coverage (%) threshold to be used when annotating prophages and mobile elements from PHAST and ICEberg databases |
-| `--blast_custom_minid` | :material-close: | 65 | Identity (%) threshold to be used when annotating with user's custom databases |
-| `--blast_custom_mincov` | :material-close: | 65 | Coverage (%) threshold to be used when annotating with user's custom databases |
-
-## Merge distance
-
-| <div style="width:200px">Parameter</div> | Required | Default | Description |
-| :--------------------------------------- | :------- | :------ | :---------- |
-| `--bedtools_merge_distance` | :material-close: | NA | Minimum number of required overlapping bases to merge genes. By default it is not executed. |
-
-## Non-core tools versions
-
-Users can now select the version of the non-core tools Bakta, Unicyler and Flye. These tools now have a parameter which controls which tag, thus version, from quay.io to use.
-
-| Parameter | Default | Description |
-| :-------- | :------ | :---------- |
-| `--bakta_version`     | 1.7.0--pyhdfd78af_1   | Bakta tool version     |
-| `--flye_version`      | 2.9--py39h39abbe0_0   | Flye tool version      |
-| `--unicycler_version` | 0.4.8--py38h8162308_3 | Unicycler tool version |
-
-## Max job request options
-
-Set the top limit for requested resources for any single job. If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.
-
-!!! note
-    
-    Note that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.
-
-| Parameter | Default | Description |
-| :-------- | :------ | :---------- |
-| `--max_cpus`   | 16     | Maximum number of CPUs that can be requested for any single job   |
-| `--max_memory` | 20.GB  | Maximum amount of memory that can be requested for any single job |
-| `--max_time`   | 40.h   | Maximum amount of time that can be requested for any single job   |
+For a better understanding of the usage we provided a feel examples. See some [examples](examples.md#).
