@@ -34,3 +34,21 @@ preprocessed_reads
     │   └── SRR23337893_data
     └── SRR23337893_sra_runInfo.csv
 ```
+
+## Example of QC outputs
+
+Here I am going to display just a very few examples of results produced, focusing on the QC, as the main result is a cleaned FASTQ file.
+
+**Length versus Quality Scatterplot**
+
+<center>
+  <img src="../assets/LengthvsQualityScatterPlot_dot.png" width="85%">
+</center>
+
+**NanoPlot Report HTML**
+
+Open it [here](../assets/NanoPlot-report.html).
+
+**NanoStats Report TXT**
+
+Open it [here](../assets/NanoStats.txt).
