@@ -20,6 +20,8 @@ theme:
     accent: blue grey
   icon:
     repo: fontawesome/brands/github-alt
+  features:
+  - content.code.copy
 plugins:
 - git-revision-date
 - search
