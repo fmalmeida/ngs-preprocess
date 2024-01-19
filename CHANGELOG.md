@@ -4,7 +4,7 @@ The tracking for changes started in v2.2
 
 ## v2.6.2 -- [2024-Jan-19]
 
-* [[#24](https://github.com/fmalmeida/ngs-preprocess/issues/25)] - Added documentation on generated outputs, as requested in paper review
+* [[#24](https://github.com/fmalmeida/ngs-preprocess/issues/24)] - Added documentation on generated outputs, as requested in paper review
 * [[#25](https://github.com/fmalmeida/ngs-preprocess/issues/25)] - Added documentation exemplifying use for non bacterial dataset, as requested in paper review
 * Small fixes on SRA module to allow downloading bgiseq data, and avoid running on empty lines
 * Updated Dockerfile to name the maximum of versions possible
