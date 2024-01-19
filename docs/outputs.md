@@ -14,18 +14,22 @@ After a successful execution, you will have something like this:
 
 # Directory tree from the running dir
 preprocessed_reads
-├── final_output                                              # directory containing the final results of the data cleaning                   
+# directory containing the final results of the data cleaning
+├── final_output                   
 │   └── nanopore
 │       └── SRR23337893.filtered.fq.gz
-├── pipeline_info                                             # directory containing the nextflow execution reports
+# directory containing the nextflow execution reports
+├── pipeline_info
 │   ├── ngs_preprocess_report_2023-11-18_10-07-36.html
 │   ├── ngs_preprocess_timeline_2023-11-18_10-07-36.html
 │   ├── ngs_preprocess_tracing_2023-11-18_10-07-36.txt
-├── preprocessing_outputs                                     # directory containing the intermediate files produced by the tools used during pre-processing, and, QC
+# directory containing the intermediate files produced by the tools used during pre-processing, and, QC
+├── preprocessing_outputs
 │   └── nanopore
 │       ├── porechop
 │       └── QC
-└── SRA_FETCH                                                 # directory containing the intermediate files when downloading data from SRA
+# directory containing the intermediate files when downloading data from SRA
+└── SRA_FETCH
     ├── FASTQ
     │   └── SRR23337893_data
     └── SRR23337893_sra_runInfo.csv
