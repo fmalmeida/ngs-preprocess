@@ -13,7 +13,9 @@ The pipeline have "standard profiles" set to run the workflows with either **con
 
 !!! tip "Example"
 
+    ```bash
     nextflow run [...] -profile conda/docker/singularity [...]
+    ```
 
 If you need to run the pipeline using another executor such as sge, lsf, slurm, etc. you can take a look at [nextflow's manual page](https://www.nextflow.io/docs/latest/executor.html) to proper configure one in a new custom profile set in your personal copy of [ngs-preprocess config file](https://github.com/fmalmeida/ngs-preprocess/blob/master/nextflow.config) and take advantage that nextflow allows multiple profiles to be used at once, e.g. `-profile docker,sge`.
 
