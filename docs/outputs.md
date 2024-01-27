@@ -1,6 +1,6 @@
 # Output files
 
-Here, using the results produced in the [Non-bacterial dataset section](non_bacteria.md#), we give users a glimpse over the main outputs produced by bacannot. The command used in the quickstart wrote the results under the `preprocessed_reads` directory.
+Here, using the results produced in the [Non-bacterial dataset section](non_bacteria.md#), we give users a glimpse over the main outputs produced by ngs-preprocess. The command used in the quickstart wrote the results under the `preprocessed_reads` directory.
 
 !!! note
 
