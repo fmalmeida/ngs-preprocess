@@ -176,7 +176,7 @@ workflow {
   final_outdir = "${final_outdir}/final_output"
 
   // start samplesheet channel and feed it
-  ch_mpgap_samplesheet = Channel.value( "samplesheet:\n" )
+  ch_mpgap_samplesheet = Channel.value( "samplesheet:" )
   ch_mpgap_samplesheet.concat(
 
     // short reads data
@@ -197,7 +197,19 @@ workflow {
       final_string = final_string + "\n\s\s\s\snanopore: ${final_outdir}/${subdir}/${reads.getName()}"
 
       final_string
-    }
+    },
+
+    // pacbio data
+    PACBIO.out.reads
+    .map{ meta, subdir, reads ->
+      def final_string = "\n\s\s- id: ${meta.id}"
+      final_string = final_string + "\n\s\s\s\spacbio: ${final_outdir}/${subdir}/${reads.getName()}"
+
+      final_string
+    },
+
+    // end line
+    Channel.value( "\n" )
 
   )
   .collectFile( name: 'mpgap_samplesheet.yml', storeDir: params.output, sort: false, cache: false, newLine: false )
