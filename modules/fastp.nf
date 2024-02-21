@@ -13,6 +13,7 @@ process FASTP {
 
     output:
     path "*"
+    tuple val(meta), val('short_reads'), path("*.preprocessed.fq.gz"), emit: reads
 
     script:
     if (meta.shortreads_type == 'paired') {

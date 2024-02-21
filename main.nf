@@ -167,6 +167,33 @@ workflow {
   )
   ILLUMINA( shortreads_ch )
 
+  /*
+   * Collect all the generated results as a samplesheet for MpGAP
+   */
+  
+  // get string of final dir
+  def final_outdir = file("${params.output}").toUriString()
+  final_outdir = "${final_outdir}/final_output"
+
+  // start samplesheet channel and feed it
+  ch_mpgap_samplesheet = Channel.value('samplesheet:')
+  ch_mpgap_samplesheet.concat(
+
+    // short reads data
+    ILLUMINA.out.reads
+    .map{ meta, subdir, reads ->
+      def reads_list = meta.shortreads_type == 'paired' ? "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[0].getName()}\n\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[1].getName()}" : "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads.getName()}"
+      def final_string = "\n\s\s- id: ${meta.id}"
+      final_string = final_string + "\n\s\s\s\sillumina:\n"
+      final_string = final_string + reads_list
+
+      final_string
+    }
+
+    // nanopore data
+  )
+  .collectFile( name: 'mpgap_samplesheet.yml', storeDir: params.output, sort: false, cache: false )
+
 }
 
 workflow.onComplete {
