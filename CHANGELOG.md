@@ -2,6 +2,10 @@
 
 The tracking for changes started in v2.2
 
+## v2.6.3 -- [2024-Fev-23]
+
+* [[#32](https://github.com/fmalmeida/ngs-preprocess/issues/32)] - Add as output a template samplesheet that can be readily used as input for MpGAP to assemble each downloaded read on its own.
+
 ## v2.6.2 -- [2024-Jan-19]
 
 * [[#24](https://github.com/fmalmeida/ngs-preprocess/issues/24)] - Added documentation on generated outputs, as requested in paper review
