@@ -182,7 +182,7 @@ workflow {
     // short reads data
     ILLUMINA.out.reads
     .map{ meta, subdir, reads ->
-      def reads_list = meta.shortreads_type == 'paired' ? "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[0].getName()}\n\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[1].getName()}" : "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads.getName()}"
+      def reads_list = (meta.shortreads_type == 'paired' && !params.fastp_merge_pairs) ? "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[0].getName()}\n\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads[1].getName()}" : "\s\s\s\s\s\s- ${final_outdir}/${subdir}/${reads.getName()}"
       def final_string = "\n\s\s- id: ${meta.id}"
       final_string = final_string + "\n\s\s\s\sillumina:\n"
       final_string = final_string + reads_list
