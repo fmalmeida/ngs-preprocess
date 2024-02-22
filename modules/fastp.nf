@@ -13,12 +13,14 @@ process FASTP {
 
     output:
     path "*"
-    tuple val(meta), val('short_reads'), path("*.preprocessed.fq.gz"), emit: reads
+    tuple val(meta), val('short_reads'), path("*${reads_output}"), emit: reads
 
     script:
+    reads_output = ".preprocessed.fq.gz"
     if (meta.shortreads_type == 'paired') {
         if (params.fastp_merge_pairs) {
-            reads_param = "--in1 ${reads[0]} --in2 ${reads[1]} --out1 ${meta.id}_R1.unmerged.fq.gz --out2 ${meta.id}_R2.unmerged.fq.gz --detect_adapter_for_pe --merge --merged_out ${meta.id}.merged.fq.gz"
+            reads_param  = "--in1 ${reads[0]} --in2 ${reads[1]} --out1 ${meta.id}_R1.unmerged.fq.gz --out2 ${meta.id}_R2.unmerged.fq.gz --detect_adapter_for_pe --merge --merged_out ${meta.id}.merged.fq.gz"
+            reads_output = ".merged.fq.gz"
         } else {
             reads_param = "--in1 ${reads[0]} --in2 ${reads[1]} --out1 ${meta.id}_R1.preprocessed.fq.gz --out2 ${meta.id}_R2.preprocessed.fq.gz --detect_adapter_for_pe"
         }
