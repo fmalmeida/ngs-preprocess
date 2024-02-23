@@ -12,5 +12,8 @@ workflow ILLUMINA {
 
     // run fastqc
     FASTP( shortreads )
+  
+  emit:
+    reads = FASTP.out.reads
 
 }

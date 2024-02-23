@@ -52,5 +52,8 @@ workflow PACBIO {
 
     // filter reads
     FILTER(reads)
+  
+  emit:
+    reads = FILTER.out.reads
 
 }

@@ -7,7 +7,7 @@ process FILTER {
     tuple val(meta), path(reads)
     
     output:
-    path "*filtered.fq.gz", emit: fastqs
+    tuple val(meta), val("${meta.longreads_type}"), path("*filtered.fq.gz"), emit: reads
 
     when:
     !(reads =~ /input.*/)

@@ -7,7 +7,7 @@
 name: Testing illumina / docker from PR
 on:
   pull_request:
-    branches: master
+    branches: [ master, dev ]
     types: [ opened, synchronize, reopened ]
 
 jobs:
