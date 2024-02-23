@@ -18,6 +18,8 @@ preprocessed_reads
 ├── final_output                   
 │   └── nanopore
 │       └── SRR23337893.filtered.fq.gz
+# a template input ready for MpGAP
+├── mpgap_samplesheet.yml
 # directory containing the nextflow execution reports
 ├── pipeline_info
 │   ├── ngs_preprocess_report_2023-11-18_10-07-36.html
@@ -34,6 +36,22 @@ preprocessed_reads
     │   └── SRR23337893_data
     └── SRR23337893_sra_runInfo.csv
 ```
+
+## The pre-formatted MpGAP input samplesheet
+
+Once finished, the pipeline also generates a file called `mpgap_samplesheet.yml` (showed below). Basically this samplesheet defines all the **minimum** definitions in order to assemble these reads using the [MpGAP](https://mpgap.readthedocs.io/en/latest/) pipeline.
+
+```yaml
+samplesheet:
+  - id: SRR23337893
+    nanopore: /workspace/ngs-preprocess/testing/preprocessed_reads/final_output/nanopore/SRR23337893.filtered.fq.gz
+```
+
+!!! note
+
+    One must keep in mind that, this template samplesheet contains only the **bare minimum** to launch MpGAP but many other customizations are possible. For example, the generated samplesheet will assemble each read separately, but, MpGAP can also perform hybrid assemblies. Therefore, users can/must use this output as a template for easily customization of the assembly pipeline input to use the results of ngs-preprocess pipeline.
+
+    For more information, please refer to the [MpGAP](https://mpgap.readthedocs.io/en/latest/) documentation.
 
 ## Example of QC outputs
 
