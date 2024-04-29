@@ -22,8 +22,8 @@ dependencies:
 - conda-forge::gcc
 
 ## bioconda packages
-- bioconda::porechop=0.2.4-6
-- bioconda::porechop_abi=0.5.0-2
+- bioconda::porechop=0.2.4
+- bioconda::porechop_abi=0.5.0
 - bioconda::fastp=0.23.2
 - bioconda::samtools
 - bioconda::bax2bam=0.0.9
