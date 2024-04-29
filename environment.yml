@@ -12,14 +12,19 @@ dependencies:
 - pip
 - pip:
   - biopython==1.78
+  - jupyter
+  - notebook==6.5.5
+  - traitlets==5.9.0
 
 ## anaconda packages
 - anaconda::hdf5
+- anaconda::notebook
 
 ## conda-forge packages
 - conda-forge::pigz=2.3.4 ## Required for TrimGalore multi-threading
 - conda-forge::matplotlib=3.1.1
 - conda-forge::gcc
+- conda-forge::importlib_metadata
 
 ## bioconda packages
 - bioconda::porechop=0.2.4
