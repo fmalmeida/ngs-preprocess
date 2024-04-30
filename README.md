@@ -222,6 +222,7 @@ In addition, users are encouraged to cite the programs used in this pipeline whe
 * [sra-tools](https://github.com/ncbi/sra-tools)
 * [Fastp](https://github.com/OpenGene/fastp)
 * [Porechop](https://github.com/rrwick/Porechop)
+* [Porechop ABI](https://github.com/bonsai-team/Porechop_ABI)
 * [pycoQC](https://github.com/a-slide/pycoQC)
 * [bax2bam](https://anaconda.org/bioconda/bax2bam)
 * [bam2fastq](https://github.com/PacificBiosciences/pbtk#bam2fastx)

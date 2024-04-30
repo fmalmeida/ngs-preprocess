@@ -26,6 +26,7 @@ The pipeline wraps up the following tools and analyses:
 | [sra-tools](https://github.com/ncbi/sra-tools) & [entrez-direct](https://anaconda.org/bioconda/entrez-direct) | Interaction with SRA database for fetching fastqs and metadata |
 | [fastp](https://github.com/OpenGene/fastp) | Fast all-in-one preprocessing for FastQ files |
 | [porechop](https://github.com/rrwick/Porechop)** | ONT reads trimming and demultiplexing |
+| [porechop ABI](https://github.com/bonsai-team/Porechop_ABI)** | *Ab initio* version of porechop |
 | [pycoQC](https://github.com/tleonardi/pycoQC) | ONT reads QC |
 | [NanoPack](https://github.com/wdecoster/nanopack) | Long reads QC and filter |
 | [bax2bam](https://anaconda.org/bioconda/bax2bam) | Convert PacBio bax files to bam |
