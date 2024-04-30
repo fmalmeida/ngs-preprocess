@@ -63,6 +63,7 @@ As of version v2.5, users can also select data directly from SRA. One just need 
 | `--lreads_min_length` | :material-close: | 500 | Length min. threshold for filtering long reads (ONT or Pacbio) |
 | `--lreads_min_quality` | :material-close: | 5 | Quality min. threshold for filtering long reads (ONT or Pacbio) |
 | `--nanopore_fastq` | :material-check: | NA | Sets path to nanopore fastq files. Pre-processes basecalled long reads |
+| `--use_porechop_abi` | :material-close: | false | Tells the pipeline to use *ab initio* version of porechop. Incompatible with `--nanopore_is_barcoded`. |
 | `--nanopore_is_barcoded` | :material-close: | false | Tells whether your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file |
 | `--nanopore_sequencing_summary` | :material-close: | NA | Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC. pycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc. Preferentially, using the same basename as the fastq |
 | `--pacbio_bam` | :material-close: | NA | Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory |

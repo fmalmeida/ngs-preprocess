@@ -7,8 +7,8 @@
 name: Testing nanopore / docker from PR
 on:
   pull_request:
-    branches: [ master, dev ]
-    types: [ opened, synchronize, reopened ]
+    branches: [master, dev]
+    types: [opened, synchronize, reopened]
 
 jobs:
   run_nextflow:
@@ -17,35 +17,46 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USER }}
       DOCKERHUB_PASS: ${{ secrets.DOCKER_PASSWORD }}
-    
-    steps:
-      
-      - name: Check out pipeline code
-        uses: actions/checkout@v2
-      
-      - name: Install Nextflow
-        env:
-          CAPSULE_LOG: none
-        run: |
-          wget -qO- get.nextflow.io | bash
-          sudo mv nextflow /usr/local/bin/
-      
-      - name: Clean environment
-        run: |
-          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
-          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
 
-      - name: Run tests for nanopore
-        run: |
-          wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
-          nextflow run main.nf \
-            -profile docker \
-            --max_cpus 2 \
-            --output TEST_DIR \
-            --nanopore_fastq "ecoli_ont_15X.fastq.gz"
-          rm -r work .nextflow*
-            
-      - name: View results
-        run: |
-          sudo apt-get install -y tree
-          tree TEST_DIR
+    steps:
+
+    - name: Check out pipeline code
+      uses: actions/checkout@v2
+
+    - name: Install Nextflow
+      env:
+        CAPSULE_LOG: none
+      run: |
+        wget -qO- get.nextflow.io | bash
+        sudo mv nextflow /usr/local/bin/
+
+    - name: Clean environment
+      run: |
+        sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+        sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+
+    - name: Run tests for nanopore
+      run: |
+        wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
+        nextflow run main.nf \
+          -profile docker \
+          --max_cpus 2 \
+          --output TEST_DIR \
+          --nanopore_fastq "ecoli_ont_15X.fastq.gz"
+        rm -r work .nextflow*
+
+    - name: Run tests for nanopore (ABI)
+      run: |
+        wget https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
+        nextflow run main.nf \
+          -profile docker \
+          --max_cpus 2 \
+          --output TEST_DIR \
+          --nanopore_fastq "ecoli_ont_15X.fastq.gz" \
+          --use_porechop_abi
+        rm -r work .nextflow*
+
+    - name: View results
+      run: |
+        sudo apt-get install -y tree
+        tree TEST_DIR

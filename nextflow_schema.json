@@ -105,6 +105,12 @@
                     "fa_icon": "fas fa-filter",
                     "default": 5
                 },
+                "use_porechop_abi": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-barcode",
+                    "description": "Do you want to use ab initio porechop implementation?",
+                    "help_text": "Incompatible with demultiplexing."
+                },
                 "nanopore_is_barcoded": {
                     "type": "boolean",
                     "fa_icon": "fas fa-barcode",
@@ -185,12 +191,6 @@
                     "type": "boolean",
                     "description": "Download template config for parameters",
                     "fa_icon": "fas fa-question-circle"
-                },
-                "tracedir": {
-                    "type": "string",
-                    "description": "Directory to keep pipeline Nextflow logs and reports.",
-                    "fa_icon": "fas fa-cogs",
-                    "hidden": true
                 },
                 "validate_params": {
                     "type": "boolean",

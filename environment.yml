@@ -1,44 +1,50 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: ngs-preprocess-2.6
+name: ngs-preprocess-2.7
 channels:
-  - conda-forge
-  - bioconda
-  - defaults
-  - anaconda
-  - r
+- conda-forge
+- bioconda
+- defaults
+- anaconda
+- r
 dependencies:
-  ## python pip dependencies
-  - pip
-  - pip:
-    - biopython==1.78
-  
-  ## anaconda packages
-  - anaconda::hdf5
-  
-  ## conda-forge packages
-  - conda-forge::pigz=2.3.4               ## Required for TrimGalore multi-threading
-  - conda-forge::matplotlib=3.1.1
-  - conda-forge::gcc
+## python pip dependencies
+- pip
+- pip:
+  - biopython==1.78
+  - jupyter
+  - notebook==6.5.5
+  - traitlets==5.9.0
 
-  ## bioconda packages
-  - bioconda::porechop=0.2.4
-  - bioconda::fastp=0.23.2
-  - bioconda::samtools
-  - bioconda::bax2bam=0.0.9
-  - bioconda::pbtk=3.1.0
-  - bioconda::pbccs=6.4.0
-  - bioconda::lima=2.7.1
-  - bioconda::pbbam>=0.23.0
-  - bioconda::pycoqc=2.5.0.3
-  - bioconda::pysam
-  - bioconda::nanoqc=0.9.4
-  - bioconda::nanostat
-  - bioconda::nanoplot=1.41.0
-  - bioconda::nanofilt=2.8.0
-  - bioconda::sra-tools=3.0.3
-  - bioconda::entrez-direct=16.2
-  - bioconda::csvtk
+## anaconda packages
+- anaconda::hdf5
+- anaconda::notebook
 
-  ## other
-  - plotly::plotly
+## conda-forge packages
+- conda-forge::pigz=2.3.4 ## Required for TrimGalore multi-threading
+- conda-forge::matplotlib=3.1.1
+- conda-forge::gcc
+- conda-forge::importlib_metadata
+
+## bioconda packages
+- bioconda::porechop=0.2.4
+- bioconda::porechop_abi=0.5.0
+- bioconda::fastp=0.23.2
+- bioconda::samtools
+- bioconda::bax2bam=0.0.9
+- bioconda::pbtk=3.1.0
+- bioconda::pbccs=6.4.0
+- bioconda::lima=2.7.1
+- bioconda::pbbam>=0.23.0
+- bioconda::pycoqc=2.5.0.3
+- bioconda::pysam
+- bioconda::nanoqc=0.9.4
+- bioconda::nanostat
+- bioconda::nanoplot=1.41.0
+- bioconda::nanofilt=2.8.0
+- bioconda::sra-tools=3.0.3
+- bioconda::entrez-direct=16.2
+- bioconda::csvtk
+
+## other
+- plotly::plotly
