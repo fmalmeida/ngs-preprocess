@@ -20,6 +20,11 @@ class WorkflowNGSPreprocess {
                     System.exit(1)
                 }
             }
+
+            if (params.use_porechop_abi && params.nanopore_is_barcoded) {
+                log.error "Major error: Porechop ABI is not able to de-multiplex data. Please de-multiplex it with another tool or use legacy porechop."
+                System.exit(1)
+            }
         }
     }
 

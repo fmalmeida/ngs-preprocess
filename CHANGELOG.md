@@ -2,6 +2,10 @@
 
 The tracking for changes started in v2.2
 
+## v2.7.0 -- [2024-Apr-30]
+
+* [[#34]](https://github.com/fmalmeida/ngs-preprocess/issues/34) - Included a new tool in the pipeline (`porechop ABI`). Removed `tracedir` parameter. Build new docker image.
+
 ## v2.6.3 -- [2024-Fev-23]
 
 * [[#32](https://github.com/fmalmeida/ngs-preprocess/issues/32)] - Add as output a template samplesheet that can be readily used as input for MpGAP to assemble each downloaded read on its own.
