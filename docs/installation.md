@@ -40,10 +40,10 @@ docker pull fmalmeida/ngs-preprocess:v2.7
     ```bash
     # apply this command to each image
     # just change the "/" and ":" for "-".
-    # E.g. Image fmalmeida/ngs-preprocess:v2.7 becomes fmalmeida-ngs-preprocess-v2.6.img
+    # E.g. Image fmalmeida/ngs-preprocess:v2.7 becomes fmalmeida-ngs-preprocess-v2.7.img
     singularity pull \
         --dir $NXF_SINGULARITY_LIBRARYDIR \
-        fmalmeida-ngs-preprocess-v2.6.img docker://fmalmeida/ngs-preprocess:v2.7
+        fmalmeida-ngs-preprocess-v2.7.img docker://fmalmeida/ngs-preprocess:v2.7
     ```
 
 !!! info "If using conda"

@@ -84,7 +84,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [ge
         export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
         singularity pull \
             --dir $NXF_SINGULARITY_LIBRARYDIR \
-            fmalmeida-ngs-preprocess-v2.6.img docker://fmalmeida/ngs-preprocess:v2.7
+            fmalmeida-ngs-preprocess-v2.7.img docker://fmalmeida/ngs-preprocess:v2.7
         
         # run
         nextflow run fmalmeida/ngs-preprocess -profile singularity [options]
