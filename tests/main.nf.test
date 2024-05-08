@@ -27,7 +27,7 @@ nextflow_pipeline {
 
                 // Check if files are the same
                 {assert snapshot(
-                    workflow,
+                    workflow.trace,
                     path( "${outputDir}/test_output/final_output" )
                 ).match()}
             )
