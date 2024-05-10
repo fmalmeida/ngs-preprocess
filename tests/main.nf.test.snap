@@ -2,27 +2,9 @@
     "Testing workflow - Should run without fails": {
         "content": [
             {
-                "stderr": [
-                    
-                ],
-                "errorReport": "",
-                "exitStatus": 0,
-                "failed": false,
-                "stdout": [
-                    "",
-                    "Pipeline completed at: 2024-05-06T07:56:14.928664372Z",
-                    "Execution status: OK",
-                    "Execution duration: 9m 50s",
-                    "Thank you for using fmalmeida/ngs-preprocess pipeline!"
-                ],
-                "errorMessage": "",
-                "trace": {
-                    "tasksFailed": 0,
-                    "tasksCount": 12,
-                    "tasksSucceeded": 12
-                },
-                "name": "workflow",
-                "success": true
+                "tasksFailed": 0,
+                "tasksCount": 12,
+                "tasksSucceeded": 12
             },
             [
                 [
@@ -41,6 +23,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-06T07:56:15.500768292"
+        "timestamp": "2024-05-08T14:26:25.758021833"
     }
 }
