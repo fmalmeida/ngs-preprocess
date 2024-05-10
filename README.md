@@ -41,7 +41,7 @@ It wraps up the following software:
 | :--- | :---- |
 | SRA NBCI fetch | [Entrez-direct](https://anaconda.org/bioconda/entrez-direct) & [sra-tools](https://github.com/ncbi/sra-tools) |
 | Illumina pre-processing | [Fastp](https://github.com/OpenGene/fastp) |
-| Nanopore pre-processing | [Porechop](https://github.com/rrwick/Porechop), [pycoQC](https://github.com/tleonardi/pycoQC), [NanoPack](https://github.com/wdecoster/nanopack) |
+| Nanopore pre-processing | [Porechop](https://github.com/rrwick/Porechop), [Porechop ABI](https://github.com/bonsai-team/Porechop_ABI), [pycoQC](https://github.com/tleonardi/pycoQC), [NanoPack](https://github.com/wdecoster/nanopack) |
 | Pacbio pre-processing | [bam2fastx](https://github.com/PacificBiosciences/pbtk#bam2fastx), [bax2bam](https://anaconda.org/bioconda/bax2bam), [lima](https://github.com/PacificBiosciences/barcoding), [pacbio ccs](https://ccs.how/) |
 
 ## Further reading
