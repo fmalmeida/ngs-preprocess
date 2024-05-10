@@ -3,15 +3,16 @@
         "content": [
             {
                 "tasksFailed": 0,
-                "tasksCount": 12,
-                "tasksSucceeded": 12
+                "tasksCount": 16,
+                "tasksSucceeded": 16
             },
             [
                 [
                     "SRR19901041.filtered.fq.gz:md5,1d7a8e18db3b1f7ac0bfc1f5cf1daddf"
                 ],
                 [
-                    "ERR7339227.filtered.fq.gz:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    "ERR7339227.filtered.fq.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
+                    "SRR9641620.filtered.fq.gz:md5,f6658663be49766459b123efa690cc42"
                 ],
                 [
                     "ERR9850226_R1.preprocessed.fq.gz:md5,69f8bd550fbf99d81f4a110734f4803a",
@@ -23,6 +24,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-05-08T14:26:25.758021833"
+        "timestamp": "2024-05-10T15:44:14.430345179"
     }
 }
