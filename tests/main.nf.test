@@ -1,0 +1,39 @@
+nextflow_pipeline {
+
+    name "Test Workflow main.nf"
+    script "main.nf"
+
+    test("Testing workflow - Should run without fails") {
+
+        when {
+            params {
+                sra_ids    = 'https://github.com/fmalmeida/test_datasets/raw/main/sra_ids.txt'
+                output     = "${outputDir}/test_output"
+                max_cpus   = 2
+                max_memory = '6.GB'
+                max_time   = '6.h'
+            }
+        }
+
+        then {
+            
+            assertAll(
+                // All good?
+                {assert workflow.success},
+
+                // All there?
+                {assert path("${outputDir}/test_output").list().size() == 5},
+                {assert path("${outputDir}/test_output/preprocessing_outputs").list().size() == 3},
+
+                // Check if files are the same
+                {assert snapshot(
+                    workflow.trace,
+                    path( "${outputDir}/test_output/final_output" )
+                ).match()}
+            )
+        
+        }
+
+    }
+
+}

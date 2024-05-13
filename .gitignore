@@ -2,3 +2,5 @@ teste
 testing
 .vscode/settings.json
 docs/_build
+*.log
+.nf-test/
