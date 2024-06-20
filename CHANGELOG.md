@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.2
 
+## v2.7.1
+
+* [[#36]](https://github.com/fmalmeida/ngs-preprocess/issues/36) - Include nf-tests to the pipeline.
+* [[#40]](https://github.com/fmalmeida/ngs-preprocess/issues/40) - Fix a problem when downloading PACBIO data.
+* Adjust short-reads workflow filter to allow analysis from SRA for platform key-values: illumina, bgiseq and dnbseq
+
 ## v2.7.0 -- [2024-Apr-30]
 
 * [[#34]](https://github.com/fmalmeida/ngs-preprocess/issues/34) - Included a new tool in the pipeline (`porechop ABI`). Removed `tracedir` parameter. Build new docker image.

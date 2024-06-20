@@ -156,7 +156,7 @@ workflow {
   .filter{ it != '' }
   .mix( 
     SRA_FETCH.out.fastqs
-    .filter{ it[1] =~ /illumina|bgiseq/ }
+    .filter{ it[1] =~ /illumina|bgiseq|dnbseq/ }
     .map{ 
       def meta             = [:]
       meta.id              = it[0]

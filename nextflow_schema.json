@@ -13,7 +13,6 @@
             "properties": {
                 "output": {
                     "type": "string",
-                    "default": "output",
                     "help_text": "Where to place results?",
                     "fa_icon": "fas fa-folder"
                 },
