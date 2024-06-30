@@ -2,6 +2,10 @@
 
 The tracking for changes started in v2.2
 
+## v2.7.2
+
+* [[#42]](https://github.com/fmalmeida/ngs-preprocess/issues/42) - Include `--skip-technical` parameter for `fasterq-dump`. Bacannot does not need technical reads.
+
 ## v2.7.1
 
 * [[#36]](https://github.com/fmalmeida/ngs-preprocess/issues/36) - Include nf-tests to the pipeline.
