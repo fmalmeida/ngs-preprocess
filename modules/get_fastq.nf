@@ -18,6 +18,7 @@ process GET_FASTQ {
     --split-files \\
     --threads $task.cpus \\
     --outdir ./${sra_ids}_data \\
+    --skip-technical \\
     --progress \\
     $sra_ids &> fasterq-dump.err || true
   
